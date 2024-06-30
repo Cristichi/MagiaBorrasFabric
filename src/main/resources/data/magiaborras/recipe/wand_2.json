@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "SSS",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "tag": "minecraft:logs"
+    }
+  },
+  "result": {
+    "id": "magiaborras:wand_2",
+    "count": 1
+  }
+}

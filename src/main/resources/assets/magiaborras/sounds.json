@@ -1,0 +1,33 @@
+{
+  "avada": {
+    "subtitle": "magiaborras.spell.avada",
+    "sounds": [
+      "magiaborras:avada"
+    ]
+  },
+  "alohomora": {
+    "subtitle": "magiaborras.spell.alohomora",
+    "sounds": [
+      "magiaborras:alohomora"
+    ]
+  },
+  "accio": {
+    "subtitle": "magiaborras.spell.accio",
+    "sounds": [
+      "magiaborras:accio"
+    ]
+  },
+  "diffindo": {
+    "subtitle": "magiaborras.spell.diffindo",
+    "sounds": [
+      "magiaborras:diffindo"
+    ]
+  },
+  "wingardium_leviosa": {
+    "subtitle": "magiaborras.spell.wingardium_leviosa",
+    "sounds": [
+      "magiaborras:wingardium_leviosa"
+    ]
+  }
+}
+

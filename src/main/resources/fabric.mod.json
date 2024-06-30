@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "magiaborras",
+	"version": "${version}",
+	"name": "Magia Borras",
+	"description": "A mod that adds magic wands and magic spells!",
+	"authors": [
+		"Cristichi"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/magiaborras/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"es.cristichi.mod.magiaborras.MagiaBorras"
+		],
+		"client": [
+			"es.cristichi.mod.magiaborras.MagiaBorrasClient"
+		],
+		"fabric-datagen": [
+			"es.cristichi.mod.magiaborras.MagiaBorrasDataGenerator"
+		]
+	},
+	"mixins": [
+		"magiaborras.mixins.json",
+		{
+			"config": "magiaborras.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.15.11",
+		"minecraft": "~1.21",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}
