@@ -1,16 +1,12 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "equipment",
   "ingredients": [
     {
       "item": "magiaborras:moonstone_block"
-    },
-    {
-      "item": "minecraft:stick"
     }
   ],
   "result": {
-    "id": "magiaborras:wand_2",
-    "count": 1
+    "id": "magiaborras:moonstone",
+    "count": 9
   }
 }

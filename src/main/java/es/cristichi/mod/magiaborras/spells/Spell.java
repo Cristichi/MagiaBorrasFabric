@@ -26,7 +26,7 @@ public abstract class Spell {
     //  - Crucio
     //  - Depulso
     //  - Expelliarmus
-    //  - Finite Incantatem
+    //  - Finite (if I figure out what to do with it)
     //  - Imperio
     //  - Incendio
     //  - Petrificus Totalus
@@ -37,7 +37,11 @@ public abstract class Spell {
     //  X Alohomora (it opens iron doors/trapdoors)
     //  - Lumos (well I don't know how to do it xD)
     //  - Bombarda
-    //  X Diffindo
+    //  X Diffindo (as a substitute of the "Default" HL spell, since my "Default" does something different)
+
+    // TODO: Other Spells I'd love to implement (do I record the Spell cast .ogg myself?)
+    //  - Morsmorde (for my friend, who clearly is not a Death Eater)
+    //  - Finite Incantatem (for me to stop the annoying Morsmorde spam)
 
     static final Predicate<Entity> LIVING_ENTITIES =  (entity -> !entity.isSpectator() && entity.canBeHitByProjectile());
     static final Predicate<Entity> ANY_ENTITY =  (entity -> true);
@@ -54,7 +58,7 @@ public abstract class Spell {
     protected Vector3f partColor;
     protected int baseCooldown;
 
-    public Spell(String id, Text name, List<SpellCastType> castTypes, Predicate<Entity> affectableEntities,
+    protected Spell(String id, Text name, List<SpellCastType> castTypes, Predicate<Entity> affectableEntities,
                  Predicate<Block> affectableBlocks, @Nullable Vector3f partColor, int baseCooldown) {
         this.id = id;
         this.name = name;

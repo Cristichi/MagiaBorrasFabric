@@ -3,6 +3,10 @@
   "item.magiaborras.wand_2": "Magic Wand",
   "item.magiaborras.wand_spell": "Magic Wand (%s)",
 
+  "item.magiaborras.moonstone": "Moonstone",
+  "block.magiaborras.moonstone_block": "Moonstone Block",
+  "block.magiaborras.moonstone_ore": "Moonstone Block",
+
   "itemGroup.magic_items_tab": "Magic Items",
 
   "item.magiaborras.wand.tooltip_core": "Core: %s",
@@ -17,7 +21,6 @@
   "magiaborras.spell.alohomora": "Alohomora",
   "magiaborras.spell.diffindo": "Diffindo",
   "magiaborras.spell.wingardium_leviosa": "Wingardium Leviosa",
-  "magiaborras.spell.lumos": "Lumos",
 
   "item.magiaborras.wand.broken": "Oh no! The wand is broken. You will need to craft a new one.",
 

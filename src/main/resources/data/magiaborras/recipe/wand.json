@@ -1,15 +1,14 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "SSS",
-    "SSS",
-    "SSS"
-  ],
-  "key": {
-    "S": {
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "magiaborras:moonstone"
+    },
+    {
       "item": "minecraft:stick"
     }
-  },
+  ],
   "result": {
     "id": "magiaborras:wand",
     "count": 1

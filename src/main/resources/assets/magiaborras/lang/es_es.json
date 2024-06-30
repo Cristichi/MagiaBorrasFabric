@@ -3,6 +3,10 @@
   "item.magiaborras.wand_2": "Varita Mágica",
   "item.magiaborras.wand_spell": "Magic Wand (%s)",
 
+  "item.magiaborras.moonstone": "Piedraluna",
+  "block.magiaborras.moonstone_block": "Bloque de Piedraluna",
+  "block.magiaborras.moonstone_ore": "Mena de Piedraluna",
+
   "itemGroup.magic_items_tab": "Objetos Mágicos",
 
   "item.magiaborras.wand.tooltip_core": "Núcleo: %s",
@@ -17,7 +21,6 @@
   "magiaborras.spell.alohomora": "Alohomora",
   "magiaborras.spell.diffindo": "Diffindo",
   "magiaborras.spell.wingardium_leviosa": "Wingardium Leviosa",
-  "magiaborras.spell.lumos": "Lumos",
 
   "item.magiaborras.wand.broken": "¡Rayos y retruécanos! La varita está rota. Tendrás que craftearte otra.",
 
