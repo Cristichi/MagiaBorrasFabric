@@ -10,7 +10,7 @@
           "children": [
             {
               "type": "minecraft:item",
-              "name": "magiaborras:moonstone",
+              "name": "magiaborras:moonstone_ore",
               "conditions": [
                 {
                   "condition": "minecraft:match_tool",
