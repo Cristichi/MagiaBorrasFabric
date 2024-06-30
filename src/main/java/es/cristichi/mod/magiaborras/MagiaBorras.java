@@ -51,9 +51,9 @@ public class MagiaBorras implements ModInitializer {
     public static final MoonStone MOONSTONE_ITEM = new MoonStone(new Item.Settings());
 
     // Blocks
-    public static final Block MOONSTONE_BLOCK = new Block(Block.Settings.create().strength(1.0f));
-    public static final Block MOONSTONE_ORE = new Block(Block.Settings.create().strength(1.0f));
-    public static final Block MOONSTONE_ORE_DEEP = new Block(Block.Settings.create().strength(1.1f));
+    public static final Block MOONSTONE_BLOCK = new Block(Block.Settings.create().strength(3.0f));
+    public static final Block MOONSTONE_ORE = new Block(Block.Settings.create().strength(4.0f));
+    public static final Block MOONSTONE_ORE_DEEP = new Block(Block.Settings.create().strength(4.1f));
 
     // World Generation
     public static final RegistryKey<PlacedFeature> MOONSTONE_ORE_PLACED_KEY =
