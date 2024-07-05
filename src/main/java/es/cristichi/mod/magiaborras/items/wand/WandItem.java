@@ -17,8 +17,6 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
@@ -108,15 +106,13 @@ public class WandItem extends Item {
                             // Particles of the Spell
                             if (prop.spell.getParticlesColor() != null) {
                                 Vec3d objectivePos = null;
-                                if (hit.getType() == HitResult.Type.ENTITY) {
-                                    objectivePos = ((EntityHitResult) hit).getEntity().getBoundingBox().getCenter();
-                                } else if (hit.getType() == HitResult.Type.BLOCK) {
-                                    objectivePos = ((BlockHitResult) hit).getBlockPos().toCenterPos();
+                                if (hit.getPos() != null){
+                                    objectivePos = hit.getPos();
                                 }
 
                                 if (objectivePos != null) {
                                     DustColorTransitionParticleEffect particleEffect = new DustColorTransitionParticleEffect(
-                                            prop.spell.getParticlesColor(), prop.spell.getParticlesColor(), 1f
+                                            prop.spell.getParticlesColor(), prop.spell.getParticlesColor(), 0.3f
                                     );
                                     Vec3d current = user.getEyePos().add(0, -0.2, 0);
 
