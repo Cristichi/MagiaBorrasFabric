@@ -28,9 +28,14 @@ public class Accio extends Spell {
             EntityHitResult hitEnt = (EntityHitResult) hit;
             Entity ent = hitEnt.getEntity();
             Vec3d pos = ent.getPos();
-            Vec3d target = magicUser.getPos();
-            Vec3d velocity = target.subtract(pos);
+            Vec3d target = magicUser.getEyePos();
+            Vec3d velocity = target.subtract(pos).multiply(0.33333);
+            boolean gravity = ent.hasNoGravity();
+            ent.setNoGravity(true);
             ent.move(MovementType.PLAYER, velocity);
+            ent.move(MovementType.PLAYER, velocity);
+            ent.move(MovementType.PLAYER, velocity);
+            ent.setNoGravity(gravity);
             return new Result(TypedActionResult.success(wand), baseCooldown, new EasyList<>(MagiaBorras.ACCIO_CAST));
         } else {
             return new Result(TypedActionResult.fail(wand), 0, null);

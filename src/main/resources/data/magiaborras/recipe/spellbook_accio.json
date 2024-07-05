@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "magiaborras:moonstone"
+    },
+    {
+      "item": "minecraft:fishing_rod"
+    },
+    {
+      "item": "minecraft:book"
+    }
+  ],
+  "result": {
+    "id": "magiaborras:spellbook_accio",
+    "count": 1
+  }
+}

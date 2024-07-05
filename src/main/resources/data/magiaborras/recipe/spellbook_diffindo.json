@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "magiaborras:moonstone"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:book"
+    }
+  ],
+  "result": {
+    "id": "magiaborras:spellbook_diffindo",
+    "count": 1
+  }
+}

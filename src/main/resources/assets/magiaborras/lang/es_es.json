@@ -3,9 +3,17 @@
   "item.magiaborras.wand_2": "Varita Mágica",
   "item.magiaborras.wand_spell": "Varita Mágica (%s)",
 
+  "item.magiaborras.spellbook_wingardium_leviosa": "Libro de Magia (Wingardium Leviosa)",
+  "item.magiaborras.spellbook_accio": "Libro de Magia (Accio)",
+  "item.magiaborras.spellbook_alohomora": "Libro de Magia (Alohomora)",
+  "item.magiaborras.spellbook_avada": "Libro de Magia (Maldición Asesina)",
+  "item.magiaborras.spellbook_diffindo": "Libro de Magia (Diffindo)",
+  "item.magiaborras.spellbook_lumos": "Libro de Magia (Lumos)",
+
   "item.magiaborras.moonstone": "Piedraluna",
   "block.magiaborras.moonstone_block": "Bloque de Piedraluna",
   "block.magiaborras.moonstone_ore": "Mena de Piedraluna",
+  "block.magiaborras.deepslate_moonstone_ore": "Mena de Piedraluna de pizzarra profunda",
 
   "itemGroup.magic_items_tab": "Objetos Mágicos",
 
@@ -16,11 +24,13 @@
   "item.magiaborras.wand.tooltip_power": "Poder: %d",
 
   "magiaborras.spell.none": "Ningún Conjuro preparado",
+  "magiaborras.spell.locked": "No has desbloqueado este Conjuro.",
   "magiaborras.spell.avada": "Maldición Asesina",
   "magiaborras.spell.accio": "Accio",
   "magiaborras.spell.alohomora": "Alohomora",
   "magiaborras.spell.diffindo": "Diffindo",
   "magiaborras.spell.wingardium_leviosa": "Wingardium Leviosa",
+  "magiaborras.spell.lumos": "Lumos",
 
   "item.magiaborras.wand.broken": "¡Rayos y retruécanos! La varita está rota. Tendrás que craftearte otra.",
 

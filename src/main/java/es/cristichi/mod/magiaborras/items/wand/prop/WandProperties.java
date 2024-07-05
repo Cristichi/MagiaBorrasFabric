@@ -1,7 +1,9 @@
 package es.cristichi.mod.magiaborras.items.wand.prop;
 
+import com.mojang.serialization.Codec;
 import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.spells.Spell;
+import es.cristichi.mod.magiaborras.util.PlayerDataPS;
 import net.minecraft.component.ComponentMapImpl;
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.DataComponentTypes;
@@ -23,6 +25,7 @@ public class WandProperties {
     public WandLength length;
     public Float magicNumber;
     public Spell spell;
+    public boolean lumos;
 
     public WandProperties() {
         this.core = WandCore.getRandomCore(MagiaBorras.RNG);
@@ -31,15 +34,17 @@ public class WandProperties {
         this.length = WandLength.getRandom(MagiaBorras.RNG);
         this.magicNumber = MagiaBorras.RNG.nextFloat();
         this.spell = MagiaBorras.SPELLS.get("");
+        this.lumos = false;
     }
 
-    public WandProperties(WandCore core, WandWood wood, WandFlexibility flex, WandLength length, Float magicNumber, Spell spell) {
+    public WandProperties(WandCore core, WandWood wood, WandFlexibility flex, WandLength length, Float magicNumber, Spell spell, boolean lumos) {
         this.core = core;
         this.wood = wood;
         this.flex = flex;
         this.length = length;
         this.magicNumber = magicNumber;
         this.spell = spell;
+        this.lumos = lumos;
     }
 
     public void apply(ItemStack stack) {
@@ -50,8 +55,10 @@ public class WandProperties {
         components.set(DATA_LENGTH, length.ordinal());
         components.set(DATA_MAGIC_NUM, magicNumber);
         components.set(DATA_SPELL, spell.getId());
+        components.set(DATA_LUMOS, lumos);
         if (spell.getId().equals("")){
             components.remove(DataComponentTypes.CUSTOM_NAME);
+            components.set(DataComponentTypes.CUSTOM_NAME, Text.translatable("item.magiaborras.wand"));
         } else {
             components.set(DataComponentTypes.CUSTOM_NAME, Text.translatable("item.magiaborras.wand_spell", spell.getName()));
         }
@@ -70,7 +77,8 @@ public class WandProperties {
                 map.contains(DATA_FLEX) ||
                 map.contains(DATA_LENGTH) ||
                 map.contains(DATA_MAGIC_NUM) ||
-                map.contains(DATA_SPELL)
+                map.contains(DATA_SPELL) ||
+                map.contains(DATA_LUMOS)
         ) {
             try {
                 Integer core = map.getOrDefault(DATA_CORE, null);
@@ -79,6 +87,7 @@ public class WandProperties {
                 Integer length = map.getOrDefault(DATA_LENGTH, null);
                 Float magNum = map.getOrDefault(DATA_MAGIC_NUM, null);
                 String spell = map.getOrDefault(DATA_SPELL, null);
+                boolean lumos = map.getOrDefault(DATA_LUMOS, false);
 
                 return new WandProperties(
                         WandCore.values()[core],
@@ -86,7 +95,8 @@ public class WandProperties {
                         WandFlexibility.values()[flex],
                         WandLength.values()[length],
                         magNum,
-                        MagiaBorras.SPELLS.get(spell)
+                        MagiaBorras.SPELLS.get(spell),
+                        lumos
                 );
             } catch (NullPointerException e) {
                 MagiaBorras.LOGGER.warn("Wand is incomplete. Oh no!", e);
@@ -97,8 +107,8 @@ public class WandProperties {
     }
 
     public float getPower(PlayerEntity magicUser) {
-        float pot = 1 - Math.abs(
-                MagiaBorras.magicNumbers.getOrGenerateValue(magicUser) - magicNumber);
+        PlayerDataPS.PlayerMagicData data = MagiaBorras.playerDataPS.getOrGenerateData(magicUser);
+        float pot = 1 - Math.abs(data.getMagicNumber() - magicNumber);
         return Math.max(0, pot);
     }
 
@@ -114,6 +124,8 @@ public class WandProperties {
 
     public static ComponentType<String> DATA_SPELL;
 
+    public static ComponentType<Boolean> DATA_LUMOS;
+
     public static void init() {
         DATA_CORE = register("wand_core", builder -> builder.codec(Codecs.NONNEGATIVE_INT).packetCodec(PacketCodecs.VAR_INT));
         DATA_WOOD =
@@ -126,6 +138,9 @@ public class WandProperties {
                 register("wand_magic_num", builder -> builder.codec(Codecs.POSITIVE_FLOAT).packetCodec(PacketCodecs.FLOAT));
         DATA_SPELL =
                 register("wand_spell", builder -> builder.codec(Codecs.ESCAPED_STRING).packetCodec(PacketCodecs.STRING));
+
+        DATA_LUMOS =
+                register("wand_lumos", builder -> builder.codec(Codec.BOOL).packetCodec(PacketCodecs.BOOL));
 
     }
 }

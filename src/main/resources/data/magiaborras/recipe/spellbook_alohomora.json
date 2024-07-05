@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "magiaborras:moonstone"
+    },
+    {
+      "item": "minecraft:iron_door"
+    },
+    {
+      "item": "minecraft:book"
+    }
+  ],
+  "result": {
+    "id": "magiaborras:spellbook_alohomora",
+    "count": 1
+  }
+}

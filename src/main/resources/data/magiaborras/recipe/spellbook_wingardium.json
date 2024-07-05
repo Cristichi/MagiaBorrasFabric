@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "magiaborras:moonstone"
+    },
+    {
+      "item": "minecraft:feather"
+    },
+    {
+      "item": "minecraft:book"
+    }
+  ],
+  "result": {
+    "id": "magiaborras:spellbook_wingardium_leviosa",
+    "count": 1
+  }
+}
