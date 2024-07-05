@@ -28,6 +28,18 @@
     "sounds": [
       "magiaborras:wingardium_leviosa"
     ]
+  },
+  "lumos": {
+    "subtitle": "magiaborras.spell.lumos",
+    "sounds": [
+      "magiaborras:lumos"
+    ]
+  },
+  "arresto": {
+    "subtitle": "magiaborras.spell.arresto",
+    "sounds": [
+      "magiaborras:arresto"
+    ]
   }
 }
 

@@ -3,13 +3,6 @@
   "item.magiaborras.wand_2": "Magic Wand",
   "item.magiaborras.wand_spell": "Magic Wand (%s)",
 
-  "item.magiaborras.spellbook_wingardium_leviosa": "Spell Book (Wingardium Leviosa)",
-  "item.magiaborras.spellbook_accio": "Spell Book (Accio)",
-  "item.magiaborras.spellbook_alohomora": "Spell Book (Alohomora)",
-  "item.magiaborras.spellbook_avada": "Spell Book (Killing Curse)",
-  "item.magiaborras.spellbook_diffindo": "Spell Book (Diffindo)",
-  "item.magiaborras.spellbook_lumos": "Spell Book (Lumos)",
-
   "item.magiaborras.moonstone": "Moonstone",
   "block.magiaborras.moonstone_block": "Moonstone Block",
   "block.magiaborras.moonstone_ore": "Moonstone Ore",
@@ -31,6 +24,15 @@
   "magiaborras.spell.diffindo": "Diffindo",
   "magiaborras.spell.wingardium_leviosa": "Wingardium Leviosa",
   "magiaborras.spell.lumos": "Lumos",
+  "magiaborras.spell.arresto": "Arresto Momentum",
+
+  "item.magiaborras.spellbook_wingardium_leviosa": "Spell Book (Wingardium Leviosa)",
+  "item.magiaborras.spellbook_accio": "Spell Book (Accio)",
+  "item.magiaborras.spellbook_alohomora": "Spell Book (Alohomora)",
+  "item.magiaborras.spellbook_avada": "Spell Book (Killing Curse)",
+  "item.magiaborras.spellbook_diffindo": "Spell Book (Diffindo)",
+  "item.magiaborras.spellbook_lumos": "Spell Book (Lumos)",
+  "item.magiaborras.spellbook_arresto": "Spell Book (Arresto Momentum)",
 
   "item.magiaborras.wand.broken": "Oh no! The wand is broken. You will need to craft a new one.",
 

@@ -122,6 +122,10 @@ public class MagiaBorras implements ModInitializer {
     public static SoundEvent DIFFINDO_CAST = SoundEvent.of(SOUND_DIFFINDO_ID);
     public static final Identifier SOUND_WING_LEV_ID = Identifier.of(MOD_ID, "wingardium_leviosa");
     public static SoundEvent WING_LEV_CAST = SoundEvent.of(SOUND_WING_LEV_ID);
+    public static final Identifier SOUND_LUMOS_ID = Identifier.of(MOD_ID, "lumos");
+    public static SoundEvent LUMOS_CAST = SoundEvent.of(SOUND_LUMOS_ID);
+    public static final Identifier SOUND_ARRESTO_ID = Identifier.of(MOD_ID, "arresto");
+    public static SoundEvent ARRESTO_CAST = SoundEvent.of(SOUND_ARRESTO_ID);
 
     @Override
     public void onInitialize() {
@@ -165,6 +169,7 @@ public class MagiaBorras implements ModInitializer {
         regSpell(Diffindo.class);
         regSpell(WingardiumLeviosa.class);
         regSpell(Lumos.class);
+        regSpell(ArrestoMomentum.class);
 
         // Magic numbers are also very special because they are saved in the main overworld
         ServerLifecycleEvents.SERVER_STARTED.register(
@@ -182,6 +187,8 @@ public class MagiaBorras implements ModInitializer {
         Registry.register(Registries.SOUND_EVENT, SOUND_ACCIO_ID, ACCIO_CAST);
         Registry.register(Registries.SOUND_EVENT, SOUND_DIFFINDO_ID, DIFFINDO_CAST);
         Registry.register(Registries.SOUND_EVENT, SOUND_WING_LEV_ID, WING_LEV_CAST);
+        Registry.register(Registries.SOUND_EVENT, SOUND_LUMOS_ID, LUMOS_CAST);
+        Registry.register(Registries.SOUND_EVENT, SOUND_ARRESTO_ID, ARRESTO_CAST);
 
         // Armor
         // No idea. This changed a lot and is way too different than the tutorial.
