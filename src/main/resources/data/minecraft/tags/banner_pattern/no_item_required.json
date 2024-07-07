@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "magiaborras:gryffindor",
+    "magiaborras:slytherin",
+    "magiaborras:hufflepuff",
+    "magiaborras:ravenclaw"
+  ]
+}

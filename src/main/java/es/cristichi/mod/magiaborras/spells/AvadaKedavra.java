@@ -20,7 +20,7 @@ import org.joml.Vector3f;
 public class AvadaKedavra extends Spell {
     public AvadaKedavra() {
         super("avada", Text.translatable("magiaborras.spell.avada"), new EasyList<>(SpellCastType.USE),
-                Spell.LIVING_ENTITIES, Spell.NO_BLOCK, new Vector3f(0, 200, 0), 180);
+                Spell.LIVING_ENTITIES, Spell.NO_BLOCK, new Vector3f(0, 0.9f, 0), 180);
     }
 
     @Override

@@ -6,6 +6,8 @@ import es.cristichi.mod.magiaborras.items.SpellBook;
 import es.cristichi.mod.magiaborras.items.wand.WandItem;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.*;
+import es.cristichi.mod.magiaborras.uniform.ModArmorMaterials;
+import es.cristichi.mod.magiaborras.uniform.SchoolUniform;
 import es.cristichi.mod.magiaborras.util.PlayerDataPS;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
@@ -14,6 +16,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.block.Block;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -40,12 +43,14 @@ import java.util.Optional;
 //  1. Moar Spells
 //  X. Moonstone from Hogwarts Legacy
 //  3. Progression. Craftable books that unlock Spells.
-//  4. School Uniforms (Armor) (Dyable)
-//  5. Magic HP Potions
-//  6. Floo Powder
-//  7. Special Enchantments for Wands, School Uniforms/Armor, etc.
+//  X. School Uniforms (Armor)
+//  5. Houses Trim? (Instead of dyable armor)
+//  6. Magic HP Potions
+//  7. Floo Powder
+//  8. Special Enchantments for Wands, School Uniforms/Armor, etc.
 //     Perhaps each Spell could be in an Enchantment for use with any tool, or Sticks!
-//  8. Banner patterns for each house.
+//  X. Banner patterns for each house.
+//  10. Magic Brooms?
 public class MagiaBorras implements ModInitializer {
     public static final String MOD_ID = "magiaborras";
     public static final Random RNG = Random.create();
@@ -54,7 +59,14 @@ public class MagiaBorras implements ModInitializer {
     // Items
     public static final WandItem WAND_ITEM = new WandItem(new WandItem.Settings());
     public static final WandItem WAND_2_ITEM = new WandItem(new WandItem.Settings());
+    public static final WandItem WAND_SLYTHERIN_ITEM = new WandItem(new WandItem.Settings());
     public static final MoonStone MOONSTONE_ITEM = new MoonStone(new Item.Settings());
+
+    // Armor Items
+    public static final SchoolUniform SCHOOL_HELMET = new SchoolUniform(ModArmorMaterials.UNIFORM_MATERIAL, ArmorItem.Type.HELMET, new Item.Settings());
+    public static final SchoolUniform SCHOOL_CHESTPLATE = new SchoolUniform(ModArmorMaterials.UNIFORM_MATERIAL, ArmorItem.Type.CHESTPLATE, new Item.Settings());
+    public static final SchoolUniform SCHOOL_LEGGINGS = new SchoolUniform(ModArmorMaterials.UNIFORM_MATERIAL, ArmorItem.Type.LEGGINGS, new Item.Settings());
+    public static final SchoolUniform SCHOOL_BOOTS = new SchoolUniform(ModArmorMaterials.UNIFORM_MATERIAL, ArmorItem.Type.BOOTS, new Item.Settings());
 
     // Blocks
     public static final Block MOONSTONE_BLOCK = new Block(Block.Settings.create().strength(3.0f));
@@ -102,15 +114,6 @@ public class MagiaBorras implements ModInitializer {
         }
     }
 
-    // Armor I'll work on this once the tutorials are out, way too hard to figure this out after it changed
-//    public static ArmorMaterial CUSTOM_ARMOR_MATERIAL;
-//    public static Item CUSTOM_MATERIAL;
-//    // If you made a new material, this is where you would note it.
-//    public static Item CUSTOM_MATERIAL_HELMET;
-//    public static Item CUSTOM_MATERIAL_CHESTPLATE;
-//    public static Item CUSTOM_MATERIAL_LEGGINGS;
-//    public static Item CUSTOM_MATERIAL_BOOTS;
-
     // Sounds
     public static final Identifier SOUND_AVADA_ID = Identifier.of(MOD_ID, "avada");
     public static SoundEvent AVADA_CAST = SoundEvent.of(SOUND_AVADA_ID);
@@ -126,6 +129,10 @@ public class MagiaBorras implements ModInitializer {
     public static SoundEvent LUMOS_CAST = SoundEvent.of(SOUND_LUMOS_ID);
     public static final Identifier SOUND_ARRESTO_ID = Identifier.of(MOD_ID, "arresto");
     public static SoundEvent ARRESTO_CAST = SoundEvent.of(SOUND_ARRESTO_ID);
+    public static final Identifier SOUND_BOMBARDA_ID = Identifier.of(MOD_ID, "bombarda");
+    public static SoundEvent BOMBARDA_CAST = SoundEvent.of(SOUND_BOMBARDA_ID);
+    public static final Identifier SOUND_INCENDIO_ID = Identifier.of(MOD_ID, "incendio");
+    public static SoundEvent INCENDIO_CAST = SoundEvent.of(SOUND_INCENDIO_ID);
 
     @Override
     public void onInitialize() {
@@ -137,7 +144,15 @@ public class MagiaBorras implements ModInitializer {
         // Items
         Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "wand"), WAND_ITEM);
         Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "wand_2"), WAND_2_ITEM);
+        Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "wand_slytherin"), WAND_SLYTHERIN_ITEM);
         Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "moonstone"), MOONSTONE_ITEM);
+
+        // Armor Items
+        ModArmorMaterials.initialize();
+        Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "school_helmet"), SCHOOL_HELMET);
+        Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "school_chestplate"), SCHOOL_CHESTPLATE);
+        Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "school_leggings"), SCHOOL_LEGGINGS);
+        Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "school_boots"), SCHOOL_BOOTS);
 
         // Items Creative Tab
         Registry.register(Registries.ITEM_GROUP, Identifier.of(MOD_ID, "magic_items_tab"), MAGIC_GROUP);
@@ -170,6 +185,7 @@ public class MagiaBorras implements ModInitializer {
         regSpell(WingardiumLeviosa.class);
         regSpell(Lumos.class);
         regSpell(ArrestoMomentum.class);
+        regSpell(Bombarda.class);
 
         // Magic numbers are also very special because they are saved in the main overworld
         ServerLifecycleEvents.SERVER_STARTED.register(
@@ -189,30 +205,10 @@ public class MagiaBorras implements ModInitializer {
         Registry.register(Registries.SOUND_EVENT, SOUND_WING_LEV_ID, WING_LEV_CAST);
         Registry.register(Registries.SOUND_EVENT, SOUND_LUMOS_ID, LUMOS_CAST);
         Registry.register(Registries.SOUND_EVENT, SOUND_ARRESTO_ID, ARRESTO_CAST);
+        Registry.register(Registries.SOUND_EVENT, SOUND_BOMBARDA_ID, BOMBARDA_CAST);
+        Registry.register(Registries.SOUND_EVENT, SOUND_INCENDIO_ID, INCENDIO_CAST);
 
-        // Armor
-        // No idea. This changed a lot and is way too different than the tutorial.
-        // I'll do School Uniforms when I find an updated tutorial or ask on Discord.
-//        CUSTOM_ARMOR_MATERIAL = new ArmorMaterial(
-//                new EasyMap<>( //Defense
-//                        new EasyMap.EasyEntry<>(ArmorItem.Type.HELMET, 1),
-//                        new EasyMap.EasyEntry<>(ArmorItem.Type.CHESTPLATE, 1),
-//                        new EasyMap.EasyEntry<>(ArmorItem.Type.LEGGINGS, 1),
-//                        new EasyMap.EasyEntry<>(ArmorItem.Type.BOOTS, 1)
-//                ),
-//                10, //Enchantability. 10 = same as Diamond
-//                SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, // Equip Sound
-//                null, // Repair Ingredient Supplier<Ingredient>
-//                new EasyList<>(new ArmorMaterial.Layer(Identifier.of(MOD_ID, "uniform"), "uniform", true)), // Layers
-//                1f, // Toughness
-//                0f // Knockback Resistance
-//        );
-//        RegistryEntry.Reference<ArmorMaterial> regUniform =Registry.registerReference(Registries.ARMOR_MATERIAL,
-//                Identifier.of(MOD_ID, "uniform"), CUSTOM_ARMOR_MATERIAL);
-//        CUSTOM_MATERIAL_HELMET = new SchoolUniform(regUniform, ArmorItem.Type.HELMET, new Item.Settings());
-//        CUSTOM_MATERIAL_CHESTPLATE = new SchoolUniform(regUniform, ArmorItem.Type.CHESTPLATE, new Item.Settings());
-//        CUSTOM_MATERIAL_LEGGINGS = new SchoolUniform(regUniform, ArmorItem.Type.LEGGINGS, new Item.Settings());
-//        CUSTOM_MATERIAL_BOOTS = new SchoolUniform(regUniform, ArmorItem.Type.BOOTS, new Item.Settings());
+        // Custom Payloads
 
         LOGGER.info("Loaded, against all odds.");
     }

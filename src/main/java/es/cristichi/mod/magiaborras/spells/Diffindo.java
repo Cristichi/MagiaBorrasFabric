@@ -19,7 +19,7 @@ import org.joml.Vector3f;
 public class Diffindo extends Spell {
     public Diffindo() {
         super("diffindo", Text.translatable("magiaborras.spell.diffindo"), new EasyList<>(SpellCastType.USE),
-                Spell.LIVING_ENTITIES, Spell.NO_BLOCK, new Vector3f(200, 0, 0), 20);
+                Spell.LIVING_ENTITIES, Spell.NO_BLOCK, new Vector3f(0.7f, 0, 0), 20);
     }
 
     @Override

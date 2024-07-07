@@ -21,7 +21,7 @@ import java.util.function.Predicate;
 public abstract class Spell {
     // TODO: Spells in Hogwards Legacy I think I want to add from the old version
     //  X Accio
-    //  - ArrestoMomentum
+    //  X ArrestoMomentum
     //  X Avada
     //  - Crucio
     //  - Depulso
@@ -43,11 +43,11 @@ public abstract class Spell {
     //  - Morsmorde (for my friend, who clearly is not a Death Eater)
     //  - Finite Incantatem (for me to stop the annoying Morsmorde spam)
 
-    static final Predicate<Entity> LIVING_ENTITIES =  (entity -> !entity.isSpectator() && entity.canBeHitByProjectile());
-    static final Predicate<Entity> ANY_ENTITY =  (entity -> true);
-    static final Predicate<Entity> NO_ENTITY =  (entity -> false);
-//    static final Predicate<Block> ANY_BLOCK =  (entity -> true); //Tool for the future
-    static final Predicate<Block> NO_BLOCK =  (entity -> false);
+    static final Predicate<Entity> LIVING_ENTITIES = (entity -> !entity.isSpectator() && entity.canBeHitByProjectile());
+    static final Predicate<Entity> ANY_ENTITY = (entity -> true);
+    static final Predicate<Entity> NO_ENTITY = (entity -> false);
+    static final Predicate<Block> ANY_BLOCK =  (entity -> true); //Tool for the future
+    static final Predicate<Block> NO_BLOCK = (entity -> false);
 
     protected String id;
     protected Text name;
@@ -59,7 +59,7 @@ public abstract class Spell {
     protected int baseCooldown;
 
     protected Spell(String id, Text name, List<SpellCastType> castTypes, Predicate<Entity> affectableEntities,
-                 Predicate<Block> affectableBlocks, @Nullable Vector3f partColor, int baseCooldown) {
+                    Predicate<Block> affectableBlocks, @Nullable Vector3f partColor, int baseCooldown) {
         this.id = id;
         this.name = name;
         this.affectableEntities = affectableEntities;

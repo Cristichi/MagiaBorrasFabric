@@ -19,7 +19,7 @@ import org.joml.Vector3f;
 public class Accio extends Spell {
     public Accio() {
         super("accio", Text.translatable("magiaborras.spell.accio"), new EasyList<>(SpellCastType.USE),
-                Spell.ANY_ENTITY, Spell.NO_BLOCK, new Vector3f(200, 0, 0), 20);
+                Spell.ANY_ENTITY, Spell.NO_BLOCK, new Vector3f(1f, 0, 0), 20);
     }
 
     @Override

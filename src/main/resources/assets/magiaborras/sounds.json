@@ -40,6 +40,18 @@
     "sounds": [
       "magiaborras:arresto"
     ]
+  },
+  "bombarda": {
+    "subtitle": "magiaborras.spell.bombarda",
+    "sounds": [
+      "magiaborras:bombarda"
+    ]
+  },
+  "incendio": {
+    "subtitle": "magiaborras.spell.incendio",
+    "sounds": [
+      "magiaborras:incendio"
+    ]
   }
 }
 

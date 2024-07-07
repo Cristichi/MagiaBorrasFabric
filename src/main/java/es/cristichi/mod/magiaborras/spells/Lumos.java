@@ -22,6 +22,7 @@ public class Lumos extends Spell {
     @Override
     public Result use(ItemStack wand, WandProperties properties, PlayerEntity magicUser, World world, HitResult hit) {
         // TODO: Wait for 1.21 Dynamic Lighs and use it to complete Lumos. Logic is already here, just make it shine!
+        //  https://modrinth.com/mod/lambdynamiclights
         EasyList<SoundEvent> sounds;
         if (properties.lumos) {
             properties.lumos = false;
@@ -30,9 +31,9 @@ public class Lumos extends Spell {
             properties.lumos = true;
             sounds = new EasyList<>(MagiaBorras.LUMOS_CAST);
         }
-        if (!world.isClient()) {
+//        if (!world.isClient()) {
             properties.apply(wand);
-        }
+//        }
         return new Result(TypedActionResult.success(wand), baseCooldown, sounds);
     }
 }

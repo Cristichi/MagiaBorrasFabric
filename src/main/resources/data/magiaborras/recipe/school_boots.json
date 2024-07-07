@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    "WMW",
+    "W W"
+  ],
+  "key": {
+    "M": {
+      "item": "magiaborras:moonstone"
+    },
+    "W": {
+      "item": "minecraft:black_wool"
+    }
+  },
+  "result": {
+    "id": "magiaborras:school_boots",
+    "count": 1
+  }
+}

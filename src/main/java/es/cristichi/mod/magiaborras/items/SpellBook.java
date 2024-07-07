@@ -15,7 +15,6 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class SpellBook extends Item {
-    // TODO:
     private final Spell spell;
 
     public SpellBook(Settings settings, Spell spell) {

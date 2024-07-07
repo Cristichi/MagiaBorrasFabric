@@ -8,6 +8,11 @@
   "block.magiaborras.moonstone_ore": "Moonstone Ore",
   "block.magiaborras.deepslate_moonstone_ore": "Deepslate Moonstone Ore",
 
+  "item.magiaborras.school_helmet": "School's Helmet",
+  "item.magiaborras.school_chestplate": "School's Chestplate",
+  "item.magiaborras.school_leggings": "School's Leggings",
+  "item.magiaborras.school_boots": "School's Boots",
+
   "itemGroup.magic_items_tab": "Magic Items",
 
   "item.magiaborras.wand.tooltip_core": "Core: %s",
@@ -25,6 +30,7 @@
   "magiaborras.spell.wingardium_leviosa": "Wingardium Leviosa",
   "magiaborras.spell.lumos": "Lumos",
   "magiaborras.spell.arresto": "Arresto Momentum",
+  "magiaborras.spell.bombarda": "Bombarda",
 
   "item.magiaborras.spellbook_wingardium_leviosa": "Spell Book (Wingardium Leviosa)",
   "item.magiaborras.spellbook_accio": "Spell Book (Accio)",
@@ -33,6 +39,7 @@
   "item.magiaborras.spellbook_diffindo": "Spell Book (Diffindo)",
   "item.magiaborras.spellbook_lumos": "Spell Book (Lumos)",
   "item.magiaborras.spellbook_arresto": "Spell Book (Arresto Momentum)",
+  "item.magiaborras.spellbook_bombarda": "Spell Book (Bombarda)",
 
   "item.magiaborras.wand.broken": "Oh no! The wand is broken. You will need to craft a new one.",
 
@@ -124,5 +131,11 @@
   "magiaborras.spell.changed_spell": "You loaded the Spell %s to your Wand.",
   "magiaborras.spell.change_spell_no_wand": "You need a wand in your hand to change its Spell.",
   "magiaborras.spell.changed_no_spell": "You removed the Spell of your Wand.",
-  "magiaborras.spell.changed_wrong_spell": "That Spell, \"%s\", does not exist."
+  "magiaborras.spell.changed_wrong_spell": "That Spell, \"%s\", does not exist.",
+
+  "block.magiaborras.banner.gryffindor": "Gryffindor",
+  "block.magiaborras.banner.gryffindor.red": "Red Gryffindor",
+  "block.magiaborras.banner.slytherin": "Slytherin",
+  "block.magiaborras.banner.hufflepuff": "Hufflepuff",
+  "block.magiaborras.banner.ravenclaw": "Ravenclaw"
 }

@@ -16,12 +16,14 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,6 +55,13 @@ public class WandItem extends Item {
             try {
                 WandProperties props = new WandProperties();
                 props.apply(stack);
+                ArrayList<Identifier> recipes = new ArrayList<>(MagiaBorras.SPELLS.size());
+                // It is intended design that only the recipes "spellbook_spellname" are unlocked.
+                // Alternative recipes like spellbook_avada_head are "hidden".
+                for (String spell : MagiaBorras.SPELLS.keySet()) {
+                    recipes.add(Identifier.of(MagiaBorras.MOD_ID, "spellbook_" + spell));
+                }
+                player.unlockRecipes(recipes);
             } catch (Exception e) {
                 MagiaBorras.LOGGER.error("Oh no", e);
             }
@@ -63,6 +72,12 @@ public class WandItem extends Item {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        // TODO: Bug, sometimes server does it and client doesn't, sometimes client does and server doesn't. :(
+        //  Perhaps this could be executed on server first and then send package to client if needed
+        //  I have tried and I could not figure it out. I think I would need to rething this entire
+        //  thing from scratch in order to fix this bug.
+        //  Impact: Not much, it syncs in the end, but it looks weird on client.
+
         ItemStack stack = user.getStackInHand(hand);
         WandProperties prop = WandProperties.check(stack);
         PlayerDataPS.PlayerMagicData data = MagiaBorras.playerDataPS.getOrGenerateData(user);
@@ -80,9 +95,6 @@ public class WandItem extends Item {
                         hit = user.raycast(MAX_DISTANCE, 0, false);
                     }
 
-                    // TODO: Bug, sometimes server does it and client doesn't, sometimes client does and server doesn't. :(
-                    //  Perhaps this could be executed on server first and then send package to client if needed
-                    //  Impact: Not much, it syncs in the end, but it looks weird on client.
                     Spell.Result result = prop.spell.use(stack, prop, user, world, hit);
 
                     // CD of the Spell. Spells can determine a CD based on the outcome, including failing.
@@ -94,35 +106,30 @@ public class WandItem extends Item {
 
                     // If Spell is successfull
                     if (result.actionResult().getResult().isAccepted()) {
+                        // Sound of the spell
+                        for (SoundEvent sound : result.sounds()) {
+                            user.playSound(sound, 1.0F, 1.0F);
+                        }
 
-                        if (world.isClient()) {
-                            // Client side
-
-                            // Sound of the spell
-                            for (SoundEvent sound : result.sounds()) {
-                                user.playSound(sound, 1.0F, 1.0F);
+                        // Particles of the Spell
+                        if (prop.spell.getParticlesColor() != null) {
+                            Vec3d objectivePos = null;
+                            if (hit.getPos() != null) {
+                                objectivePos = hit.getPos();
                             }
 
-                            // Particles of the Spell
-                            if (prop.spell.getParticlesColor() != null) {
-                                Vec3d objectivePos = null;
-                                if (hit.getPos() != null){
-                                    objectivePos = hit.getPos();
-                                }
+                            if (objectivePos != null) {
+                                DustColorTransitionParticleEffect particleEffect = new DustColorTransitionParticleEffect(
+                                        prop.spell.getParticlesColor(), prop.spell.getParticlesColor(), 0.6f
+                                );
+                                Vec3d current = user.getEyePos().add(0, -0.2, 0);
 
-                                if (objectivePos != null) {
-                                    DustColorTransitionParticleEffect particleEffect = new DustColorTransitionParticleEffect(
-                                            prop.spell.getParticlesColor(), prop.spell.getParticlesColor(), 0.3f
-                                    );
-                                    Vec3d current = user.getEyePos().add(0, -0.2, 0);
-
-                                    while (current.distanceTo(objectivePos) > 1) {
-                                        Vec3d step = objectivePos.subtract(current).normalize().multiply(0.5);
-                                        world.addParticle(particleEffect, current.getX(), current.getY(), current.getZ(), 0, 0, 0);
-                                        world.addParticle(particleEffect, current.getX(), current.getY(), current.getZ(), 0, 0, 0);
-                                        world.addParticle(particleEffect, current.getX(), current.getY(), current.getZ(), 0, 0, 0);
-                                        current = current.add(step);
-                                    }
+                                while (current.distanceTo(objectivePos) > 1) {
+                                    Vec3d step = objectivePos.subtract(current).normalize().multiply(0.5);
+                                    world.addParticle(particleEffect, current.getX(), current.getY(), current.getZ(), 0, 0, 0);
+                                    world.addParticle(particleEffect, current.getX(), current.getY(), current.getZ(), 0, 0, 0);
+                                    world.addParticle(particleEffect, current.getX(), current.getY(), current.getZ(), 0, 0, 0);
+                                    current = current.add(step);
                                 }
                             }
                         }
@@ -134,7 +141,7 @@ public class WandItem extends Item {
                     return TypedActionResult.fail(stack);
                 }
             }
-        } else {
+        } else if (world.isClient()){
             user.sendMessage(Text.translatable("item.magiaborras.wand.broken"));
         }
         return TypedActionResult.fail(user.getStackInHand(hand));
