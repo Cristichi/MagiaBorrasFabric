@@ -1,4 +1,4 @@
-# Magia Borras
+# Magia Borras [WIP]
 ##### By Cristichi
 Magia Borras is just a mod I have been doing in order to practice modding on
 Minecraft (with Fabric). Since I like Harry Potter (the universe more than anything),
@@ -37,3 +37,7 @@ typing the `/magia set <Spell>` command and he will be able to use that Spell wh
 using a Wand with that Spell prepared.
 
 [WIP]
+
+## Releases
+A release may be available as soon as the project has all the features and is 
+properly tested with everything, even if only to share with my friends.
