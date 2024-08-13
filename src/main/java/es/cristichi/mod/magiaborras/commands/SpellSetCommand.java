@@ -13,7 +13,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 
-public class ChangeSpellCommand {
+public class SpellSetCommand {
 
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         final String label = "magia";

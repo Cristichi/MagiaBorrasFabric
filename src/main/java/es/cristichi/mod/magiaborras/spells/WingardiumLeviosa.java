@@ -3,7 +3,6 @@ package es.cristichi.mod.magiaborras.spells;
 import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
-import es.cristichi.mod.magiaborras.util.EasyList;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -17,9 +16,11 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import java.util.List;
+
 public class WingardiumLeviosa extends Spell {
     public WingardiumLeviosa() {
-        super("wingardium_leviosa", Text.translatable("magiaborras.spell.wingardium_leviosa"), new EasyList<>(SpellCastType.USE),
+        super("wingardium_leviosa", Text.translatable("magiaborras.spell.wingardium_leviosa"), List.of(SpellCastType.USE),
                 Spell.ANY_ENTITY, Spell.NO_BLOCK, null, 80);
     }
 
@@ -35,7 +36,7 @@ public class WingardiumLeviosa extends Spell {
             } else {
                 ent.setVelocity(ent.getVelocity().add(new Vec3d(0, .3, 0)));
             }
-            return new Result(TypedActionResult.success(wand), baseCooldown, new EasyList<>(MagiaBorras.WING_LEV_CAST));
+            return new Result(TypedActionResult.success(wand), baseCooldown, List.of(MagiaBorras.WING_LEV_CAST));
         } else {
             return new Result(TypedActionResult.fail(wand), 0, null);
         }

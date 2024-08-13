@@ -2,7 +2,6 @@ package es.cristichi.mod.magiaborras.spells;
 
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
-import es.cristichi.mod.magiaborras.util.EasyList;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
@@ -14,21 +13,23 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 
+import java.util.List;
+
 public class DefaultSpell extends Spell {
     public DefaultSpell() {
-        super("", Text.translatable("magiaborras.spell.none"), new EasyList<>(SpellCastType.USE),
+        super("", Text.translatable("magiaborras.spell.none"), List.of(SpellCastType.USE),
                 Spell.NO_ENTITY, Spell.NO_BLOCK, null, 10);
 
     }
 
     @Override
     public Result use(ItemStack wand, WandProperties properties, PlayerEntity magicUser, World world, HitResult hit) {
-        SoundEvent sound = null;
+        SoundEvent sound = SoundEvents.ENTITY_ENDER_DRAGON_GROWL;
         if (world.isClient()) {
             float power = properties.getPower(magicUser);
             double variation = 2 * power + 1;
             int count = 100 + (int) (200 * power);
-            SimpleParticleType particle = null;
+            SimpleParticleType particle = ParticleTypes.DRAGON_BREATH;
             if (power < 0.1) {
                 particle = ParticleTypes.ASH;
                 sound = SoundEvents.BLOCK_DISPENSER_FAIL;
@@ -61,8 +62,8 @@ public class DefaultSpell extends Spell {
                 sound = SoundEvents.BLOCK_CHERRY_LEAVES_PLACE;
                 count = (int) (count * 1.5);
             } else {
-                particle = ParticleTypes.DRAGON_BREATH;
-                sound = SoundEvents.ENTITY_ENDER_DRAGON_GROWL;
+                //particle = ParticleTypes.DRAGON_BREATH;
+                //sound = SoundEvents.ENTITY_ENDER_DRAGON_GROWL;
                 count = count * 2;
             }
             for (int i = 0; i < count; i++) {
@@ -73,6 +74,6 @@ public class DefaultSpell extends Spell {
                         magicUser.getEyeHeight(magicUser.getPose()) + varY, magicUser.getZ() + varZ, 0, 0, 0);
             }
         }
-        return new Result(TypedActionResult.success(wand), baseCooldown, new EasyList<>(sound));
+        return new Result(TypedActionResult.success(wand), baseCooldown, List.of(sound));
     }
 }

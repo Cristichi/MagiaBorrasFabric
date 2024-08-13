@@ -3,7 +3,6 @@ package es.cristichi.mod.magiaborras.spells;
 import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
-import es.cristichi.mod.magiaborras.util.EasyList;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
@@ -16,9 +15,11 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
+import java.util.List;
+
 public class Alohomora extends Spell {
     public Alohomora() {
-        super("alohomora", Text.translatable("magiaborras.spell.alohomora"), new EasyList<>(SpellCastType.USE),
+        super("alohomora", Text.translatable("magiaborras.spell.alohomora"), List.of(SpellCastType.USE),
                 Spell.NO_ENTITY, (block -> block instanceof DoorBlock || block instanceof TrapdoorBlock),
                 null, 20);
     }
@@ -32,7 +33,7 @@ public class Alohomora extends Spell {
                 if (!world.isClient()) {
                     door.setOpen(magicUser, world, blockState, hitLego.getBlockPos(), !door.isOpen(blockState));
                 }
-                return new Result(TypedActionResult.success(wand), baseCooldown, new EasyList<>(MagiaBorras.ALOHOMORA_CAST));
+                return new Result(TypedActionResult.success(wand), baseCooldown, List.of(MagiaBorras.ALOHOMORA_CAST));
             } else if (blockState.getBlock() instanceof TrapdoorBlock) {
                 if (!world.isClient()) {
                     // Code copied from trapdoor.flip because it's private for some fucking reason.
@@ -49,7 +50,7 @@ public class Alohomora extends Spell {
                     world.emitGameEvent(magicUser,
                             blockState.get(TrapdoorBlock.OPEN) ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, hitLego.getBlockPos());
                 }
-                return new Result(TypedActionResult.success(wand), baseCooldown, new EasyList<>(MagiaBorras.ALOHOMORA_CAST));
+                return new Result(TypedActionResult.success(wand), baseCooldown, List.of(MagiaBorras.ALOHOMORA_CAST));
             }
         }
         return new Result(TypedActionResult.fail(wand), 0, null);

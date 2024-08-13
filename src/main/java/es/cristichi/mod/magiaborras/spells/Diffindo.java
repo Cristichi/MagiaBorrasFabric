@@ -3,7 +3,6 @@ package es.cristichi.mod.magiaborras.spells;
 import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
-import es.cristichi.mod.magiaborras.util.EasyList;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.ArmorStandEntity;
@@ -16,9 +15,11 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 import org.joml.Vector3f;
 
+import java.util.List;
+
 public class Diffindo extends Spell {
     public Diffindo() {
-        super("diffindo", Text.translatable("magiaborras.spell.diffindo"), new EasyList<>(SpellCastType.USE),
+        super("diffindo", Text.translatable("magiaborras.spell.diffindo"), List.of(SpellCastType.USE),
                 Spell.LIVING_ENTITIES, Spell.NO_BLOCK, new Vector3f(0.7f, 0, 0), 20);
     }
 
@@ -30,7 +31,7 @@ public class Diffindo extends Spell {
             if (ent instanceof LivingEntity livingEntity && !(ent instanceof ArmorStandEntity)){
                 livingEntity.damage(world.getDamageSources().mobAttack(magicUser), 8 * properties.getPower(magicUser));
             }
-            return new Result(TypedActionResult.success(wand), baseCooldown, new EasyList<>(MagiaBorras.DIFFINDO_CAST));
+            return new Result(TypedActionResult.success(wand), baseCooldown, List.of(MagiaBorras.DIFFINDO_CAST));
         } else {
             return new Result(TypedActionResult.fail(wand), 0, null);
         }

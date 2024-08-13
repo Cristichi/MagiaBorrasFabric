@@ -3,7 +3,6 @@ package es.cristichi.mod.magiaborras.spells;
 import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
-import es.cristichi.mod.magiaborras.util.EasyList;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -21,7 +20,7 @@ public class ArrestoMomentum extends Spell {
     private static final double area = 50;
 
     public ArrestoMomentum() {
-        super("arresto", Text.translatable("magiaborras.spell.arresto"), new EasyList<>(SpellCastType.USE),
+        super("arresto", Text.translatable("magiaborras.spell.arresto"), List.of(SpellCastType.USE),
                 Spell.NO_ENTITY, Spell.NO_BLOCK, null, 20);
     }
 
@@ -35,6 +34,6 @@ public class ArrestoMomentum extends Spell {
                 livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, baseCooldown/2));
             }
         }
-        return new Result(TypedActionResult.success(wand), baseCooldown, new EasyList<>(MagiaBorras.ARRESTO_CAST));
+        return new Result(TypedActionResult.success(wand), baseCooldown, List.of(MagiaBorras.ARRESTO_CAST));
     }
 }

@@ -3,7 +3,6 @@ package es.cristichi.mod.magiaborras.spells;
 import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
-import es.cristichi.mod.magiaborras.util.EasyList;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.ArmorStandEntity;
@@ -17,9 +16,11 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 import org.joml.Vector3f;
 
+import java.util.List;
+
 public class AvadaKedavra extends Spell {
     public AvadaKedavra() {
-        super("avada", Text.translatable("magiaborras.spell.avada"), new EasyList<>(SpellCastType.USE),
+        super("avada", Text.translatable("magiaborras.spell.avada"), List.of(SpellCastType.USE),
                 Spell.LIVING_ENTITIES, Spell.NO_BLOCK, new Vector3f(0, 0.9f, 0), 180);
     }
 
@@ -33,7 +34,7 @@ public class AvadaKedavra extends Spell {
                     livingEntity.damage(magicUser.getDamageSources().magic(), livingEntity.getMaxHealth());
                 }
                 return new Result(TypedActionResult.success(wand), baseCooldown,
-                        new EasyList<>(MagiaBorras.AVADA_CAST, SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER));
+                        List.of(MagiaBorras.AVADA_CAST, SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER));
             }
         }
         return new Result(TypedActionResult.fail(wand), 10, null);

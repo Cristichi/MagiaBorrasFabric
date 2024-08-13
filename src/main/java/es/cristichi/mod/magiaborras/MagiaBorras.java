@@ -1,6 +1,6 @@
 package es.cristichi.mod.magiaborras;
 
-import es.cristichi.mod.magiaborras.commands.ChangeSpellCommand;
+import es.cristichi.mod.magiaborras.commands.SpellSetCommand;
 import es.cristichi.mod.magiaborras.items.MoonStone;
 import es.cristichi.mod.magiaborras.items.SpellBook;
 import es.cristichi.mod.magiaborras.items.wand.WandItem;
@@ -194,7 +194,7 @@ public class MagiaBorras implements ModInitializer {
 
         // Commands
         CommandRegistrationCallback.EVENT.register(
-                (dispatcher, registryAccess, environment) -> ChangeSpellCommand.register(dispatcher)
+                (dispatcher, registryAccess, environment) -> SpellSetCommand.register(dispatcher)
         );
 
         // Sounds
