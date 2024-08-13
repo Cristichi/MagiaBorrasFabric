@@ -40,9 +40,9 @@ import java.util.HashMap;
 import java.util.Optional;
 
 // TODO List:
-//  1. Moar Spells
+//  1. Moar Spells (+ their Spell Book)
 //  X. Moonstone from Hogwarts Legacy
-//  3. Progression. Craftable books that unlock Spells.
+//  X. Progression. Craftable books that unlock Spells.
 //  X. School Uniforms (Armor)
 //  5. Houses Trim? (Instead of dyable armor)
 //  6. Magic HP Potions

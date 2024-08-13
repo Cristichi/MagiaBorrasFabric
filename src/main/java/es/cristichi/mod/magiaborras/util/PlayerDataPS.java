@@ -18,8 +18,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-// TODO: Remake this. We are going to use it to store also the list of unlocked Spells. Unless I use achievements.
-//  I think I did it? Hopefully it works.
 public class PlayerDataPS extends PersistentState {
     public HashMap<UUID, PlayerMagicData> values = new HashMap<>(5);
 

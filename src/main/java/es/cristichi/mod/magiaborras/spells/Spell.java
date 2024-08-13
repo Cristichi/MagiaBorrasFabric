@@ -28,7 +28,7 @@ public abstract class Spell {
     //  - Expelliarmus
     //  - Finite (if I figure out what to do with it)
     //  - Imperio
-    //  - Incendio
+    //  - Incendio (add functionality for furnaces :D)
     //  - Petrificus Totalus
     //  - Stupefy
     //  X Wingardium Leviosa
@@ -43,10 +43,15 @@ public abstract class Spell {
     //  - Morsmorde (for my friend, who clearly is not a Death Eater)
     //  - Finite Incantatem (for me to stop the annoying Morsmorde spam)
 
+    // TODO: Unique Spells:
+    //  ? Tree Chopper Spell
+    //  ? Redstone Spell
+    //  ?
+
     static final Predicate<Entity> LIVING_ENTITIES = (entity -> !entity.isSpectator() && entity.canBeHitByProjectile());
     static final Predicate<Entity> ANY_ENTITY = (entity -> true);
     static final Predicate<Entity> NO_ENTITY = (entity -> false);
-    static final Predicate<Block> ANY_BLOCK =  (entity -> true); //Tool for the future
+    static final Predicate<Block> ANY_BLOCK =  (entity -> true);
     static final Predicate<Block> NO_BLOCK = (entity -> false);
 
     protected String id;
