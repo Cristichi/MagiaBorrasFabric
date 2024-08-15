@@ -18,6 +18,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
@@ -84,7 +85,7 @@ public class WandItem extends Item {
 
         if (prop != null) {
             if (prop.spell.getCastTypes().contains(SpellCastType.USE)) {
-                if (prop.spell.getId().equals("") || data.containsSpell(prop.spell)) {
+                if (user.isCreative() || prop.spell.getId().equals("") || data.containsSpell(prop.spell)) {
                     Vec3d camPos = user.getCameraPosVec(0);
                     Vec3d rotation = user.getRotationVec(0);
                     Vec3d ray = camPos.add(rotation.x * MAX_DISTANCE, rotation.y * MAX_DISTANCE, rotation.z * MAX_DISTANCE);
@@ -93,12 +94,22 @@ public class WandItem extends Item {
 
                     if (hit == null) {
                         hit = user.raycast(MAX_DISTANCE, 0, false);
+                        if (hit instanceof BlockHitResult blockHitResult){
+                            if (!prop.spell.getAffectableBlocks().test(world.getBlockState(blockHitResult.getBlockPos()))){
+                                hit = new HitResult(hit.getPos()) {
+                                    @Override
+                                    public Type getType() {
+                                        return Type.MISS;
+                                    }
+                                };
+                            }
+                        }
                     }
 
                     Spell.Result result = prop.spell.use(stack, prop, user, world, hit);
 
                     // CD of the Spell. Spells can determine a CD based on the outcome, including failing.
-                    // For example, the avada gives a second of CD on missing while Stupefy allows you to
+                    // For example, the avada gives you some CD on missing while Stupefy allows you to
                     // hold right click no problemo.
                     if (!user.isCreative()) {
                         user.getItemCooldownManager().set(this, result.cooldown());

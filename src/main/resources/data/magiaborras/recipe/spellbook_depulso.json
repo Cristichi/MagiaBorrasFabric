@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "magiaborras:moonstone"
+    },
+    [
+      {
+        "item": "minecraft:piston"
+      },
+      {
+        "item": "minecraft:sticky_piston"
+      }
+    ],
+    {
+      "item": "minecraft:book"
+    }
+  ],
+  "result": {
+    "id": "magiaborras:spellbook_depulso",
+    "count": 1
+  }
+}

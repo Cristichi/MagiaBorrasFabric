@@ -31,7 +31,11 @@
   "magiaborras.spell.lumos": "Lumos",
   "magiaborras.spell.arresto": "Arresto Momentum",
   "magiaborras.spell.bombarda": "Bombarda",
+  "magiaborras.spell.depulso": "Depulso",
+  "magiaborras.spell.incendio": "Incendio",
 
+  "item.magiaborras.spellbook.consumed": "You learned the Spell %s.",
+  "item.magiaborras.spellbook.already_know": "You already know the Spell %s.",
   "item.magiaborras.spellbook_wingardium_leviosa": "Spell Book (Wingardium Leviosa)",
   "item.magiaborras.spellbook_accio": "Spell Book (Accio)",
   "item.magiaborras.spellbook_alohomora": "Spell Book (Alohomora)",
@@ -40,6 +44,8 @@
   "item.magiaborras.spellbook_lumos": "Spell Book (Lumos)",
   "item.magiaborras.spellbook_arresto": "Spell Book (Arresto Momentum)",
   "item.magiaborras.spellbook_bombarda": "Spell Book (Bombarda)",
+  "item.magiaborras.spellbook_depulso": "Spell Book (Depulso)",
+  "item.magiaborras.spellbook_incendio": "Spell Book (Incendio)",
 
   "item.magiaborras.wand.broken": "Oh no! The wand is broken. You will need to craft a new one.",
 

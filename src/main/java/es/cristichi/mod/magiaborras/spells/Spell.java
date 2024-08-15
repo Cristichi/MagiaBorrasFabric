@@ -3,7 +3,7 @@ package es.cristichi.mod.magiaborras.spells;
 
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
-import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -51,20 +51,20 @@ public abstract class Spell {
     static final Predicate<Entity> LIVING_ENTITIES = (entity -> !entity.isSpectator() && entity.canBeHitByProjectile());
     static final Predicate<Entity> ANY_ENTITY = (entity -> true);
     static final Predicate<Entity> NO_ENTITY = (entity -> false);
-    static final Predicate<Block> ANY_BLOCK =  (entity -> true);
-    static final Predicate<Block> NO_BLOCK = (entity -> false);
+    static final Predicate<BlockState> ANY_BLOCK =  (block -> true);
+    static final Predicate<BlockState> NO_BLOCK = (block -> false);
 
     protected String id;
     protected Text name;
     protected List<SpellCastType> castTypes;
     protected Predicate<Entity> affectableEntities;
-    protected Predicate<Block> affectableBlocks;
+    protected Predicate<BlockState> affectableBlocks;
     @Nullable
     protected Vector3f partColor;
     protected int baseCooldown;
 
     protected Spell(String id, Text name, List<SpellCastType> castTypes, Predicate<Entity> affectableEntities,
-                    Predicate<Block> affectableBlocks, @Nullable Vector3f partColor, int baseCooldown) {
+                    Predicate<BlockState> affectableBlocks, @Nullable Vector3f partColor, int baseCooldown) {
         this.id = id;
         this.name = name;
         this.affectableEntities = affectableEntities;
@@ -88,6 +88,10 @@ public abstract class Spell {
 
     public Predicate<Entity> getAffectableEntities() {
         return affectableEntities;
+    }
+
+    public Predicate<BlockState> getAffectableBlocks() {
+        return affectableBlocks;
     }
 
     public @Nullable Vector3f getParticlesColor() {

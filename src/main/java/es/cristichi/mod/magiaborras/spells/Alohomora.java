@@ -20,7 +20,7 @@ import java.util.List;
 public class Alohomora extends Spell {
     public Alohomora() {
         super("alohomora", Text.translatable("magiaborras.spell.alohomora"), List.of(SpellCastType.USE),
-                Spell.NO_ENTITY, (block -> block instanceof DoorBlock || block instanceof TrapdoorBlock),
+                Spell.NO_ENTITY, (blockState -> blockState.getBlock() instanceof DoorBlock || blockState.getBlock() instanceof TrapdoorBlock),
                 null, 20);
     }
 

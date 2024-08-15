@@ -7,6 +7,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -34,10 +36,16 @@ public class SpellBook extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         PlayerDataPS.PlayerMagicData data = MagiaBorras.playerDataPS.getOrGenerateData(user);
-        if (!world.isClient() && data.addSpell(spell)){
-            MagiaBorras.playerDataPS.setData(user, data);
-            user.getStackInHand(hand).decrementUnlessCreative(1, user);
-            return TypedActionResult.consume(user.getStackInHand(hand));
+        if (!world.isClient()){
+            if (data.addSpell(spell)){
+                MagiaBorras.playerDataPS.setData(user, data);
+                user.getStackInHand(hand).decrementUnlessCreative(1, user);
+                user.sendMessage(Text.translatable("item.magiaborras.spellbook.consumed", spell.getName()));
+                world.playSound(null, user.getBlockPos(), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 1f, 1f);
+                return TypedActionResult.consume(user.getStackInHand(hand));
+            } else {
+                user.sendMessage(Text.translatable("item.magiaborras.spellbook.already_know", spell.getName()));
+            }
         }
         return TypedActionResult.fail(user.getStackInHand(hand));
     }

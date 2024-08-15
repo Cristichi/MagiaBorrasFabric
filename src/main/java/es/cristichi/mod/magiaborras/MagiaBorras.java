@@ -97,7 +97,7 @@ public class MagiaBorras implements ModInitializer {
     // Spells
     public static final HashMap<String, Spell> SPELLS = new HashMap<>(10);
 
-    private static void regSpell(Class<? extends Spell> spellClass) {
+    private static void initSpell(Class<? extends Spell> spellClass) {
         try {
             Constructor<? extends Spell> ctor = spellClass.getConstructor();
             Spell newSpell = ctor.newInstance();
@@ -131,14 +131,13 @@ public class MagiaBorras implements ModInitializer {
     public static SoundEvent ARRESTO_CAST = SoundEvent.of(SOUND_ARRESTO_ID);
     public static final Identifier SOUND_BOMBARDA_ID = Identifier.of(MOD_ID, "bombarda");
     public static SoundEvent BOMBARDA_CAST = SoundEvent.of(SOUND_BOMBARDA_ID);
+    public static final Identifier SOUND_DEPULSO_ID = Identifier.of(MOD_ID, "depulso");
+    public static SoundEvent DEPULSO_CAST = SoundEvent.of(SOUND_DEPULSO_ID);
     public static final Identifier SOUND_INCENDIO_ID = Identifier.of(MOD_ID, "incendio");
     public static SoundEvent INCENDIO_CAST = SoundEvent.of(SOUND_INCENDIO_ID);
 
     @Override
     public void onInitialize() {
-        // This code runs as soon as Minecraft is in a mod-load-ready state.
-        // However, some things (like resources) may still be uninitialized.
-        // Proceed with mild caution.
         LOGGER.info("Loading");
 
         // Items
@@ -176,16 +175,18 @@ public class MagiaBorras implements ModInitializer {
         BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(),
                 GenerationStep.Feature.UNDERGROUND_ORES, MOONSTONE_ORE_PLACED_KEY);
 
-        // Spells
-        regSpell(DefaultSpell.class);
-        regSpell(AvadaKedavra.class);
-        regSpell(Alohomora.class);
-        regSpell(Accio.class);
-        regSpell(Diffindo.class);
-        regSpell(WingardiumLeviosa.class);
-        regSpell(Lumos.class);
-        regSpell(ArrestoMomentum.class);
-        regSpell(Bombarda.class);
+        // Spells init
+        initSpell(DefaultSpell.class);
+        initSpell(AvadaKedavra.class);
+        initSpell(Alohomora.class);
+        initSpell(Accio.class);
+        initSpell(Diffindo.class);
+        initSpell(WingardiumLeviosa.class);
+        initSpell(Lumos.class);
+        initSpell(ArrestoMomentum.class);
+        initSpell(Bombarda.class);
+        initSpell(Depulso.class);
+        initSpell(Incendio.class);
 
         // Magic numbers are also very special because they are saved in the main overworld
         ServerLifecycleEvents.SERVER_STARTED.register(
@@ -206,6 +207,7 @@ public class MagiaBorras implements ModInitializer {
         Registry.register(Registries.SOUND_EVENT, SOUND_LUMOS_ID, LUMOS_CAST);
         Registry.register(Registries.SOUND_EVENT, SOUND_ARRESTO_ID, ARRESTO_CAST);
         Registry.register(Registries.SOUND_EVENT, SOUND_BOMBARDA_ID, BOMBARDA_CAST);
+        Registry.register(Registries.SOUND_EVENT, SOUND_DEPULSO_ID, DEPULSO_CAST);
         Registry.register(Registries.SOUND_EVENT, SOUND_INCENDIO_ID, INCENDIO_CAST);
 
         // Custom Payloads

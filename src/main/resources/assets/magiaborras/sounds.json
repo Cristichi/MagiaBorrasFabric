@@ -47,6 +47,12 @@
       "magiaborras:bombarda"
     ]
   },
+  "depulso": {
+    "subtitle": "magiaborras.spell.depulso",
+    "sounds": [
+      "magiaborras:depulso"
+    ]
+  },
   "incendio": {
     "subtitle": "magiaborras.spell.incendio",
     "sounds": [

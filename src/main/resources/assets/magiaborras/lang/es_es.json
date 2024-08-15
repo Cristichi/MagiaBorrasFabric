@@ -31,7 +31,11 @@
   "magiaborras.spell.lumos": "Lumos",
   "magiaborras.spell.arresto": "Arresto Momentum",
   "magiaborras.spell.bombarda": "Bombarda",
+  "magiaborras.spell.depulso": "Depulso",
+  "magiaborras.spell.incendio": "Incendio",
 
+  "item.magiaborras.spellbook.consumed": "Has aprendido el Conjuro %s.",
+  "item.magiaborras.spellbook.already_know": "Ya conoces el Conjuro %s.",
   "item.magiaborras.spellbook_wingardium_leviosa": "Libro de Magia (Wingardium Leviosa)",
   "item.magiaborras.spellbook_accio": "Libro de Magia (Accio)",
   "item.magiaborras.spellbook_alohomora": "Libro de Magia (Alohomora)",
@@ -40,6 +44,8 @@
   "item.magiaborras.spellbook_lumos": "Libro de Magia (Lumos)",
   "item.magiaborras.spellbook_arresto": "Libro de Magia (Arresto Momentum)",
   "item.magiaborras.spellbook_bombarda": "Libro de Magia (Bombarda)",
+  "item.magiaborras.spellbook_depulso": "Libro de Magia (Depulso)",
+  "item.magiaborras.spellbook_incendio": "Libro de Magia (Incendio)",
 
   "item.magiaborras.wand.broken": "¡Rayos y retruécanos! La varita está rota. Tendrás que craftearte otra.",
 
@@ -124,9 +130,9 @@
   "magiaborras.wandwood.yew": "Tejo",
 
   "magiaborras.wandlength.none": "????",
-  "magiaborras.wandlength.short": "Más corta que la media",
+  "magiaborras.wandlength.short": "Corta",
   "magiaborras.wandlength.average": "Longitud normal",
-  "magiaborras.wandlength.long": "Más larga que la media",
+  "magiaborras.wandlength.long": "Larga",
 
   "magiaborras.spell.changed_spell": "Has preparado el Conjuro %s en tu Varita.",
   "magiaborras.spell.change_spell_no_wand": "Necesitas tener la Varita en la mano.",
