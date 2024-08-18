@@ -24,11 +24,11 @@ public abstract class Spell {
     //  X ArrestoMomentum
     //  X Avada
     //  - Crucio
-    //  - Depulso
+    //  X Depulso
     //  - Expelliarmus
     //  - Finite (if I figure out what to do with it)
     //  - Imperio
-    //  - Incendio (add functionality for furnaces :D)
+    //  X Incendio (add functionality for furnaces :D)
     //  - Petrificus Totalus
     //  - Stupefy
     //  X Wingardium Leviosa
