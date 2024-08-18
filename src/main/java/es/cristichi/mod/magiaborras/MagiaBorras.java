@@ -1,31 +1,34 @@
 package es.cristichi.mod.magiaborras;
 
 import es.cristichi.mod.magiaborras.commands.SpellSetCommand;
+import es.cristichi.mod.magiaborras.floo.FlooFireplaceBlock;
+import es.cristichi.mod.magiaborras.floo.FlooPowderItem;
 import es.cristichi.mod.magiaborras.items.MoonStone;
 import es.cristichi.mod.magiaborras.items.SpellBook;
 import es.cristichi.mod.magiaborras.items.wand.WandItem;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
+import es.cristichi.mod.magiaborras.networking.SpellChangeInHandPayload;
 import es.cristichi.mod.magiaborras.spells.*;
 import es.cristichi.mod.magiaborras.uniform.ModArmorMaterials;
 import es.cristichi.mod.magiaborras.uniform.SchoolUniform;
-import es.cristichi.mod.magiaborras.util.PlayerDataPS;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.Block;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
+import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.gen.GenerationStep;
@@ -61,6 +64,7 @@ public class MagiaBorras implements ModInitializer {
     public static final WandItem WAND_2_ITEM = new WandItem(new WandItem.Settings());
     public static final WandItem WAND_SLYTHERIN_ITEM = new WandItem(new WandItem.Settings());
     public static final MoonStone MOONSTONE_ITEM = new MoonStone(new Item.Settings());
+    public static final FlooPowderItem FLOO_POWDER_ITEM = new FlooPowderItem(new Item.Settings());
 
     // Armor Items
     public static final SchoolUniform SCHOOL_HELMET = new SchoolUniform(ModArmorMaterials.UNIFORM_MATERIAL, ArmorItem.Type.HELMET, new Item.Settings());
@@ -70,8 +74,9 @@ public class MagiaBorras implements ModInitializer {
 
     // Blocks
     public static final Block MOONSTONE_BLOCK = new Block(Block.Settings.create().strength(3.0f));
-    public static final Block MOONSTONE_ORE = new Block(Block.Settings.create().strength(4.0f));
-    public static final Block MOONSTONE_ORE_DEEP = new Block(Block.Settings.create().strength(4.1f));
+    public static final Block MOONSTONE_ORE_BLOCK = new Block(Block.Settings.create().strength(4.0f));
+    public static final Block MOONSTONE_ORE_DEEP_BLOCK = new Block(Block.Settings.create().strength(4.1f));
+    public static final FlooFireplaceBlock FLOO_FIREPLACE_BLOCK = new FlooFireplaceBlock(Block.Settings.create().luminance(value -> 15));
 
     // World Generation
     public static final RegistryKey<PlacedFeature> MOONSTONE_ORE_PLACED_KEY =
@@ -136,6 +141,9 @@ public class MagiaBorras implements ModInitializer {
     public static final Identifier SOUND_INCENDIO_ID = Identifier.of(MOD_ID, "incendio");
     public static SoundEvent INCENDIO_CAST = SoundEvent.of(SOUND_INCENDIO_ID);
 
+    // Networking
+    public static final Identifier NET_CHANGE_SPELL_ID = Identifier.of(MOD_ID, "change_spell");
+
     @Override
     public void onInitialize() {
         LOGGER.info("Loading");
@@ -145,6 +153,7 @@ public class MagiaBorras implements ModInitializer {
         Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "wand_2"), WAND_2_ITEM);
         Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "wand_slytherin"), WAND_SLYTHERIN_ITEM);
         Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "moonstone"), MOONSTONE_ITEM);
+        Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "floo_powder"), FLOO_POWDER_ITEM);
 
         // Armor Items
         ModArmorMaterials.initialize();
@@ -164,12 +173,16 @@ public class MagiaBorras implements ModInitializer {
         Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "moonstone_block"),
                 new BlockItem(MOONSTONE_BLOCK, new Item.Settings()));
 
-        Registry.register(Registries.BLOCK, Identifier.of(MOD_ID, "moonstone_ore"), MOONSTONE_ORE);
+        Registry.register(Registries.BLOCK, Identifier.of(MOD_ID, "moonstone_ore"), MOONSTONE_ORE_BLOCK);
         Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "moonstone_ore"),
-                new BlockItem(MOONSTONE_ORE, new Item.Settings()));
-        Registry.register(Registries.BLOCK, Identifier.of(MOD_ID, "deepslate_moonstone_ore"), MOONSTONE_ORE_DEEP);
+                new BlockItem(MOONSTONE_ORE_BLOCK, new Item.Settings()));
+        Registry.register(Registries.BLOCK, Identifier.of(MOD_ID, "deepslate_moonstone_ore"), MOONSTONE_ORE_DEEP_BLOCK);
         Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "deepslate_moonstone_ore"),
-                new BlockItem(MOONSTONE_ORE_DEEP, new Item.Settings()));
+                new BlockItem(MOONSTONE_ORE_DEEP_BLOCK, new Item.Settings()));
+
+        Registry.register(Registries.BLOCK, Identifier.of(MOD_ID, "floo_fireplace"), FLOO_FIREPLACE_BLOCK);
+        Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "floo_fireplace"),
+                new BlockItem(FLOO_FIREPLACE_BLOCK, new Item.Settings()));
 
         // World Generation
         BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(),
@@ -210,7 +223,20 @@ public class MagiaBorras implements ModInitializer {
         Registry.register(Registries.SOUND_EVENT, SOUND_DEPULSO_ID, DEPULSO_CAST);
         Registry.register(Registries.SOUND_EVENT, SOUND_INCENDIO_ID, INCENDIO_CAST);
 
-        // Custom Payloads
+        // Networking
+        PayloadTypeRegistry.playC2S().register(SpellChangeInHandPayload.ID, SpellChangeInHandPayload.CODEC);
+        ServerPlayNetworking.registerGlobalReceiver(SpellChangeInHandPayload.ID, (payload, context) -> {
+           Spell spell = payload.spell();
+           ServerPlayerEntity magicUser = context.player();
+
+            ItemStack hand = magicUser.getStackInHand(Hand.MAIN_HAND);
+            WandProperties prop = WandProperties.check(hand);
+            if (prop != null) {
+                magicUser.sendMessage(Text.translatable("magiaborras.spell.changed_spell", spell.getName()).append(" (Server)"));
+                prop.spell = spell;
+                prop.apply(hand);
+            }
+        });
 
         LOGGER.info("Loaded, against all odds.");
     }

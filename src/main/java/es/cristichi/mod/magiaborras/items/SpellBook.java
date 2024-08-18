@@ -2,7 +2,7 @@ package es.cristichi.mod.magiaborras.items;
 
 import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.spells.Spell;
-import es.cristichi.mod.magiaborras.util.PlayerDataPS;
+import es.cristichi.mod.magiaborras.PlayerDataPS;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

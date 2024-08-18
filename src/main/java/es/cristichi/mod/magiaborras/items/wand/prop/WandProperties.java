@@ -3,7 +3,7 @@ package es.cristichi.mod.magiaborras.items.wand.prop;
 import com.mojang.serialization.Codec;
 import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.spells.Spell;
-import es.cristichi.mod.magiaborras.util.PlayerDataPS;
+import es.cristichi.mod.magiaborras.PlayerDataPS;
 import net.minecraft.component.ComponentMapImpl;
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.DataComponentTypes;

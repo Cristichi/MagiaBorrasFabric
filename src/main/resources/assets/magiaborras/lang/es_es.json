@@ -4,9 +4,11 @@
   "item.magiaborras.wand_spell": "Varita Mágica (%s)",
 
   "item.magiaborras.moonstone": "Piedraluna",
+  "item.magiaborras.floo_powder": "Polvos Flu",
   "block.magiaborras.moonstone_block": "Bloque de Piedraluna",
   "block.magiaborras.moonstone_ore": "Mena de Piedraluna",
   "block.magiaborras.deepslate_moonstone_ore": "Mena de Piedraluna de pizzarra profunda",
+  "block.magiaborras.floo_fireplace": "Chimenea Flu",
 
   "item.magiaborras.school_helmet": "Casco de la Escuela",
   "item.magiaborras.school_chestplate": "Peto de la Escuela",
@@ -143,5 +145,12 @@
   "block.magiaborras.banner.gryffindor.red": "Gryffindor rojo",
   "block.magiaborras.banner.slytherin": "Slytherin",
   "block.magiaborras.banner.hufflepuff": "Hufflepuff",
-  "block.magiaborras.banner.ravenclaw": "Ravenclaw"
+  "block.magiaborras.banner.ravenclaw": "Ravenclaw",
+
+  "category.magiaborras.keybinds": "MagiaBorras",
+  "key.magiaborras.change_spell": "Cambiar Conjuro",
+
+  "magiaborras.screen.spells.title": "Lista de Conjuros",
+  "magiaborras.screen.spells.nowand": "Necesitas tener una Varita en la mano para aplicarle un Conjuro.",
+  "magiaborras.screen.spells.tooltip": "Aplica el Conjuro %s a la Varita de su mano."
 }

@@ -1,12 +1,17 @@
 package es.cristichi.mod.magiaborras.spells;
 
 
+import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.TypedActionResult;
@@ -103,4 +108,23 @@ public abstract class Spell {
 
     public record Result(TypedActionResult<ItemStack> actionResult, int cooldown, List<SoundEvent> sounds) {
     }
+
+    public static final PacketCodec<ByteBuf, Spell> PACKET_CODEC = new PacketCodec<ByteBuf, Spell>() {
+        public Spell decode(ByteBuf byteBuf) {
+            NbtCompound data = PacketByteBuf.readNbt(byteBuf);
+            if (data != null){
+                String spell = data.getString("spell");
+                if (MagiaBorras.SPELLS.containsKey(spell)){
+                    return MagiaBorras.SPELLS.get(spell);
+                }
+            }
+            return MagiaBorras.SPELLS.get("");
+        }
+
+        public void encode(ByteBuf byteBuf, Spell spell) {
+            NbtCompound data = new NbtCompound();
+            data.putString("spell", spell.getId());
+            PacketByteBuf.writeNbt(byteBuf, data);
+        }
+    };
 }

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "MMM",
+    "MMM",
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "item": "minecraft:oak_log"
+    }
+  },
+  "result": {
+    "id": "magiaborras:floo_fireplace",
+    "count": 1
+  }
+}

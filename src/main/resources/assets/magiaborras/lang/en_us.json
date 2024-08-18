@@ -4,9 +4,13 @@
   "item.magiaborras.wand_spell": "Magic Wand (%s)",
 
   "item.magiaborras.moonstone": "Moonstone",
+  "item.magiaborras.floo_powder": "Floo Powder",
+
   "block.magiaborras.moonstone_block": "Moonstone Block",
   "block.magiaborras.moonstone_ore": "Moonstone Ore",
   "block.magiaborras.deepslate_moonstone_ore": "Deepslate Moonstone Ore",
+  "block.magiaborras.floo_fireplace": "Floo Fireplace",
+
 
   "item.magiaborras.school_helmet": "School's Helmet",
   "item.magiaborras.school_chestplate": "School's Chestplate",
@@ -143,5 +147,12 @@
   "block.magiaborras.banner.gryffindor.red": "Red Gryffindor",
   "block.magiaborras.banner.slytherin": "Slytherin",
   "block.magiaborras.banner.hufflepuff": "Hufflepuff",
-  "block.magiaborras.banner.ravenclaw": "Ravenclaw"
+  "block.magiaborras.banner.ravenclaw": "Ravenclaw",
+
+  "category.magiaborras.keybinds": "MagiaBorras keys",
+  "key.magiaborras.change_spell": "Change Spell",
+
+  "magiaborras.screen.spells.title": "Spell List",
+  "magiaborras.screen.spells.nowand": "You need to hold a Wand to apply a Spell to it.",
+  "magiaborras.screen.spells.tooltip": "Apply the Spell %s to the Wand in your hand."
 }

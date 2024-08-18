@@ -4,7 +4,7 @@ import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.items.wand.prop.*;
 import es.cristichi.mod.magiaborras.spells.Spell;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
-import es.cristichi.mod.magiaborras.util.PlayerDataPS;
+import es.cristichi.mod.magiaborras.PlayerDataPS;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.Item;

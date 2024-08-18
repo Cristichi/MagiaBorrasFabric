@@ -1,6 +1,5 @@
-package es.cristichi.mod.magiaborras.util;
+package es.cristichi.mod.magiaborras;
 
-import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.spells.Spell;
 import net.minecraft.datafixer.DataFixTypes;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,6 +11,8 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.PersistentState;
 import net.minecraft.world.PersistentStateManager;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -21,7 +22,7 @@ import java.util.UUID;
 public class PlayerDataPS extends PersistentState {
     public HashMap<UUID, PlayerMagicData> values = new HashMap<>(5);
 
-    public PlayerMagicData getOrGenerateData(PlayerEntity player) {
+    public PlayerMagicData getOrGenerateData(@NotNull PlayerEntity player) {
         PlayerMagicData savedPlayerData = values.get(player.getUuid());
         if (savedPlayerData == null) {
             savedPlayerData = new PlayerMagicData(MagiaBorras.RNG.nextFloat(), new String[0]);
@@ -31,7 +32,7 @@ public class PlayerDataPS extends PersistentState {
         return savedPlayerData;
     }
 
-    public void setData(PlayerEntity player, PlayerMagicData data) {
+    public void setData(@NotNull PlayerEntity player, PlayerMagicData data) {
         values.put(player.getUuid(), data);
         this.markDirty();
     }
@@ -46,7 +47,7 @@ public class PlayerDataPS extends PersistentState {
         return nbt;
     }
 
-    public static PlayerDataPS createFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+    public static @NotNull PlayerDataPS createFromNbt(@NotNull NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
         PlayerDataPS mn = new PlayerDataPS();
         mn.values = new HashMap<>(tag.getSize());
         for (String key : tag.getKeys()) {
@@ -79,7 +80,7 @@ public class PlayerDataPS extends PersistentState {
         return null;
     }
 
-    public static class PlayerMagicData{
+    public static class PlayerMagicData {
         static String MAGIC_NUMBER = "magicNumber", UNLOCKED_SPELLS= "unlockedSpells", UNLOCKED_SPELL_DIVIDER = " ";
         private final Float magicNumber;
         private String[] unlockedSpells;
@@ -89,7 +90,8 @@ public class PlayerDataPS extends PersistentState {
             this.unlockedSpells = unlockedSpells;
         }
 
-        public static PlayerMagicData fromNbt(NbtElement nbt){
+        @Contract("null -> fail")
+        public static @NotNull PlayerMagicData fromNbt(NbtElement nbt){
             if (nbt instanceof NbtCompound nbtCompound){
                 return new PlayerMagicData(nbtCompound.getFloat(MAGIC_NUMBER), nbtCompound.getString(UNLOCKED_SPELLS).split(UNLOCKED_SPELL_DIVIDER));
                 //return new PlayerMagicData(nbtCompound.getFloat(MAGIC_NUMBER), new String[0]);
@@ -112,7 +114,7 @@ public class PlayerDataPS extends PersistentState {
             return unlockedSpells;
         }
 
-        public boolean addSpell(Spell spell){
+        public boolean addSpell(@NotNull Spell spell){
             if (containsSpell(spell.getId())){
                 return false;
             }
@@ -126,7 +128,7 @@ public class PlayerDataPS extends PersistentState {
             return true;
         }
 
-        public boolean containsSpell(Spell spell){
+        public boolean containsSpell(@NotNull Spell spell){
             return containsSpell(spell.getId());
         }
 
