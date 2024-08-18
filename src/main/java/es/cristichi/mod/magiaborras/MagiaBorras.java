@@ -232,7 +232,7 @@ public class MagiaBorras implements ModInitializer {
             ItemStack hand = magicUser.getStackInHand(Hand.MAIN_HAND);
             WandProperties prop = WandProperties.check(hand);
             if (prop != null) {
-                magicUser.sendMessage(Text.translatable("magiaborras.spell.changed_spell", spell.getName()).append(" (Server)"));
+                magicUser.sendMessage(Text.translatable("magiaborras.spell.changed_spell", spell.getName()));
                 prop.spell = spell;
                 prop.apply(hand);
             }

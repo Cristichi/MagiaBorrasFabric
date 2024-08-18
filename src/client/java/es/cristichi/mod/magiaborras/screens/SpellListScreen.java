@@ -37,33 +37,35 @@ public class SpellListScreen extends Screen {
         boolean alt = false;
         PlayerDataPS.PlayerMagicData playerWorldData = MagiaBorras.playerDataPS.getOrGenerateData(client.player);
         for (Spell spell : MagiaBorras.SPELLS.values()) {
-            if (client.player.isCreative() || playerWorldData.containsSpell(spell) || spell.getId().equals("")){
-                ButtonWidget btn = ButtonWidget.builder(spell.getName(), button -> {
-                        System.out.println("You clicked the Spell " + spell.getId());
+            boolean unlocked = client.player.isCreative() || playerWorldData.containsSpell(spell) || spell.getId().equals("");
+            ButtonWidget btn = ButtonWidget.builder(
+                unlocked ? spell.getName() : Text.translatable("magiaborras.screen.spells.name_locked", spell.getName()),
+                button -> {
+                    ItemStack hand = client.player.getStackInHand(Hand.MAIN_HAND);
+                    WandProperties prop = WandProperties.check(hand);
+                    if (prop != null) {
+                        prop.spell = spell;
+                        prop.apply(hand);
+                        client.player.getInventory().markDirty();
 
-                        ItemStack hand = client.player.getStackInHand(Hand.MAIN_HAND);
-                        WandProperties prop = WandProperties.check(hand);
-                        if (prop != null) {
-                            prop.spell = spell;
-                            prop.apply(hand);
-                            client.player.getInventory().markDirty();
+                        ClientPlayNetworking.send(new SpellChangeInHandPayload(spell));
+                    }
 
-                            ClientPlayNetworking.send(new SpellChangeInHandPayload(spell));
-                        }
+                    close();
+                })
+                .dimensions((alt?xAlt:x), y, btnWidth, btnHeight)
+                .tooltip(Tooltip.of(Text.translatable(
+                        unlocked ? "magiaborras.screen.spells.tooltip" : "magiaborras.screen.spells.tooltip_locked",
+                        spell.getName())))
+                .build();
 
-                        close();
-                    })
-                    .dimensions((alt?xAlt:x), y, btnWidth, btnHeight)
-                    .tooltip(Tooltip.of(Text.translatable("magiaborras.screen.spells.tooltip", spell.getName())))
-                    .build();
-                spellBtns.add(btn);
-                addDrawableChild(btn);
+            spellBtns.add(btn);
+            addDrawableChild(btn);
 
-                if (alt){
-                    y += btnHeight+10;
-                }
-                alt = !alt;
+            if (alt){
+                y += btnHeight+10;
             }
+            alt = !alt;
         }
     }
 }
