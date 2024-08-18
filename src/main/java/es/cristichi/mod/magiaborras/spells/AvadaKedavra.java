@@ -21,7 +21,7 @@ import java.util.List;
 public class AvadaKedavra extends Spell {
     public AvadaKedavra() {
         super("avada", Text.translatable("magiaborras.spell.avada"), List.of(SpellCastType.USE),
-                Spell.LIVING_ENTITIES, Spell.NO_BLOCK, new Vector3f(0, 0.9f, 0), 180);
+                Spell.LIVING_ENTITIES, Spell.NO_BLOCK, new Vector3f(0, 0.9f, 0), 240);
     }
 
     @Override

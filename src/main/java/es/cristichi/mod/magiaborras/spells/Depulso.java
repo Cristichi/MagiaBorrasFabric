@@ -19,7 +19,7 @@ import java.util.List;
 public class Depulso extends Spell {
     public Depulso() {
         super("depulso", Text.translatable("magiaborras.spell.depulso"), List.of(SpellCastType.USE),
-                Spell.ANY_ENTITY, Spell.NO_BLOCK, new Vector3f(0.5f, 0.5f, 0.5f), 200);
+                Spell.ANY_ENTITY, Spell.NO_BLOCK, new Vector3f(0.5f, 0.5f, 0.5f), 80);
     }
 
     @Override

@@ -22,7 +22,7 @@ import java.util.List;
 public class Incendio extends Spell {
     public Incendio() {
         super("incendio", Text.translatable("magiaborras.spell.incendio"), List.of(SpellCastType.USE),
-                Spell.ANY_ENTITY, Spell.ANY_BLOCK, new Vector3f(0.9f, 0.5f, 0), 180);
+                Spell.ANY_ENTITY, Spell.ANY_BLOCK, new Vector3f(0.9f, 0.5f, 0), 140);
     }
 
     @Override

@@ -17,7 +17,7 @@ import java.util.List;
 public class Lumos extends Spell {
     public Lumos() {
         super("lumos", Text.translatable("magiaborras.spell.lumos"), List.of(SpellCastType.USE),
-                Spell.NO_ENTITY, Spell.NO_BLOCK, null, 5);
+                Spell.NO_ENTITY, Spell.NO_BLOCK, null, 20);
     }
 
     @Override

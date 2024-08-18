@@ -18,7 +18,7 @@ import java.util.Optional;
 public class Bombarda extends Spell {
     public Bombarda() {
         super("bombarda", Text.translatable("magiaborras.spell.bombarda"), List.of(SpellCastType.USE),
-                Spell.ANY_ENTITY, Spell.ANY_BLOCK, new Vector3f(0.9f, 0.9f, 0.9f), 500);
+                Spell.ANY_ENTITY, Spell.ANY_BLOCK, new Vector3f(0.9f, 0.9f, 0.9f), 120);
     }
 
     @Override
