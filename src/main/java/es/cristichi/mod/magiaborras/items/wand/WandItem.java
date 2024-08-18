@@ -79,6 +79,9 @@ public class WandItem extends Item {
         //  thing from scratch in order to fix this bug.
         //  Impact: Not much, it syncs in the end, but it looks weird on client.
 
+        // TODO: Divide this in two: one for server to check everything and then tells clients
+        //  what happened (inside this method) and one for clients (outside of this method)
+
         ItemStack stack = user.getStackInHand(hand);
         WandProperties prop = WandProperties.check(stack);
         PlayerDataPS.PlayerMagicData data = MagiaBorras.playerDataPS.getOrGenerateData(user);
