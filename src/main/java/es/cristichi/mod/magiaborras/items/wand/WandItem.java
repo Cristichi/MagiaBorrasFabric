@@ -8,8 +8,8 @@ import es.cristichi.mod.magiaborras.spells.Spell;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipData;
@@ -24,6 +24,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public class WandItem extends Item {
     public WandItem(Settings settings) {
@@ -91,20 +93,32 @@ public class WandItem extends Item {
                         Vec3d rotation = user.getRotationVec(0);
                         Vec3d ray = camPos.add(rotation.x * MAX_DISTANCE, rotation.y * MAX_DISTANCE, rotation.z * MAX_DISTANCE);
                         Box box = user.getBoundingBox().stretch(rotation.multiply(MAX_DISTANCE)).expand(1d, 1d, 1d);
-                        HitResult hit = ProjectileUtil.raycast(user, camPos, ray, box, prop.spell.getAffectableEntities(), MAX_DISTANCE);
-
-                        if (hit == null) {
-                            hit = user.raycast(MAX_DISTANCE, 0, false);
-                            if (hit instanceof BlockHitResult blockHitResult){
-                                if (!prop.spell.getAffectableBlocks().test(world.getBlockState(blockHitResult.getBlockPos()))){
-                                    hit = new HitResult(hit.getPos()) {
-                                        @Override
-                                        public Type getType() {
-                                            return Type.MISS;
-                                        }
-                                    };
+                        HitResult hit = WandItem.raycast(user, camPos, ray, box, prop.spell.getAffectableEntities(), MAX_DISTANCE);
+                        if (hit instanceof EntityHitResult entityHitResult && entityHitResult.getEntity() == null){
+                            hit = new HitResult(hit.getPos()) {
+                                @Override
+                                public Type getType() {
+                                    return Type.MISS;
                                 }
-                            }
+                            };
+                        }
+                        // This is always a block hit
+                        HitResult hitBlock = user.raycast(MAX_DISTANCE, 0, false);
+                        if (hitBlock instanceof BlockHitResult blockHitResult
+                                && !prop.spell.getAffectableBlocks().test(world.getBlockState(blockHitResult.getBlockPos()))){
+                            hitBlock = new HitResult(hitBlock.getPos()) {
+                                @Override
+                                public Type getType() {
+                                    return Type.MISS;
+                                }
+                            };
+                        }
+
+                        double distEHit = user.squaredDistanceTo(hit.getPos());
+                        double distBHit = user.squaredDistanceTo(hitBlock.getPos());
+
+                        if (distEHit > distBHit){
+                            hit = hitBlock;
                         }
 
                         Spell.Result result = prop.spell.cast(stack, prop, (ServerPlayerEntity) user, world, hit);
@@ -169,4 +183,39 @@ public class WandItem extends Item {
         }
     }
 
+    private static EntityHitResult raycast(Entity entity, Vec3d min, Vec3d max, Box box, Predicate<Entity> predicate, double maxDistance) {
+        World world = entity.getWorld();
+        double d = maxDistance;
+        Entity entity2 = null;
+        Vec3d vec3d = null;
+
+        for (Entity entity3 : world.getOtherEntities(entity, box, predicate)) {
+            Box box2 = entity3.getBoundingBox().expand(entity3.getTargetingMargin());
+            Optional<Vec3d> optional = box2.raycast(min, max);
+            if (box2.contains(min)) {
+                if (d >= 0.0) {
+                    entity2 = entity3;
+                    vec3d = optional.orElse(min);
+                    d = 0.0;
+                }
+            } else if (optional.isPresent()) {
+                Vec3d vec3d2 = optional.get();
+                double e = min.squaredDistanceTo(vec3d2);
+                if (e < d || d == 0.0) {
+                    if (entity3.getRootVehicle() == entity.getRootVehicle()) {
+                        if (d == 0.0) {
+                            entity2 = entity3;
+                            vec3d = vec3d2;
+                        }
+                    } else {
+                        entity2 = entity3;
+                        vec3d = vec3d2;
+                        d = e;
+                    }
+                }
+            }
+        }
+
+        return new EntityHitResult(entity2, vec3d);
+    }
 }
