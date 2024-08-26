@@ -114,8 +114,8 @@ public class WandItem extends Item {
                             };
                         }
 
-                        double distEHit = user.squaredDistanceTo(hit.getPos());
-                        double distBHit = user.squaredDistanceTo(hitBlock.getPos());
+                        double distEHit = hit.getPos()==null?Double.MAX_VALUE:user.getEyePos().squaredDistanceTo(hit.getPos());
+                        double distBHit = hitBlock.getPos()==null?Double.MAX_VALUE:user.getEyePos().squaredDistanceTo(hitBlock.getPos());
 
                         if (distEHit > distBHit){
                             hit = hitBlock;
