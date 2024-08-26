@@ -109,63 +109,6 @@ public abstract class Spell {
     public record Result(ActionResult actionResult, int cooldown, List<SoundEvent> sounds) {
     }
 
-    // This is from an attempt to divide Spells in a server and client side, but I realised I like the server-only more
-    // I'm keeping it in case I need to redo it again for some other data
-//    public record Result(Spell spell, ActionResult actionResult, Hand hand, int cooldown, List<SoundEvent> sounds) {
-//
-//        public static final PacketCodec<ByteBuf, Result> PACKET_CODEC = new PacketCodec<ByteBuf, Result>() {
-//            public Result decode(ByteBuf byteBuf) {
-//                try {
-//                    NbtCompound data = PacketByteBuf.readNbt(byteBuf);
-//                    if (data != null) {
-//                        Spell spell = null;
-//                        String spellStr = data.getString("spell");
-//                        if (MagiaBorras.SPELLS.containsKey(spellStr)){
-//                            spell = MagiaBorras.SPELLS.get(spellStr);
-//                        }
-//
-//                        ActionResult result = ActionResult.values()[data.getInt("result")];
-//                        int cd = data.getInt("cd");
-//                        Hand hand = Hand.values()[data.getInt("hand")];
-//                        String soundsStr = data.getString("sounds");
-//                        StringTokenizer soundsTks = new StringTokenizer(soundsStr, ";");
-//                        ArrayList<SoundEvent> soundEvents = new ArrayList<>(soundsTks.countTokens());
-//                        while (soundsTks.hasMoreTokens()){
-//                            String token = soundsTks.nextToken();
-//                            String[] idData = token.split(":");
-//                            soundEvents.add(SoundEvent.of(Identifier.of(idData[0], idData[1])));
-//                        }
-//                        return new Result(spell, result, hand, cd, soundEvents);
-//                    }
-//                } catch (Exception e) {
-//                    throw new SpellPacketDecoderException("Error trying to decode a Spell packet.", e);
-//                }
-//                throw new SpellPacketDecoderException("Error trying to decode a Spell packet.");
-//            }
-//
-//            public void encode(ByteBuf byteBuf, Result result) {
-//                NbtCompound data = new NbtCompound();
-//                data.putString("spell", result.spell.getId());
-//                data.putInt("result", result.actionResult.ordinal());
-//                data.putInt("cd", result.cooldown);
-//                data.putInt("hand", result.hand.ordinal());
-//                StringBuilder sounds = new StringBuilder();
-//                boolean first = true;
-//                for (SoundEvent sound : result.sounds){
-//                    if (first){
-//                        first = false;
-//                    } else {
-//                        sounds.append(";");
-//                    }
-//                    sounds.append(sound.getId().toString());
-//                }
-//                data.putString("sounds", sounds.toString());
-//                MagiaBorras.LOGGER.info("Tenemos los sonidos: {}", sounds);
-//                PacketByteBuf.writeNbt(byteBuf, data);
-//            }
-//        };
-//    }
-
     public static final PacketCodec<ByteBuf, Spell> PACKET_CODEC = new PacketCodec<>() {
         public Spell decode(ByteBuf byteBuf) {
             NbtCompound data = PacketByteBuf.readNbt(byteBuf);
