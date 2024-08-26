@@ -9,7 +9,7 @@ import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
-import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 
@@ -74,6 +74,6 @@ public class DefaultSpell extends Spell {
                         magicUser.getEyeHeight(magicUser.getPose()) + varY, magicUser.getZ() + varZ, 0, 0, 0);
             }
         }
-        return new Result(TypedActionResult.success(wand), baseCooldown, List.of(sound));
+        return new Result(ActionResult.SUCCESS, baseCooldown, List.of(sound));
     }
 }

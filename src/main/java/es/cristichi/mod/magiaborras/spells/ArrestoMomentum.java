@@ -10,6 +10,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
@@ -34,6 +35,6 @@ public class ArrestoMomentum extends Spell {
                 livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, baseCooldown/2));
             }
         }
-        return new Result(TypedActionResult.success(wand), baseCooldown, List.of(MagiaBorras.ARRESTO_CAST));
+        return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.ARRESTO_CAST));
     }
 }

@@ -10,7 +10,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
-import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
@@ -36,9 +36,9 @@ public class WingardiumLeviosa extends Spell {
             } else {
                 ent.setVelocity(ent.getVelocity().add(new Vec3d(0, .3, 0)));
             }
-            return new Result(TypedActionResult.success(wand), baseCooldown, List.of(MagiaBorras.WING_LEV_CAST));
+            return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.WING_LEV_CAST));
         } else {
-            return new Result(TypedActionResult.fail(wand), 0, null);
+            return new Result(ActionResult.FAIL, 0, null);
         }
     }
 }

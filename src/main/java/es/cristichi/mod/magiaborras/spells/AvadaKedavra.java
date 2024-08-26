@@ -10,7 +10,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
-import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
@@ -33,10 +33,10 @@ public class AvadaKedavra extends Spell {
                 if (!(ent instanceof ArmorStandEntity)){
                     livingEntity.damage(magicUser.getDamageSources().magic(), livingEntity.getMaxHealth());
                 }
-                return new Result(TypedActionResult.success(wand), baseCooldown,
+                return new Result(ActionResult.SUCCESS, baseCooldown,
                         List.of(MagiaBorras.AVADA_CAST, SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER));
             }
         }
-        return new Result(TypedActionResult.fail(wand), 10, null);
+        return new Result(ActionResult.FAIL, 10, null);
     }
 }

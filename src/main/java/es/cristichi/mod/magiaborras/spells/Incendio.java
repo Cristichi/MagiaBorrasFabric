@@ -9,7 +9,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
-import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
@@ -28,7 +28,7 @@ public class Incendio extends Spell {
     @Override
     public Result use(ItemStack wand, WandProperties properties, PlayerEntity magicUser, World world, HitResult hit) {
         if (hit.getType().equals(HitResult.Type.MISS)){
-            return new Result(TypedActionResult.fail(wand), baseCooldown/5, List.of(MagiaBorras.INCENDIO_CAST));
+            return new Result(ActionResult.FAIL, baseCooldown/5, List.of(MagiaBorras.INCENDIO_CAST));
         }
         if (!world.isClient()){
             float power = properties.getPower(magicUser);
@@ -61,6 +61,6 @@ public class Incendio extends Spell {
             }
         }
 
-        return new Result(TypedActionResult.success(wand), baseCooldown, List.of(MagiaBorras.INCENDIO_CAST));
+        return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.INCENDIO_CAST));
     }
 }

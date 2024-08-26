@@ -1,17 +1,20 @@
 package es.cristichi.mod.magiaborras.items.wand;
 
 import es.cristichi.mod.magiaborras.MagiaBorras;
+import es.cristichi.mod.magiaborras.PlayerDataPS;
 import es.cristichi.mod.magiaborras.items.wand.prop.*;
+import es.cristichi.mod.magiaborras.networking.SpellHitPayload;
 import es.cristichi.mod.magiaborras.spells.Spell;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
-import es.cristichi.mod.magiaborras.PlayerDataPS;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipData;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.particle.DustColorTransitionParticleEffect;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -73,90 +76,66 @@ public class WandItem extends Item {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        // TODO: Bug, sometimes server does it and client doesn't, sometimes client does and server doesn't. :(
-        //  Perhaps this could be executed on server first and then send package to client if needed
-        //  I have tried and I could not figure it out. I think I would need to rething this entire
-        //  thing from scratch in order to fix this bug.
-        //  Impact: Not much, it syncs in the end, but it looks weird on client.
 
-        // TODO: Divide this in two: one for server to check everything and then tells clients
-        //  what happened (inside this method) and one for clients (outside of this method)
+        if (!world.isClient()){
+            ItemStack stack = user.getStackInHand(hand);
+            WandProperties prop = WandProperties.check(stack);
+            PlayerDataPS.PlayerMagicData data = MagiaBorras.playerDataPS.getOrGenerateData(user);
+            if (prop != null) {
+                if (prop.spell.getCastTypes().contains(SpellCastType.USE)) {
+                    if (user.isCreative() || prop.spell.getId().equals("") || data.containsSpell(prop.spell)) {
+                        Vec3d camPos = user.getCameraPosVec(0);
+                        Vec3d rotation = user.getRotationVec(0);
+                        Vec3d ray = camPos.add(rotation.x * MAX_DISTANCE, rotation.y * MAX_DISTANCE, rotation.z * MAX_DISTANCE);
+                        Box box = user.getBoundingBox().stretch(rotation.multiply(MAX_DISTANCE)).expand(1d, 1d, 1d);
+                        HitResult hit = ProjectileUtil.raycast(user, camPos, ray, box, prop.spell.getAffectableEntities(), MAX_DISTANCE);
 
-        ItemStack stack = user.getStackInHand(hand);
-        WandProperties prop = WandProperties.check(stack);
-        PlayerDataPS.PlayerMagicData data = MagiaBorras.playerDataPS.getOrGenerateData(user);
-
-        if (prop != null) {
-            if (prop.spell.getCastTypes().contains(SpellCastType.USE)) {
-                if (user.isCreative() || prop.spell.getId().equals("") || data.containsSpell(prop.spell)) {
-                    Vec3d camPos = user.getCameraPosVec(0);
-                    Vec3d rotation = user.getRotationVec(0);
-                    Vec3d ray = camPos.add(rotation.x * MAX_DISTANCE, rotation.y * MAX_DISTANCE, rotation.z * MAX_DISTANCE);
-                    Box box = user.getBoundingBox().stretch(rotation.multiply(MAX_DISTANCE)).expand(1d, 1d, 1d);
-                    HitResult hit = ProjectileUtil.raycast(user, camPos, ray, box, prop.spell.getAffectableEntities(), MAX_DISTANCE);
-
-                    if (hit == null) {
-                        hit = user.raycast(MAX_DISTANCE, 0, false);
-                        if (hit instanceof BlockHitResult blockHitResult){
-                            if (!prop.spell.getAffectableBlocks().test(world.getBlockState(blockHitResult.getBlockPos()))){
-                                hit = new HitResult(hit.getPos()) {
-                                    @Override
-                                    public Type getType() {
-                                        return Type.MISS;
-                                    }
-                                };
-                            }
-                        }
-                    }
-
-                    Spell.Result result = prop.spell.use(stack, prop, user, world, hit);
-
-                    // CD of the Spell. Spells can determine a CD based on the outcome, including failing.
-                    // For example, the avada gives you some CD on missing while Stupefy allows you to
-                    // hold right click no problemo.
-                    if (!user.isCreative()) {
-                        user.getItemCooldownManager().set(this, result.cooldown());
-                    }
-
-                    // If Spell is successfull
-                    if (result.actionResult().getResult().isAccepted()) {
-                        // Sound of the spell
-                        for (SoundEvent sound : result.sounds()) {
-                            user.playSound(sound, 1.0F, 1.0F);
-                        }
-
-                        // Particles of the Spell
-                        if (prop.spell.getParticlesColor() != null) {
-                            Vec3d objectivePos = null;
-                            if (hit.getPos() != null) {
-                                objectivePos = hit.getPos();
-                            }
-
-                            if (objectivePos != null) {
-                                DustColorTransitionParticleEffect particleEffect = new DustColorTransitionParticleEffect(
-                                        prop.spell.getParticlesColor(), prop.spell.getParticlesColor(), 0.6f
-                                );
-                                Vec3d current = user.getEyePos().add(0, -0.2, 0);
-
-                                while (current.distanceTo(objectivePos) > 1) {
-                                    Vec3d step = objectivePos.subtract(current).normalize().multiply(0.5);
-                                    world.addParticle(particleEffect, current.getX(), current.getY(), current.getZ(), 0, 0, 0);
-                                    world.addParticle(particleEffect, current.getX(), current.getY(), current.getZ(), 0, 0, 0);
-                                    world.addParticle(particleEffect, current.getX(), current.getY(), current.getZ(), 0, 0, 0);
-                                    current = current.add(step);
+                        if (hit == null) {
+                            hit = user.raycast(MAX_DISTANCE, 0, false);
+                            if (hit instanceof BlockHitResult blockHitResult){
+                                if (!prop.spell.getAffectableBlocks().test(world.getBlockState(blockHitResult.getBlockPos()))){
+                                    hit = new HitResult(hit.getPos()) {
+                                        @Override
+                                        public Type getType() {
+                                            return Type.MISS;
+                                        }
+                                    };
                                 }
                             }
                         }
-                    }
-                    return result.actionResult();
 
-                } else if (world.isClient()) {
-                    user.sendMessage(Text.translatable("magiaborras.spell.locked"));
-                    return TypedActionResult.fail(stack);
+                        Spell.Result result = prop.spell.use(stack, prop, user, world, hit);
+
+                        // CD of the Spell. Spells can determine a CD based on the outcome, including failing.
+                        // For example, the avada gives you some CD on missing while Stupefy allows you to
+                        // hold right click no problemo.
+                        if (!user.isCreative()) {
+                            user.getItemCooldownManager().set(this, result.cooldown());
+                        }
+
+                        // If Spell is successfull
+                        if (result.actionResult().isAccepted()) {
+                            // Sound of the spell
+                            for (SoundEvent sound : result.sounds()) {
+                                world.playSound(null, user.getBlockPos(), sound, SoundCategory.PLAYERS, 1f, 1f);
+                            }
+
+                            // Particles of the Spell
+                            if (prop.spell.getParticlesColor() != null){
+                                ServerPlayNetworking.send((ServerPlayerEntity) user,
+                                        new SpellHitPayload(user.getEyePos().add(0, -0.2, 0), hit.getPos(), prop.spell.getParticlesColor()));
+                            }
+                        }
+                        return new TypedActionResult<>(result.actionResult(), stack);
+
+                    } else {
+                        user.sendMessage(Text.translatable("magiaborras.spell.locked"));
+                        return TypedActionResult.fail(stack);
+                    }
                 }
+            } else {
+                user.sendMessage(Text.translatable("item.magiaborras.wand.broken"));
             }
-        } else if (world.isClient()){
-            user.sendMessage(Text.translatable("item.magiaborras.wand.broken"));
         }
         return TypedActionResult.fail(user.getStackInHand(hand));
     }

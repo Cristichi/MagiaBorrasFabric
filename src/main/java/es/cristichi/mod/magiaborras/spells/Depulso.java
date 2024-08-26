@@ -7,7 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
-import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
@@ -29,8 +29,8 @@ public class Depulso extends Spell {
             Entity ent = hitEnt.getEntity();
             //ent.move(MovementType.PLAYER, ent.getPos().subtract(magicUser.getPos()).normalize().multiply(power*5));
             ent.addVelocity(ent.getPos().subtract(magicUser.getPos()).normalize().multiply(power*5));
-            return new Result(TypedActionResult.success(wand), baseCooldown, List.of(MagiaBorras.DEPULSO_CAST));
+            return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.DEPULSO_CAST));
         }
-        return new Result(TypedActionResult.fail(wand), 0, new ArrayList<>(0));
+        return new Result(ActionResult.FAIL, 0, new ArrayList<>(0));
     }
 }

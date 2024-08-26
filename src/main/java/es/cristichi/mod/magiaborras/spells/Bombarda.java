@@ -6,7 +6,7 @@ import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
-import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.AdvancedExplosionBehavior;
@@ -27,6 +27,6 @@ public class Bombarda extends Spell {
         world.createExplosion(null, world.getDamageSources().mobAttack(magicUser),
                 new AdvancedExplosionBehavior(true, true, Optional.of(0.5f * power), Optional.empty()),
                 hit.getPos(), 4f * power + 1f, false, World.ExplosionSourceType.TNT);
-        return new Result(TypedActionResult.success(wand), baseCooldown, List.of(MagiaBorras.BOMBARDA_CAST));
+        return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.BOMBARDA_CAST));
     }
 }

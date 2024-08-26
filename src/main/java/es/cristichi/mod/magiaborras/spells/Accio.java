@@ -8,7 +8,7 @@ import net.minecraft.entity.MovementType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
-import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
@@ -37,9 +37,9 @@ public class Accio extends Spell {
             ent.move(MovementType.PLAYER, velocity);
             ent.move(MovementType.PLAYER, velocity);
             ent.setNoGravity(gravity);
-            return new Result(TypedActionResult.success(wand), baseCooldown, List.of(MagiaBorras.ACCIO_CAST));
+            return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.ACCIO_CAST));
         } else {
-            return new Result(TypedActionResult.fail(wand), 0, null);
+            return new Result(ActionResult.FAIL, 0, null);
         }
     }
 }

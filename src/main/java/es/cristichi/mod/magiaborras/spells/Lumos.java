@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
-import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 
@@ -35,6 +35,6 @@ public class Lumos extends Spell {
 //        if (!world.isClient()) {
             properties.apply(wand);
 //        }
-        return new Result(TypedActionResult.success(wand), baseCooldown, sounds);
+        return new Result(ActionResult.SUCCESS, baseCooldown, sounds);
     }
 }

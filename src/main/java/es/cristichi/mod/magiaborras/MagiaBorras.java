@@ -8,6 +8,7 @@ import es.cristichi.mod.magiaborras.items.SpellBook;
 import es.cristichi.mod.magiaborras.items.wand.WandItem;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.networking.SpellChangeInHandPayload;
+import es.cristichi.mod.magiaborras.networking.SpellHitPayload;
 import es.cristichi.mod.magiaborras.spells.*;
 import es.cristichi.mod.magiaborras.uniform.ModArmorMaterials;
 import es.cristichi.mod.magiaborras.uniform.SchoolUniform;
@@ -143,6 +144,7 @@ public class MagiaBorras implements ModInitializer {
 
     // Networking
     public static final Identifier NET_CHANGE_SPELL_ID = Identifier.of(MOD_ID, "change_spell");
+    public static final Identifier NET_SPELL_HIT_ID = Identifier.of(MOD_ID, "spell_hit");
 
     @Override
     public void onInitialize() {
@@ -224,10 +226,15 @@ public class MagiaBorras implements ModInitializer {
         Registry.register(Registries.SOUND_EVENT, SOUND_INCENDIO_ID, INCENDIO_CAST);
 
         // Networking
+
+        //  Spell Hit
+        PayloadTypeRegistry.playS2C().register(SpellHitPayload.ID, SpellHitPayload.CODEC);
+
+        //  Spell Change
         PayloadTypeRegistry.playC2S().register(SpellChangeInHandPayload.ID, SpellChangeInHandPayload.CODEC);
         ServerPlayNetworking.registerGlobalReceiver(SpellChangeInHandPayload.ID, (payload, context) -> {
-           Spell spell = payload.spell();
-           ServerPlayerEntity magicUser = context.player();
+            Spell spell = payload.spell();
+            ServerPlayerEntity magicUser = context.player();
 
             ItemStack hand = magicUser.getStackInHand(Hand.MAIN_HAND);
             WandProperties prop = WandProperties.check(hand);

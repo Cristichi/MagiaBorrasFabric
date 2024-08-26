@@ -9,7 +9,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
-import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
@@ -33,7 +33,7 @@ public class Alohomora extends Spell {
                 if (!world.isClient()) {
                     door.setOpen(magicUser, world, blockState, hitLego.getBlockPos(), !door.isOpen(blockState));
                 }
-                return new Result(TypedActionResult.success(wand), baseCooldown, List.of(MagiaBorras.ALOHOMORA_CAST));
+                return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.ALOHOMORA_CAST));
             } else if (blockState.getBlock() instanceof TrapdoorBlock) {
                 if (!world.isClient()) {
                     // Code copied from trapdoor.flip because it's private for some fucking reason.
@@ -50,9 +50,9 @@ public class Alohomora extends Spell {
                     world.emitGameEvent(magicUser,
                             blockState.get(TrapdoorBlock.OPEN) ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, hitLego.getBlockPos());
                 }
-                return new Result(TypedActionResult.success(wand), baseCooldown, List.of(MagiaBorras.ALOHOMORA_CAST));
+                return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.ALOHOMORA_CAST));
             }
         }
-        return new Result(TypedActionResult.fail(wand), 0, null);
+        return new Result(ActionResult.FAIL, 0, null);
     }
 }
