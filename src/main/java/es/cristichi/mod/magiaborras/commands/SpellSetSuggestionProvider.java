@@ -16,9 +16,15 @@ public class SpellSetSuggestionProvider implements SuggestionProvider<ServerComm
     public CompletableFuture<Suggestions> getSuggestions(CommandContext<ServerCommandSource> context, SuggestionsBuilder builder) {
         if (context.getSource().isExecutedByPlayer()) {
             try {
-                PlayerDataPS.PlayerMagicData data = MagiaBorras.playerDataPS.getOrGenerateData(context.getSource().getPlayerOrThrow());
-                for (String id : data.getUnlockedSpells()){
-                    builder.suggest(id);
+                if (context.getSource().getPlayerOrThrow().isCreative()){
+                    for (String id : MagiaBorras.SPELLS.keySet()){
+                        builder.suggest(id);
+                    }
+                } else {
+                    PlayerDataPS.PlayerMagicData data = MagiaBorras.playerDataPS.getOrGenerateData(context.getSource().getPlayerOrThrow());
+                    for (String id : data.getUnlockedSpells()){
+                        builder.suggest(id);
+                    }
                 }
             } catch (CommandSyntaxException e) {
             }
