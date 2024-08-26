@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.explosion.AdvancedExplosionBehavior;
 import org.joml.Vector3f;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +24,9 @@ public class Bombarda extends Spell {
 
     @Override
     public Result cast(ItemStack wand, WandProperties properties, ServerPlayerEntity magicUser, World world, HitResult hit) {
+        if (hit.getType().equals(HitResult.Type.MISS)){
+            return new Result(ActionResult.FAIL, baseCooldown/5, new ArrayList<>());
+        }
         float power = properties.getPower(magicUser);
         world.createExplosion(null, world.getDamageSources().mobAttack(magicUser),
                 new AdvancedExplosionBehavior(true, true, Optional.of(0.5f * power), Optional.empty()),
