@@ -4,8 +4,8 @@ import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.EntityHitResult;
@@ -23,7 +23,7 @@ public class Depulso extends Spell {
     }
 
     @Override
-    public Result use(ItemStack wand, WandProperties properties, PlayerEntity magicUser, World world, HitResult hit) {
+    public Result cast(ItemStack wand, WandProperties properties, ServerPlayerEntity magicUser, World world, HitResult hit) {
         float power = properties.getPower(magicUser);
         if (hit instanceof EntityHitResult hitEnt){
             Entity ent = hitEnt.getEntity();

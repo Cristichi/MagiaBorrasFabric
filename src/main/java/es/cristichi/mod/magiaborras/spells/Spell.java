@@ -7,11 +7,11 @@ import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -103,8 +103,8 @@ public abstract class Spell {
         return partColor;
     }
 
-    public abstract Spell.Result use(ItemStack wand, WandProperties properties,
-                                     PlayerEntity magicUser, World world, HitResult hit);
+    public abstract Spell.Result cast(ItemStack wand, WandProperties properties,
+                                      ServerPlayerEntity magicUser, World world, HitResult hit);
 
     public record Result(ActionResult actionResult, int cooldown, List<SoundEvent> sounds) {
     }
@@ -166,12 +166,12 @@ public abstract class Spell {
 //        };
 //    }
 
-    public static final PacketCodec<ByteBuf, Spell> PACKET_CODEC = new PacketCodec<ByteBuf, Spell>() {
+    public static final PacketCodec<ByteBuf, Spell> PACKET_CODEC = new PacketCodec<>() {
         public Spell decode(ByteBuf byteBuf) {
             NbtCompound data = PacketByteBuf.readNbt(byteBuf);
-            if (data != null){
+            if (data != null) {
                 String spell = data.getString("spell");
-                if (MagiaBorras.SPELLS.containsKey(spell)){
+                if (MagiaBorras.SPELLS.containsKey(spell)) {
                     return MagiaBorras.SPELLS.get(spell);
                 }
             }

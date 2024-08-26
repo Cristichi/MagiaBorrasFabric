@@ -4,9 +4,9 @@ import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
 import net.minecraft.block.*;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -25,7 +25,7 @@ public class Alohomora extends Spell {
     }
 
     @Override
-    public Result use(ItemStack wand, WandProperties properties, PlayerEntity magicUser, World world, HitResult hit) {
+    public Result cast(ItemStack wand, WandProperties properties, ServerPlayerEntity magicUser, World world, HitResult hit) {
         if (hit.getType() == HitResult.Type.BLOCK) {
             BlockHitResult hitLego = (BlockHitResult) hit;
             BlockState blockState = world.getBlockState(hitLego.getBlockPos());

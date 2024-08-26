@@ -3,8 +3,8 @@ package es.cristichi.mod.magiaborras.spells;
 import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.HitResult;
@@ -22,7 +22,7 @@ public class Bombarda extends Spell {
     }
 
     @Override
-    public Result use(ItemStack wand, WandProperties properties, PlayerEntity magicUser, World world, HitResult hit) {
+    public Result cast(ItemStack wand, WandProperties properties, ServerPlayerEntity magicUser, World world, HitResult hit) {
         float power = properties.getPower(magicUser);
         world.createExplosion(null, world.getDamageSources().mobAttack(magicUser),
                 new AdvancedExplosionBehavior(true, true, Optional.of(0.5f * power), Optional.empty()),

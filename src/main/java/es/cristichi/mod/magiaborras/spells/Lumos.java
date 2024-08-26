@@ -3,8 +3,8 @@ package es.cristichi.mod.magiaborras.spells;
 import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -21,7 +21,7 @@ public class Lumos extends Spell {
     }
 
     @Override
-    public Result use(ItemStack wand, WandProperties properties, PlayerEntity magicUser, World world, HitResult hit) {
+    public Result cast(ItemStack wand, WandProperties properties, ServerPlayerEntity magicUser, World world, HitResult hit) {
         // TODO: Wait for 1.21 Dynamic Lighs and use it to complete Lumos. Logic is already here, just make it shine!
         //  https://modrinth.com/mod/lambdynamiclights
         List<SoundEvent> sounds;

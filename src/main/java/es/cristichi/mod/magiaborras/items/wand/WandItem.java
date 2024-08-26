@@ -107,7 +107,7 @@ public class WandItem extends Item {
                             }
                         }
 
-                        Spell.Result result = prop.spell.use(stack, prop, user, world, hit);
+                        Spell.Result result = prop.spell.cast(stack, prop, (ServerPlayerEntity) user, world, hit);
 
                         // CD of the Spell. Spells can determine a CD based on the outcome, including failing.
                         // For example, the avada gives you some CD on missing while Stupefy allows you to

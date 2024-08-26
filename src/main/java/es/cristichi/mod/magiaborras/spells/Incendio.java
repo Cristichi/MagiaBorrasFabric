@@ -6,8 +6,8 @@ import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.EntityHitResult;
@@ -26,7 +26,7 @@ public class Incendio extends Spell {
     }
 
     @Override
-    public Result use(ItemStack wand, WandProperties properties, PlayerEntity magicUser, World world, HitResult hit) {
+    public Result cast(ItemStack wand, WandProperties properties, ServerPlayerEntity magicUser, World world, HitResult hit) {
         if (hit.getType().equals(HitResult.Type.MISS)){
             return new Result(ActionResult.FAIL, baseCooldown/5, List.of(MagiaBorras.INCENDIO_CAST));
         }

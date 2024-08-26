@@ -6,8 +6,8 @@ import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.ArmorStandEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.EntityHitResult;
@@ -24,7 +24,7 @@ public class Diffindo extends Spell {
     }
 
     @Override
-    public Result use(ItemStack wand, WandProperties properties, PlayerEntity magicUser, World world, HitResult hit) {
+    public Result cast(ItemStack wand, WandProperties properties, ServerPlayerEntity magicUser, World world, HitResult hit) {
         if (hit.getType() == HitResult.Type.ENTITY) {
             EntityHitResult hitEnt = (EntityHitResult) hit;
             Entity ent = hitEnt.getEntity();
