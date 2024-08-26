@@ -6,6 +6,7 @@ import es.cristichi.mod.magiaborras.items.wand.prop.*;
 import es.cristichi.mod.magiaborras.networking.SpellHitPayload;
 import es.cristichi.mod.magiaborras.spells.Spell;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
@@ -14,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipData;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -28,6 +30,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -122,8 +125,13 @@ public class WandItem extends Item {
 
                             // Particles of the Spell
                             if (prop.spell.getParticlesColor() != null){
-                                ServerPlayNetworking.send((ServerPlayerEntity) user,
-                                        new SpellHitPayload(user.getEyePos().add(0, -0.2, 0), hit.getPos(), prop.spell.getParticlesColor()));
+                                Collection<ServerPlayerEntity> players = PlayerLookup.tracking((ServerWorld) world, user.getBlockPos());
+                                for (ServerPlayerEntity player : players){
+                                    ServerPlayNetworking.send(player, new SpellHitPayload(
+                                        user.getEyePos().add(0, -0.2, 0),
+                                        hit.getPos(),
+                                        prop.spell.getParticlesColor()));
+                                }
                             }
                         }
                         return new TypedActionResult<>(result.actionResult(), stack);
