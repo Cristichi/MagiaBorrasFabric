@@ -48,11 +48,9 @@ public class MagiaBorrasClient implements ClientModInitializer {
                 Vec3d current = payload.eyeSource();
 
                 while (current.distanceTo(payload.hit()) > 1) {
-                    context.client().world.addParticle(particleEffect, current.getX(), current.getY(), current.getZ(), 0, 0, 0);
-                    context.client().world.addParticle(particleEffect, current.getX(), current.getY(), current.getZ(), 0, 0, 0);
-                    context.client().world.addParticle(particleEffect, current.getX(), current.getY(), current.getZ(), 0, 0, 0);
+                    Vec3d step = payload.hit().subtract(current).normalize().multiply(0.1);
+                    context.client().world.addParticle(particleEffect, current.getX(), current.getY(), current.getZ(), step.x, step.y, step.z);
 
-                    Vec3d step = payload.hit().subtract(current).normalize().multiply(0.5);
                     current = current.add(step);
                 }
             }
