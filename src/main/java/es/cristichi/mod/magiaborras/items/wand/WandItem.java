@@ -124,7 +124,7 @@ public class WandItem extends Item {
                         Spell.Result result = prop.spell.cast(stack, prop, (ServerPlayerEntity) user, world, hit);
 
                         // CD of the Spell. Spells can determine a CD based on the outcome, including failing.
-                        // For example, the avada gives you some CD on missing while Stupefy allows you to
+                        // For example, the avada gives you some CD on missing while Diffindo allows you to
                         // hold right click no problemo.
                         if (!user.isCreative()) {
                             user.getItemCooldownManager().set(this, result.cooldown());
