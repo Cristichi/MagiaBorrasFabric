@@ -1,4 +1,4 @@
-package es.cristichi.mod.magiaborras.networking;
+package es.cristichi.mod.magiaborras.spells.net;
 
 import es.cristichi.mod.magiaborras.MagiaBorras;
 import net.minecraft.network.RegistryByteBuf;
