@@ -3,7 +3,7 @@ package es.cristichi.mod.magiaborras.screens;
 import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.perdata.PlayerDataPS;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
-import es.cristichi.mod.magiaborras.networking.SpellChangeInHandPayload;
+import es.cristichi.mod.magiaborras.spells.net.SpellChangeInHandPayload;
 import es.cristichi.mod.magiaborras.spells.Spell;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.gui.screen.Screen;
