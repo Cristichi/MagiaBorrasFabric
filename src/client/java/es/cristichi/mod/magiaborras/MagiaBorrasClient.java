@@ -1,10 +1,13 @@
 package es.cristichi.mod.magiaborras;
 
 import es.cristichi.mod.magiaborras.floo.fireplace.packets.FlooFireRenamePayload;
+import es.cristichi.mod.magiaborras.floo.fireplace.packets.FlooFireTPPayload;
+import es.cristichi.mod.magiaborras.floo.fireplace.packets.FlooFiresMenuPayload;
 import es.cristichi.mod.magiaborras.items.wand.WandItem;
+import es.cristichi.mod.magiaborras.screens.FlooMenuScreen;
 import es.cristichi.mod.magiaborras.screens.FlooNameScreen;
-import es.cristichi.mod.magiaborras.spells.net.SpellHitPayload;
 import es.cristichi.mod.magiaborras.screens.SpellListScreen;
+import es.cristichi.mod.magiaborras.spells.net.SpellHitPayload;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -75,6 +78,20 @@ public class MagiaBorrasClient implements ClientModInitializer {
             }
         }));
 
-        // TODO: Floo Fireplace menu to TP receive + send
+
+        // Floo Fireplace menu
+        ClientPlayNetworking.registerGlobalReceiver(FlooFiresMenuPayload.ID, (payload, context) -> context.client().execute(() -> {
+            if (context.client() != null){
+                context.client().setScreen(new FlooMenuScreen(payload.fireplaces()) {
+                    @Override
+                    public void close() {
+                        if (getSelected() != null){
+                            ClientPlayNetworking.send(new FlooFireTPPayload(getSelected()));
+                        }
+                        super.close();
+                    }
+                });
+            }
+        }));
     }
 }

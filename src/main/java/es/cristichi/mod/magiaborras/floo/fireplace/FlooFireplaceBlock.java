@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.floo.FlooNetwork;
 import es.cristichi.mod.magiaborras.floo.fireplace.packets.FlooFireRenamePayload;
+import es.cristichi.mod.magiaborras.floo.fireplace.packets.FlooFiresMenuPayload;
 import es.cristichi.mod.magiaborras.items.FlooPowderItem;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockEntityProvider;
@@ -13,9 +14,10 @@ import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particle.DustColorTransitionParticleEffect;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemActionResult;
@@ -23,8 +25,13 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
+
+import java.util.HashMap;
 
 public class FlooFireplaceBlock extends BlockWithEntity implements BlockEntityProvider {
+    public static DustColorTransitionParticleEffect tpParticles = new DustColorTransitionParticleEffect(new Vector3f(0, 255, 0),
+            new Vector3f(100, 255, 100), 1f);
     public FlooFireplaceBlock(Settings settings) {
         super(settings);
     }
@@ -52,25 +59,24 @@ public class FlooFireplaceBlock extends BlockWithEntity implements BlockEntityPr
                 return ActionResult.SUCCESS;
             }
         }
-        return ActionResult.PASS;
+        return ActionResult.FAIL;
     }
 
     @Override
     protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (stack.getItem() instanceof FlooPowderItem){
-            BlockEntity be = world.getBlockEntity(pos);
-            if (world.isClient()){
-                if (be instanceof FlooFireplaceBlockE){
-                    player.playSound(SoundEvents.BLOCK_CAMPFIRE_CRACKLE);
-                    return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-                }
-            } else {
+        if (stack.getItem() instanceof FlooPowderItem && !world.isClient()){
+            if (pos.equals(player.getBlockPos().down())){
+                BlockEntity be = world.getBlockEntity(pos);
                 if (be instanceof FlooFireplaceBlockE fireplace){
-                    // TODO send package of FlooFiresMenuPayload
                     FlooNetwork flooNetwork = FlooNetwork.getNetworkOfWorld((ServerWorld) world);
-
+                    HashMap<BlockPos, String> fireplaces = new HashMap<>(flooNetwork.fireplaces);
+                    fireplaces.remove(pos);
+                    ServerPlayNetworking.send((ServerPlayerEntity) player, new FlooFiresMenuPayload(fireplaces));
                     return ItemActionResult.SUCCESS;
                 }
+            } else {
+                player.sendMessage(Text.translatable("block.magiaborras.floo_fireplace.need_ontop"));
+                return ItemActionResult.FAIL;
             }
         }
         return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;

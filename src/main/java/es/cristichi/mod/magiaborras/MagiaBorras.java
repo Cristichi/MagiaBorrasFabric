@@ -5,6 +5,8 @@ import es.cristichi.mod.magiaborras.floo.FlooNetwork;
 import es.cristichi.mod.magiaborras.floo.fireplace.FlooFireplaceBlock;
 import es.cristichi.mod.magiaborras.floo.fireplace.FlooFireplaceBlockE;
 import es.cristichi.mod.magiaborras.floo.fireplace.packets.FlooFireRenamePayload;
+import es.cristichi.mod.magiaborras.floo.fireplace.packets.FlooFireTPPayload;
+import es.cristichi.mod.magiaborras.floo.fireplace.packets.FlooFiresMenuPayload;
 import es.cristichi.mod.magiaborras.items.FlooPowderItem;
 import es.cristichi.mod.magiaborras.items.MoonStone;
 import es.cristichi.mod.magiaborras.items.SpellBook;
@@ -23,12 +25,15 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.*;
+import net.minecraft.network.packet.s2c.play.ParticleS2CPacket;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -46,6 +51,7 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Optional;
@@ -267,6 +273,7 @@ public class MagiaBorras implements ModInitializer {
         PayloadTypeRegistry.playC2S().register(FlooFireRenamePayload.ID, FlooFireRenamePayload.CODEC);
         ServerPlayNetworking.registerGlobalReceiver(FlooFireRenamePayload.ID, (payload, context) -> {
             BlockEntity be = context.player().getWorld().getBlockEntity(payload.block());
+
             if (be instanceof FlooFireplaceBlockE flooFireplaceBlockE){
                 flooFireplaceBlockE.setName(payload.name());
                 BlockState bs = context.player().getWorld().getBlockState(payload.block());
@@ -279,6 +286,40 @@ public class MagiaBorras implements ModInitializer {
                     flooNetwork.unregister(payload.block());
                 }
             }
+        });
+
+        // Floo Fireplace menu
+        PayloadTypeRegistry.playS2C().register(FlooFiresMenuPayload.ID, FlooFiresMenuPayload.CODEC);
+
+        // Floo Fireplace TP
+        PayloadTypeRegistry.playC2S().register(FlooFireTPPayload.ID, FlooFireTPPayload.CODEC);
+        ServerPlayNetworking.registerGlobalReceiver(FlooFireTPPayload.ID, (payload, context) -> {
+
+            PlayerInventory inv = context.player().getInventory();
+            ItemStack hand = inv.getMainHandStack();
+            if (hand.getItem() instanceof FlooPowderItem){
+
+                if (context.player().teleport(payload.objective().getX()+0.5, payload.objective().getY()+1, payload.objective().getZ()+0.5, true)){
+                    hand.decrement(1);
+
+                    Collection<ServerPlayerEntity> players = PlayerLookup.tracking(context.player().getServerWorld(), context.player().getBlockPos());
+                    ParticleS2CPacket packetOrigin = new ParticleS2CPacket(FlooFireplaceBlock.tpParticles, false,
+                            context.player().getX()+0.5, context.player().getY()+1.5, context.player().getZ()+0.5,
+                            0.5f, 0.5f, 0.5f, 0f, 100);
+                    ParticleS2CPacket packetDest = new ParticleS2CPacket(FlooFireplaceBlock.tpParticles, false,
+                            payload.objective().getX()+0.5, payload.objective().getY()+1.5, payload.objective().getZ()+0.5,
+                            0.5f, 0.5f, 0.5f, 0f, 100);
+                    for (ServerPlayerEntity player : players){
+                        player.networkHandler.sendPacket(packetOrigin);
+                        player.networkHandler.sendPacket(packetDest);
+                    }
+                } else {
+                    context.player().sendMessage(Text.translatable("magiaborras.screen.floonet.cant_tp"));
+                }
+
+
+            }
+
         });
 
         LOGGER.info("Loaded, against all odds.");

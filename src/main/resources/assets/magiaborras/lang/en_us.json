@@ -10,6 +10,7 @@
   "block.magiaborras.moonstone_ore": "Moonstone Ore",
   "block.magiaborras.deepslate_moonstone_ore": "Deepslate Moonstone Ore",
   "block.magiaborras.floo_fireplace": "Floo Fireplace",
+  "block.magiaborras.floo_fireplace.need_ontop": "Put yourself on top of the fireplace to use the floo powder.",
 
 
   "item.magiaborras.school_helmet": "School's Helmet",
@@ -167,5 +168,8 @@
   "magiaborras.screen.flooname.unregister": "Unregister Fireplace",
   "magiaborras.screen.flooname.unregister.tooltip": "It registers this Floo Fireplace into the Floo Network of this world.",
 
-  "magiaborras.screen.floonet.title": "Floo Network"
+  "magiaborras.screen.floonet.title": "Floo Network",
+  "magiaborras.screen.floonet.subtitle": "Teleport, where? Click ESC to cancel.",
+  "magiaborras.screen.floonet.btn": "%s (%d, %d, %d)",
+  "magiaborras.screen.floonet.cant_tp": "The chosen Floo Fireplace is unsafe to teleport to. ¿Is it obstructed?"
 }

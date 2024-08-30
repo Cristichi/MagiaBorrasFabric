@@ -9,6 +9,7 @@
   "block.magiaborras.moonstone_ore": "Mena de Piedraluna",
   "block.magiaborras.deepslate_moonstone_ore": "Mena de Piedraluna de pizzarra profunda",
   "block.magiaborras.floo_fireplace": "Chimenea Flu",
+  "block.magiaborras.floo_fireplace.need_ontop": "Ponte encima de la chimenea para usar los polvos flu.",
 
   "item.magiaborras.school_helmet": "Casco de la Escuela",
   "item.magiaborras.school_chestplate": "Peto de la Escuela",
@@ -165,5 +166,8 @@
   "magiaborras.screen.flooname.unregister": "Dar de baja en la Red Flu",
   "magiaborras.screen.flooname.unregister.tooltip": "Elimina esta Chimenea Flu de la Red Flu de tu mundo. Siempre puedes volver a darla de alta después.",
 
-  "magiaborras.screen.floonet.title": "Red Flu"
+  "magiaborras.screen.floonet.title": "Red Flu",
+  "magiaborras.screen.floonet.subtitle": "¿Dónde vamos? Pulsa ESCAPE para cancelar.",
+  "magiaborras.screen.floonet.btn": "%s (%d, %d, %d)",
+  "magiaborras.screen.floonet.cant_tp": "La Chimenea Flu de destino es insegura. ¿Algún bloque la tapa?"
 }
