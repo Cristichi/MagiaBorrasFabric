@@ -38,7 +38,7 @@ public class SpellBook extends Item {
         PlayerDataPS.PlayerMagicData data = MagiaBorras.playerDataPS.getOrGenerateData(user);
         if (!world.isClient()){
             if (data.addSpell(spell)){
-                MagiaBorras.playerDataPS.setData(user, data);
+                MagiaBorras.playerDataPS.updateUserData(user, data);
                 user.getStackInHand(hand).decrementUnlessCreative(1, user);
                 user.sendMessage(Text.translatable("item.magiaborras.spellbook.consumed", spell.getName()));
                 world.playSound(null, user.getBlockPos(), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 1f, 1f);

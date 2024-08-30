@@ -26,7 +26,7 @@ public class FlooNameScreen extends Screen {
         return registered;
     }
 
-    public TextWidget txtTitle;
+    public TextWidget txtTitle, txtRegistered;
     public TextFieldWidget inTxtName;
     public ButtonWidget btnRegister, btnUnregister;
 
@@ -47,7 +47,15 @@ public class FlooNameScreen extends Screen {
         txtTitle.setMessage(Text.translatable("magiaborras.screen.flooname.title"));
         addDrawableChild(txtTitle);
 
-        inTxtName = new TextFieldWidget(textRenderer, xMargin, standardHeigh+yMargins*2, fullWidth, standardHeigh,
+        txtRegistered = new TextWidget(0, standardHeigh+yMargins*2, width, standardHeigh,
+                Text.translatable("magiaborras.screen.flooname.registered"), textRenderer);
+        if (!registered){
+            txtRegistered.setMessage(Text.translatable("magiaborras.screen.flooname.not_registered"));
+        }
+        txtRegistered.alignCenter();
+        addDrawableChild(txtRegistered);
+
+        inTxtName = new TextFieldWidget(textRenderer, xMargin, standardHeigh*2+yMargins*3, fullWidth, standardHeigh,
                 null, Text.of(name));
         inTxtName.setMaxLength(100);
         inTxtName.setText(name);
@@ -60,9 +68,10 @@ public class FlooNameScreen extends Screen {
                             name = inTxtName.getText();
                             close();
                         })
-                .dimensions(xMargin, standardHeigh*2+yMargins*3, fullWidth, standardHeigh)
+                .dimensions(xMargin, standardHeigh*3+yMargins*4, fullWidth, standardHeigh)
                 .tooltip(Tooltip.of(Text.translatable("magiaborras.screen.flooname.register.tooltip")))
                 .build();
+
 
         addDrawableChild(btnRegister);
 
@@ -72,10 +81,11 @@ public class FlooNameScreen extends Screen {
                             name = inTxtName.getText();
                             close();
                         })
-                .dimensions(xMargin, standardHeigh*3+yMargins*4, fullWidth, standardHeigh)
+                .dimensions(xMargin, standardHeigh*4+yMargins*5, fullWidth, standardHeigh)
                 .tooltip(Tooltip.of(Text.translatable("magiaborras.screen.flooname.register.tooltip")))
                 .build();
 
         addDrawableChild(btnUnregister);
+
     }
 }

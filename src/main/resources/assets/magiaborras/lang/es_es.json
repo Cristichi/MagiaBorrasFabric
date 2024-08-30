@@ -157,6 +157,8 @@
   "magiaborras.screen.spells.name_locked": "(Bloqueado) %s",
 
   "magiaborras.screen.flooname.title": "Chimenea Flu",
+  "magiaborras.screen.flooname.registered": "Registrada en la Red Flu",
+  "magiaborras.screen.flooname.not_registered": "No registrada en la Red Flu",
   "magiaborras.screen.flooname.name_placeh": "Chimenea de %s",
   "magiaborras.screen.flooname.register": "Dar de alta en la Red Flu",
   "magiaborras.screen.flooname.register.tooltip": "Registra esta Chimenea Flu en la Red Flu de este mundo.",

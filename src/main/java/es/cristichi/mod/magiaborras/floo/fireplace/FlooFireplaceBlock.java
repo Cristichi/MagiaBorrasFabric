@@ -2,8 +2,9 @@ package es.cristichi.mod.magiaborras.floo.fireplace;
 
 import com.mojang.serialization.MapCodec;
 import es.cristichi.mod.magiaborras.MagiaBorras;
-import es.cristichi.mod.magiaborras.items.FlooPowderItem;
+import es.cristichi.mod.magiaborras.floo.FlooNetwork;
 import es.cristichi.mod.magiaborras.floo.fireplace.packets.FlooFireRenamePayload;
+import es.cristichi.mod.magiaborras.items.FlooPowderItem;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockRenderType;
@@ -13,8 +14,8 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemActionResult;
@@ -29,13 +30,25 @@ public class FlooFireplaceBlock extends BlockWithEntity implements BlockEntityPr
     }
 
     @Override
+    protected void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        BlockEntity be = world.getBlockEntity(pos);
+        if (be instanceof FlooFireplaceBlockE fireplace){
+            FlooNetwork flooNetwork = FlooNetwork.getNetworkOfWorld((ServerWorld) world);
+            flooNetwork.unregister(fireplace.getPos());
+        }
+        super.onStateReplaced(state, world, pos, newState, moved);
+    }
+
+    @Override
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         if (world.isClient()){
             return ActionResult.SUCCESS;
         } else {
             BlockEntity be = world.getBlockEntity(pos);
             if (be instanceof FlooFireplaceBlockE fireplace){
-                ServerPlayNetworking.send((ServerPlayerEntity) player, new FlooFireRenamePayload(pos, fireplace.getName(), true));
+                FlooNetwork flooNetwork = FlooNetwork.getNetworkOfWorld((ServerWorld) world);
+                ServerPlayNetworking.send((ServerPlayerEntity) player,
+                        new FlooFireRenamePayload(pos, fireplace.getName(), flooNetwork.isRegistered(pos)));
                 return ActionResult.SUCCESS;
             }
         }
@@ -49,12 +62,13 @@ public class FlooFireplaceBlock extends BlockWithEntity implements BlockEntityPr
             if (world.isClient()){
                 if (be instanceof FlooFireplaceBlockE){
                     player.playSound(SoundEvents.BLOCK_CAMPFIRE_CRACKLE);
-                    return ItemActionResult.SUCCESS;
+                    return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
                 }
             } else {
                 if (be instanceof FlooFireplaceBlockE fireplace){
-                    player.sendMessage(Text.of(fireplace.getName()));
                     // TODO send package of FlooFiresMenuPayload
+                    FlooNetwork flooNetwork = FlooNetwork.getNetworkOfWorld((ServerWorld) world);
+
                     return ItemActionResult.SUCCESS;
                 }
             }

@@ -159,6 +159,8 @@
   "magiaborras.screen.spells.name_locked": "(Locked) %s",
 
   "magiaborras.screen.flooname.title": "Floo Fireplace",
+  "magiaborras.screen.flooname.registered": "Currently in the Floo Network",
+  "magiaborras.screen.flooname.not_registered": "Currently not in the Floo Network",
   "magiaborras.screen.flooname.name_placeh": "%s's Fireplace",
   "magiaborras.screen.flooname.register": "Register Fireplace",
   "magiaborras.screen.flooname.register.tooltip": "It registers this Floo Fireplace into the Floo Network of this world.",

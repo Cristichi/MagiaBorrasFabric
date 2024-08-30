@@ -1,18 +1,19 @@
 package es.cristichi.mod.magiaborras;
 
 import es.cristichi.mod.magiaborras.commands.SpellSetCommand;
-import es.cristichi.mod.magiaborras.items.FlooPowderItem;
+import es.cristichi.mod.magiaborras.floo.FlooNetwork;
 import es.cristichi.mod.magiaborras.floo.fireplace.FlooFireplaceBlock;
 import es.cristichi.mod.magiaborras.floo.fireplace.FlooFireplaceBlockE;
 import es.cristichi.mod.magiaborras.floo.fireplace.packets.FlooFireRenamePayload;
+import es.cristichi.mod.magiaborras.items.FlooPowderItem;
 import es.cristichi.mod.magiaborras.items.MoonStone;
 import es.cristichi.mod.magiaborras.items.SpellBook;
 import es.cristichi.mod.magiaborras.items.wand.WandItem;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
-import es.cristichi.mod.magiaborras.spells.net.SpellChangeInHandPayload;
-import es.cristichi.mod.magiaborras.spells.net.SpellHitPayload;
 import es.cristichi.mod.magiaborras.perdata.PlayerDataPS;
 import es.cristichi.mod.magiaborras.spells.*;
+import es.cristichi.mod.magiaborras.spells.net.SpellChangeInHandPayload;
+import es.cristichi.mod.magiaborras.spells.net.SpellHitPayload;
 import es.cristichi.mod.magiaborras.uniform.ModArmorMaterials;
 import es.cristichi.mod.magiaborras.uniform.SchoolUniform;
 import net.fabricmc.api.ModInitializer;
@@ -105,9 +106,11 @@ public class MagiaBorras implements ModInitializer {
             )
             .build();
 
-    // Magic Numbers
+    // Persistent States
     public static PlayerDataPS playerDataPS = new PlayerDataPS();
     public static final Identifier PACK_MAGICNUM_SAVESTATE_ID = Identifier.of(MOD_ID, "magic_number");
+
+    public static final Identifier FLOO_NETWORK_ID = Identifier.of(MOD_ID, "floo_network");
 
     // Spells
     public static final HashMap<String, Spell> SPELLS = new HashMap<>(10);
@@ -218,7 +221,7 @@ public class MagiaBorras implements ModInitializer {
         initSpell(Depulso.class);
         initSpell(Incendio.class);
 
-        // Magic numbers are also very special because they are saved in the main overworld
+        // Persistent States
         ServerLifecycleEvents.SERVER_STARTED.register(
                 PACK_MAGICNUM_SAVESTATE_ID, server -> playerDataPS = PlayerDataPS.getServerState(server)
         );
@@ -269,7 +272,12 @@ public class MagiaBorras implements ModInitializer {
                 BlockState bs = context.player().getWorld().getBlockState(payload.block());
                 context.player().getWorld().updateListeners(payload.block(), bs, bs, 0);
 
-                // TODO: Registering or unregistering block is pending to implement
+                FlooNetwork flooNetwork = FlooNetwork.getNetworkOfWorld(context.player().getServerWorld());
+                if (payload.registered()) {
+                    flooNetwork.registerOrEdit(payload.block(), payload.name());
+                } else {
+                    flooNetwork.unregister(payload.block());
+                }
             }
         });
 

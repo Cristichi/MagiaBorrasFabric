@@ -33,7 +33,7 @@ public class PlayerDataPS extends PersistentState {
         return savedPlayerData;
     }
 
-    public void setData(@NotNull PlayerEntity player, PlayerMagicData data) {
+    public void updateUserData(@NotNull PlayerEntity player, PlayerMagicData data) {
         values.put(player.getUuid(), data);
         this.markDirty();
     }
@@ -95,7 +95,6 @@ public class PlayerDataPS extends PersistentState {
         public static @NotNull PlayerMagicData fromNbt(NbtElement nbt){
             if (nbt instanceof NbtCompound nbtCompound){
                 return new PlayerMagicData(nbtCompound.getFloat(MAGIC_NUMBER), nbtCompound.getString(UNLOCKED_SPELLS).split(UNLOCKED_SPELL_DIVIDER));
-                //return new PlayerMagicData(nbtCompound.getFloat(MAGIC_NUMBER), new String[0]);
             }
             throw new IllegalArgumentException("Nbt data of the PlayerDataPS state is not NbtCompound.");
         }
