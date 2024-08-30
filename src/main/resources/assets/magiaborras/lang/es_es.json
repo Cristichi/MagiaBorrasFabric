@@ -158,10 +158,10 @@
 
   "magiaborras.screen.flooname.title": "Chimenea Flu",
   "magiaborras.screen.flooname.name_placeh": "Chimenea de %s",
-  "magiaborras.screen.flooname.register": "Registrar Chimenea",
+  "magiaborras.screen.flooname.register": "Dar de alta en la Red Flu",
   "magiaborras.screen.flooname.register.tooltip": "Registra esta Chimenea Flu en la Red Flu de este mundo.",
-  "magiaborras.screen.flooname.unregister": "It unregisters this Floo Fireplace into the Floo Network of this world.",
-  "magiaborras.screen.flooname.unregister.tooltip": "Registra esta Chimenea Flu en la Red Flu de este mundo.",
+  "magiaborras.screen.flooname.unregister": "Dar de baja en la Red Flu",
+  "magiaborras.screen.flooname.unregister.tooltip": "Elimina esta Chimenea Flu de la Red Flu de tu mundo. Siempre puedes volver a darla de alta después.",
 
   "magiaborras.screen.floonet.title": "Red Flu"
 }

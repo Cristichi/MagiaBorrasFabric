@@ -4,6 +4,7 @@ import es.cristichi.mod.magiaborras.commands.SpellSetCommand;
 import es.cristichi.mod.magiaborras.floo.FlooPowderItem;
 import es.cristichi.mod.magiaborras.floo.fireplace.FlooFireplaceBlock;
 import es.cristichi.mod.magiaborras.floo.fireplace.FlooFireplaceBlockE;
+import es.cristichi.mod.magiaborras.floo.fireplace.net.FlooFireRenamePayload;
 import es.cristichi.mod.magiaborras.items.MoonStone;
 import es.cristichi.mod.magiaborras.items.SpellBook;
 import es.cristichi.mod.magiaborras.items.wand.WandItem;
@@ -23,6 +24,8 @@ import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
@@ -252,6 +255,22 @@ public class MagiaBorras implements ModInitializer {
                 magicUser.sendMessage(Text.translatable("magiaborras.spell.changed_spell", spell.getName()));
                 prop.spell = spell;
                 prop.apply(hand);
+            }
+        });
+
+        // Floo Fireplace rename both ways
+        PayloadTypeRegistry.playS2C().register(FlooFireRenamePayload.ID, FlooFireRenamePayload.CODEC);
+
+        PayloadTypeRegistry.playC2S().register(FlooFireRenamePayload.ID, FlooFireRenamePayload.CODEC);
+        ServerPlayNetworking.registerGlobalReceiver(FlooFireRenamePayload.ID, (payload, context) -> {
+            BlockEntity be = context.player().getWorld().getBlockEntity(payload.block());
+            if (be instanceof FlooFireplaceBlockE flooFireplaceBlockE){
+                flooFireplaceBlockE.setName(payload.name());
+                BlockState bs = context.player().getWorld().getBlockState(payload.block());
+                context.player().getWorld().updateListeners(payload.block(), bs, bs, 0);
+                // TODO: Registering or unregistering block is pending to implement
+
+                context.player().sendMessage(Text.of("LOL renamed to "+payload.name()));
             }
         });
 

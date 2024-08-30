@@ -1,6 +1,8 @@
 package es.cristichi.mod.magiaborras;
 
+import es.cristichi.mod.magiaborras.floo.fireplace.net.FlooFireRenamePayload;
 import es.cristichi.mod.magiaborras.items.wand.WandItem;
+import es.cristichi.mod.magiaborras.screens.FlooNameScreen;
 import es.cristichi.mod.magiaborras.spells.net.SpellHitPayload;
 import es.cristichi.mod.magiaborras.screens.SpellListScreen;
 import net.fabricmc.api.ClientModInitializer;
@@ -38,7 +40,7 @@ public class MagiaBorrasClient implements ClientModInitializer {
             }
         });
 
-        // Spell hit packet
+        // Spell hit packet receive
         ClientPlayNetworking.registerGlobalReceiver(SpellHitPayload.ID, (payload, context) -> context.client().execute(() -> {
             if (context.client() != null && context.client().player != null && context.client().world != null){
                 DustColorTransitionParticleEffect particleEffect = new DustColorTransitionParticleEffect(
@@ -49,14 +51,30 @@ public class MagiaBorrasClient implements ClientModInitializer {
 
                 while (current.distanceTo(payload.hit()) > 1) {
                     Vec3d step = payload.hit().subtract(current).normalize().multiply(0.1);
-                    context.client().world.addParticle(particleEffect, current.getX(), current.getY(), current.getZ(), step.x, step.y, step.z);
+                    context.client().world.addParticle(particleEffect,
+                            current.getX(), current.getY(), current.getZ(),
+                            step.x, step.y, step.z);
 
                     current = current.add(step);
                 }
             }
         }));
 
-        // TODO: Receive packet to instruct to open Floo name change. It will carry the name
-        //  of the Floo Fireplace and whether it is registered or not.
+        // Floo Fireplace rename packet receive + send
+        ClientPlayNetworking.registerGlobalReceiver(FlooFireRenamePayload.ID, (payload, context) -> context.client().execute(() -> {
+            if (context.client() != null){
+                context.client().setScreen(new FlooNameScreen(payload.name(), payload.registered()) {
+                    @Override
+                    public void close() {
+                        if (!getName().equals(payload.name()) || !getRegistered() == payload.registered()){
+                            ClientPlayNetworking.send(new FlooFireRenamePayload(payload.block(), getName(), getRegistered()));
+                        }
+                        super.close();
+                    }
+                });
+            }
+        }));
+
+        // TODO: Floo Fireplace menu to TP receive + send
     }
 }
