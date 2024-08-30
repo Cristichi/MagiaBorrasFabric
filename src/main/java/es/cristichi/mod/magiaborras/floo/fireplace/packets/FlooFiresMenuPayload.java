@@ -1,4 +1,4 @@
-package es.cristichi.mod.magiaborras.floo.fireplace.net;
+package es.cristichi.mod.magiaborras.floo.fireplace.packets;
 
 import es.cristichi.mod.magiaborras.MagiaBorras;
 import net.minecraft.network.packet.CustomPayload;

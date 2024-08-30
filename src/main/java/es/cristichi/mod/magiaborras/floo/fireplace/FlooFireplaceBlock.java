@@ -3,7 +3,7 @@ package es.cristichi.mod.magiaborras.floo.fireplace;
 import com.mojang.serialization.MapCodec;
 import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.floo.FlooPowderItem;
-import es.cristichi.mod.magiaborras.floo.fireplace.net.FlooFireRenamePayload;
+import es.cristichi.mod.magiaborras.floo.fireplace.packets.FlooFireRenamePayload;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockRenderType;

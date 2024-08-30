@@ -4,7 +4,7 @@ import es.cristichi.mod.magiaborras.commands.SpellSetCommand;
 import es.cristichi.mod.magiaborras.floo.FlooPowderItem;
 import es.cristichi.mod.magiaborras.floo.fireplace.FlooFireplaceBlock;
 import es.cristichi.mod.magiaborras.floo.fireplace.FlooFireplaceBlockE;
-import es.cristichi.mod.magiaborras.floo.fireplace.net.FlooFireRenamePayload;
+import es.cristichi.mod.magiaborras.floo.fireplace.packets.FlooFireRenamePayload;
 import es.cristichi.mod.magiaborras.items.MoonStone;
 import es.cristichi.mod.magiaborras.items.SpellBook;
 import es.cristichi.mod.magiaborras.items.wand.WandItem;
@@ -268,9 +268,8 @@ public class MagiaBorras implements ModInitializer {
                 flooFireplaceBlockE.setName(payload.name());
                 BlockState bs = context.player().getWorld().getBlockState(payload.block());
                 context.player().getWorld().updateListeners(payload.block(), bs, bs, 0);
-                // TODO: Registering or unregistering block is pending to implement
 
-                context.player().sendMessage(Text.of("LOL renamed to "+payload.name()));
+                // TODO: Registering or unregistering block is pending to implement
             }
         });
 

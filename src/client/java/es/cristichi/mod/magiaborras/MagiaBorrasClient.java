@@ -1,6 +1,6 @@
 package es.cristichi.mod.magiaborras;
 
-import es.cristichi.mod.magiaborras.floo.fireplace.net.FlooFireRenamePayload;
+import es.cristichi.mod.magiaborras.floo.fireplace.packets.FlooFireRenamePayload;
 import es.cristichi.mod.magiaborras.items.wand.WandItem;
 import es.cristichi.mod.magiaborras.screens.FlooNameScreen;
 import es.cristichi.mod.magiaborras.spells.net.SpellHitPayload;
