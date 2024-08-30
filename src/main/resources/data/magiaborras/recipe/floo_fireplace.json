@@ -1,13 +1,13 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "MMM",
-    "MMM",
-    "MMM"
+    "FFF",
+    "FFF",
+    "FFF"
   ],
   "key": {
-    "M": {
-      "item": "minecraft:oak_log"
+    "F": {
+      "item": "minecraft:fire_powder"
     }
   },
   "result": {

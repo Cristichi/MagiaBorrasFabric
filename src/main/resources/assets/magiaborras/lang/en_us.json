@@ -25,7 +25,7 @@
   "item.magiaborras.wand.tooltip_length": "Length: %s",
   "item.magiaborras.wand.tooltip_power": "Power: %d",
 
-  "magiaborras.spell.none": "No Spell prepared.",
+  "magiaborras.spell.none": "No Spell prepared",
   "magiaborras.spell.locked": "You have not unlocked this Spell.",
   "magiaborras.spell.avada": "Killing Curse",
   "magiaborras.spell.accio": "Accio",
@@ -156,5 +156,14 @@
   "magiaborras.screen.spells.nowand": "You need to hold a Wand to apply a Spell to it.",
   "magiaborras.screen.spells.tooltip": "Apply the Spell %s to the Wand in your hand.",
   "magiaborras.screen.spells.tooltip_locked": "You need to unlock %s first.",
-  "magiaborras.screen.spells.name_locked": "(Locked) %s"
+  "magiaborras.screen.spells.name_locked": "(Locked) %s",
+
+  "magiaborras.screen.flooname.title": "Floo Fireplace",
+  "magiaborras.screen.flooname.name_placeh": "%s's Fireplace",
+  "magiaborras.screen.flooname.register": "Register Fireplace",
+  "magiaborras.screen.flooname.register.tooltip": "It registers this Floo Fireplace into the Floo Network of this world.",
+  "magiaborras.screen.flooname.unregister": "Unregister Fireplace",
+  "magiaborras.screen.flooname.unregister.tooltip": "It registers this Floo Fireplace into the Floo Network of this world.",
+
+  "magiaborras.screen.floonet.title": "Floo Network"
 }

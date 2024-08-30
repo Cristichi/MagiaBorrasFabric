@@ -1,7 +1,7 @@
 package es.cristichi.mod.magiaborras.items.wand;
 
 import es.cristichi.mod.magiaborras.MagiaBorras;
-import es.cristichi.mod.magiaborras.PlayerDataPS;
+import es.cristichi.mod.magiaborras.perdata.PlayerDataPS;
 import es.cristichi.mod.magiaborras.items.wand.prop.*;
 import es.cristichi.mod.magiaborras.networking.SpellHitPayload;
 import es.cristichi.mod.magiaborras.spells.Spell;

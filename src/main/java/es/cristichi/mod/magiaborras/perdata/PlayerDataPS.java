@@ -1,5 +1,6 @@
-package es.cristichi.mod.magiaborras;
+package es.cristichi.mod.magiaborras.perdata;
 
+import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.spells.Spell;
 import net.minecraft.datafixer.DataFixTypes;
 import net.minecraft.entity.player.PlayerEntity;

@@ -38,7 +38,7 @@ public class MagiaBorrasClient implements ClientModInitializer {
             }
         });
 
-        // Spell hit
+        // Spell hit packet
         ClientPlayNetworking.registerGlobalReceiver(SpellHitPayload.ID, (payload, context) -> context.client().execute(() -> {
             if (context.client() != null && context.client().player != null && context.client().world != null){
                 DustColorTransitionParticleEffect particleEffect = new DustColorTransitionParticleEffect(
@@ -55,5 +55,6 @@ public class MagiaBorrasClient implements ClientModInitializer {
                 }
             }
         }));
+
     }
 }

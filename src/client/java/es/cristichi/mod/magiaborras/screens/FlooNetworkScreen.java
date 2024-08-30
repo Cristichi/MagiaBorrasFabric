@@ -15,9 +15,9 @@ import net.minecraft.util.Hand;
 
 import java.util.ArrayList;
 
-public class SpellListScreen extends Screen {
-    public SpellListScreen() {
-        super(Text.translatable("magiaborras.screen.spells.title"));
+public class FlooNetworkScreen extends Screen {
+    public FlooNetworkScreen() {
+        super(Text.translatable("magiaborras.screen.floonet.title"));
     }
 
     public ArrayList<ButtonWidget> spellBtns;

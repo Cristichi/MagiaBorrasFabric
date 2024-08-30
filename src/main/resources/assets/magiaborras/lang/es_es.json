@@ -154,5 +154,14 @@
   "magiaborras.screen.spells.nowand": "Necesitas tener una Varita en la mano para aplicarle un Conjuro.",
   "magiaborras.screen.spells.tooltip": "Aplica el Conjuro %s a la Varita de su mano.",
   "magiaborras.screen.spells.tooltip_locked": "Necesitas desbloquear %s antes de poder usarlo.",
-  "magiaborras.screen.spells.name_locked": "(Bloqueado) %s"
+  "magiaborras.screen.spells.name_locked": "(Bloqueado) %s",
+
+  "magiaborras.screen.flooname.title": "Chimenea Flu",
+  "magiaborras.screen.flooname.name_placeh": "Chimenea de %s",
+  "magiaborras.screen.flooname.register": "Registrar Chimenea",
+  "magiaborras.screen.flooname.register.tooltip": "Registra esta Chimenea Flu en la Red Flu de este mundo.",
+  "magiaborras.screen.flooname.unregister": "It unregisters this Floo Fireplace into the Floo Network of this world.",
+  "magiaborras.screen.flooname.unregister.tooltip": "Registra esta Chimenea Flu en la Red Flu de este mundo.",
+
+  "magiaborras.screen.floonet.title": "Red Flu"
 }

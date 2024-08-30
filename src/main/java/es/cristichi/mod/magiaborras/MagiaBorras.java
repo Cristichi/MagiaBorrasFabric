@@ -1,14 +1,16 @@
 package es.cristichi.mod.magiaborras;
 
 import es.cristichi.mod.magiaborras.commands.SpellSetCommand;
-import es.cristichi.mod.magiaborras.floo.FlooFireplaceBlock;
 import es.cristichi.mod.magiaborras.floo.FlooPowderItem;
+import es.cristichi.mod.magiaborras.floo.fireplace.FlooFireplaceBlock;
+import es.cristichi.mod.magiaborras.floo.fireplace.FlooFireplaceBlockE;
 import es.cristichi.mod.magiaborras.items.MoonStone;
 import es.cristichi.mod.magiaborras.items.SpellBook;
 import es.cristichi.mod.magiaborras.items.wand.WandItem;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.networking.SpellChangeInHandPayload;
 import es.cristichi.mod.magiaborras.networking.SpellHitPayload;
+import es.cristichi.mod.magiaborras.perdata.PlayerDataPS;
 import es.cristichi.mod.magiaborras.spells.*;
 import es.cristichi.mod.magiaborras.uniform.ModArmorMaterials;
 import es.cristichi.mod.magiaborras.uniform.SchoolUniform;
@@ -21,6 +23,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.Block;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -54,7 +57,7 @@ import java.util.Optional;
 //  8. Special Enchantments for Wands, School Uniforms/Armor, etc.
 //     Perhaps each Spell could be in an Enchantment for use with any tool, or Sticks!
 //  X. Banner patterns for each house.
-//  10. Magic Brooms?
+//  10. Magic Brooms?z
 public class MagiaBorras implements ModInitializer {
     public static final String MOD_ID = "magiaborras";
     public static final Random RNG = Random.create();
@@ -78,6 +81,9 @@ public class MagiaBorras implements ModInitializer {
     public static final Block MOONSTONE_ORE_BLOCK = new Block(Block.Settings.create().strength(4.0f));
     public static final Block MOONSTONE_ORE_DEEP_BLOCK = new Block(Block.Settings.create().strength(4.1f));
     public static final FlooFireplaceBlock FLOO_FIREPLACE_BLOCK = new FlooFireplaceBlock(Block.Settings.create().luminance(value -> 15));
+    public static final BlockEntityType<FlooFireplaceBlockE> FLOO_FIREPLACE_BLOCK_ENTITY_TYPE = BlockEntityType.Builder
+            .create(FlooFireplaceBlockE::new, FLOO_FIREPLACE_BLOCK)
+            .build();
 
     // World Generation
     public static final RegistryKey<PlacedFeature> MOONSTONE_ORE_PLACED_KEY =
@@ -164,12 +170,6 @@ public class MagiaBorras implements ModInitializer {
         Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "school_leggings"), SCHOOL_LEGGINGS);
         Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "school_boots"), SCHOOL_BOOTS);
 
-        // Items Creative Tab
-        Registry.register(Registries.ITEM_GROUP, Identifier.of(MOD_ID, "magic_items_tab"), MAGIC_GROUP);
-
-        // Wand needs special attention
-        WandProperties.init();
-
         // Blocks
         Registry.register(Registries.BLOCK, Identifier.of(MOD_ID, "moonstone_block"), MOONSTONE_BLOCK);
         Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "moonstone_block"),
@@ -185,6 +185,14 @@ public class MagiaBorras implements ModInitializer {
         Registry.register(Registries.BLOCK, Identifier.of(MOD_ID, "floo_fireplace"), FLOO_FIREPLACE_BLOCK);
         Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "floo_fireplace"),
                 new BlockItem(FLOO_FIREPLACE_BLOCK, new Item.Settings()));
+
+        Registry.register(Registries.BLOCK_ENTITY_TYPE, Identifier.of(MOD_ID, "floo_fireplace_blocke"), FLOO_FIREPLACE_BLOCK_ENTITY_TYPE);
+
+        // Items Creative Tab
+        Registry.register(Registries.ITEM_GROUP, Identifier.of(MOD_ID, "magic_items_tab"), MAGIC_GROUP);
+
+        // Wand needs special attention
+        WandProperties.init();
 
         // World Generation
         BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(),

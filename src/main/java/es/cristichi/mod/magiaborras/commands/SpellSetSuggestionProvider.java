@@ -6,7 +6,7 @@ import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import es.cristichi.mod.magiaborras.MagiaBorras;
-import es.cristichi.mod.magiaborras.PlayerDataPS;
+import es.cristichi.mod.magiaborras.perdata.PlayerDataPS;
 import net.minecraft.server.command.ServerCommandSource;
 
 import java.util.concurrent.CompletableFuture;
