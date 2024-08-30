@@ -3,7 +3,7 @@ package es.cristichi.mod.magiaborras.items.wand;
 import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.perdata.PlayerDataPS;
 import es.cristichi.mod.magiaborras.items.wand.prop.*;
-import es.cristichi.mod.magiaborras.networking.SpellHitPayload;
+import es.cristichi.mod.magiaborras.spells.net.SpellHitPayload;
 import es.cristichi.mod.magiaborras.spells.Spell;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;

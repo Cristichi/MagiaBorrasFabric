@@ -8,8 +8,8 @@ import es.cristichi.mod.magiaborras.items.MoonStone;
 import es.cristichi.mod.magiaborras.items.SpellBook;
 import es.cristichi.mod.magiaborras.items.wand.WandItem;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
-import es.cristichi.mod.magiaborras.networking.SpellChangeInHandPayload;
-import es.cristichi.mod.magiaborras.networking.SpellHitPayload;
+import es.cristichi.mod.magiaborras.spells.net.SpellChangeInHandPayload;
+import es.cristichi.mod.magiaborras.spells.net.SpellHitPayload;
 import es.cristichi.mod.magiaborras.perdata.PlayerDataPS;
 import es.cristichi.mod.magiaborras.spells.*;
 import es.cristichi.mod.magiaborras.uniform.ModArmorMaterials;
@@ -152,6 +152,10 @@ public class MagiaBorras implements ModInitializer {
     public static final Identifier NET_CHANGE_SPELL_ID = Identifier.of(MOD_ID, "change_spell");
     public static final Identifier NET_SPELL_HIT_ID = Identifier.of(MOD_ID, "spell_hit");
 
+    public static final Identifier NET_FLOO_RENAME_ID = Identifier.of(MOD_ID, "floo_rename");
+    public static final Identifier NET_FLOO_MENU_ID = Identifier.of(MOD_ID, "floo_menu");
+    public static final Identifier NET_FLOO_TP_ID = Identifier.of(MOD_ID, "floo_teleport");
+
     @Override
     public void onInitialize() {
         LOGGER.info("Loading");
@@ -233,12 +237,10 @@ public class MagiaBorras implements ModInitializer {
         Registry.register(Registries.SOUND_EVENT, SOUND_DEPULSO_ID, DEPULSO_CAST);
         Registry.register(Registries.SOUND_EVENT, SOUND_INCENDIO_ID, INCENDIO_CAST);
 
-        // Networking
-
-        //  Spell Hit
+        // Spell Hit Packet S -> C
         PayloadTypeRegistry.playS2C().register(SpellHitPayload.ID, SpellHitPayload.CODEC);
 
-        //  Spell Change
+        //  Spell Change Packet C -> S
         PayloadTypeRegistry.playC2S().register(SpellChangeInHandPayload.ID, SpellChangeInHandPayload.CODEC);
         ServerPlayNetworking.registerGlobalReceiver(SpellChangeInHandPayload.ID, (payload, context) -> {
             Spell spell = payload.spell();
