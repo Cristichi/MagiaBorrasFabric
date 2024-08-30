@@ -1,4 +1,4 @@
-package es.cristichi.mod.magiaborras.floo;
+package es.cristichi.mod.magiaborras.items;
 
 import net.minecraft.item.Item;
 

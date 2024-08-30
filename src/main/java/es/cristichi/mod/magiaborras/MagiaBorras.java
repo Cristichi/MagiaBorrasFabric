@@ -1,7 +1,7 @@
 package es.cristichi.mod.magiaborras;
 
 import es.cristichi.mod.magiaborras.commands.SpellSetCommand;
-import es.cristichi.mod.magiaborras.floo.FlooPowderItem;
+import es.cristichi.mod.magiaborras.items.FlooPowderItem;
 import es.cristichi.mod.magiaborras.floo.fireplace.FlooFireplaceBlock;
 import es.cristichi.mod.magiaborras.floo.fireplace.FlooFireplaceBlockE;
 import es.cristichi.mod.magiaborras.floo.fireplace.packets.FlooFireRenamePayload;
