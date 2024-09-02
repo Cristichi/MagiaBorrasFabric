@@ -43,6 +43,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.PlacedFeature;
@@ -296,21 +297,30 @@ public class MagiaBorras implements ModInitializer {
         ServerPlayNetworking.registerGlobalReceiver(FlooFireTPPayload.ID, (payload, context) -> {
 
             PlayerInventory inv = context.player().getInventory();
-            ItemStack hand = inv.getMainHandStack();
-            if (hand.getItem() instanceof FlooPowderItem){
+            ItemStack handStack = inv.getMainHandStack();
+            if (handStack.getItem() instanceof FlooPowderItem){
+                BlockPos pPos = context.player().getBlockPos();
 
-                if (context.player().teleport(payload.objective().getX()+0.5, payload.objective().getY()+1, payload.objective().getZ()+0.5, true)){
-                    hand.decrement(1);
+                if (context.player().teleport(payload.objective().getX()+0.5, payload.objective().getY()+1, payload.objective().getZ()+0.5, false)){
+                    if (!context.player().isCreative()){
+                        handStack.decrement(1);
+                    }
 
-                    Collection<ServerPlayerEntity> players = PlayerLookup.tracking(context.player().getServerWorld(), context.player().getBlockPos());
+                    Collection<ServerPlayerEntity> playersOrigin = PlayerLookup.tracking(context.player().getServerWorld(), context.player().getBlockPos());
                     ParticleS2CPacket packetOrigin = new ParticleS2CPacket(FlooFireplaceBlock.tpParticles, false,
-                            context.player().getX()+0.5, context.player().getY()+1.5, context.player().getZ()+0.5,
-                            0.5f, 0.5f, 0.5f, 0f, 100);
+                            pPos.getX()+0.5, pPos.getY()+1.5, pPos.getZ()+0.5,
+                            1f, 1.5f, 1f, 0f, 1000);
+                    context.player().networkHandler.sendPacket(packetOrigin);
+                    for (ServerPlayerEntity player : playersOrigin){
+                        player.networkHandler.sendPacket(packetOrigin);
+                    }
+
+                    Collection<ServerPlayerEntity> playersDest = PlayerLookup.tracking(context.player().getServerWorld(), payload.objective());
                     ParticleS2CPacket packetDest = new ParticleS2CPacket(FlooFireplaceBlock.tpParticles, false,
                             payload.objective().getX()+0.5, payload.objective().getY()+1.5, payload.objective().getZ()+0.5,
-                            0.5f, 0.5f, 0.5f, 0f, 100);
-                    for (ServerPlayerEntity player : players){
-                        player.networkHandler.sendPacket(packetOrigin);
+                            1f, 1.5f, 1f, 0f, 1000);
+                    context.player().networkHandler.sendPacket(packetDest);
+                    for (ServerPlayerEntity player : playersDest){
                         player.networkHandler.sendPacket(packetDest);
                     }
                 } else {

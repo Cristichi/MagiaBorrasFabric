@@ -14,7 +14,8 @@ import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.particle.DustColorTransitionParticleEffect;
+import net.minecraft.particle.DustParticleEffect;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
@@ -30,8 +31,8 @@ import org.joml.Vector3f;
 import java.util.HashMap;
 
 public class FlooFireplaceBlock extends BlockWithEntity implements BlockEntityProvider {
-    public static DustColorTransitionParticleEffect tpParticles = new DustColorTransitionParticleEffect(new Vector3f(0, 255, 0),
-            new Vector3f(100, 255, 100), 1f);
+    public static ParticleEffect tpParticles
+            = new DustParticleEffect(new Vector3f(0, 1, 0), 0.5f);
     public FlooFireplaceBlock(Settings settings) {
         super(settings);
     }
@@ -67,7 +68,7 @@ public class FlooFireplaceBlock extends BlockWithEntity implements BlockEntityPr
         if (stack.getItem() instanceof FlooPowderItem && !world.isClient()){
             if (pos.equals(player.getBlockPos().down())){
                 BlockEntity be = world.getBlockEntity(pos);
-                if (be instanceof FlooFireplaceBlockE fireplace){
+                if (be instanceof FlooFireplaceBlockE){
                     FlooNetwork flooNetwork = FlooNetwork.getNetworkOfWorld((ServerWorld) world);
                     HashMap<BlockPos, String> fireplaces = new HashMap<>(flooNetwork.fireplaces);
                     fireplaces.remove(pos);

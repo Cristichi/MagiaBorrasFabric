@@ -1,5 +1,6 @@
 package es.cristichi.mod.magiaborras;
 
+import es.cristichi.mod.magiaborras.floo.fireplace.FlooFireplaceBlock;
 import es.cristichi.mod.magiaborras.floo.fireplace.packets.FlooFireRenamePayload;
 import es.cristichi.mod.magiaborras.floo.fireplace.packets.FlooFireTPPayload;
 import es.cristichi.mod.magiaborras.floo.fireplace.packets.FlooFiresMenuPayload;
@@ -27,11 +28,7 @@ public class MagiaBorrasClient implements ClientModInitializer {
     public void onInitializeClient() {
         // Keybindings
         keyChangeSpell = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.magiaborras.change_spell", // The translation key of the keybinding's name
-                InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
-                GLFW.GLFW_KEY_R, // The keycode of the key
-                "category.magiaborras.keybinds" // The translation key of the keybinding's category.
-        ));
+                "key.magiaborras.change_spell", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "category.magiaborras.keybinds"));
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             assert client.player != null;
             if (keyChangeSpell.wasPressed()) {
@@ -78,14 +75,23 @@ public class MagiaBorrasClient implements ClientModInitializer {
             }
         }));
 
-
-        // Floo Fireplace menu
+        // Floo Fireplace menu + TP
         ClientPlayNetworking.registerGlobalReceiver(FlooFiresMenuPayload.ID, (payload, context) -> context.client().execute(() -> {
             if (context.client() != null){
                 context.client().setScreen(new FlooMenuScreen(payload.fireplaces()) {
                     @Override
                     public void close() {
                         if (getSelected() != null){
+                            client.world.getChunk(getSelected()).getBlockState(getSelected());
+                            for (int i=0; i< 1000; i++){
+                                client.world.addParticle(FlooFireplaceBlock.tpParticles, true,
+                                        getSelected().getX()+client.world.random.nextDouble(),
+                                        getSelected().getY()+2+client.world.random.nextDouble(),
+                                        getSelected().getZ()+client.world.random.nextDouble(),
+                                        client.world.random.nextDouble(),
+                                        client.world.random.nextDouble(),
+                                        client.world.random.nextDouble());
+                            }
                             ClientPlayNetworking.send(new FlooFireTPPayload(getSelected()));
                         }
                         super.close();
@@ -93,5 +99,6 @@ public class MagiaBorrasClient implements ClientModInitializer {
                 });
             }
         }));
+
     }
 }
