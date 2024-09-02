@@ -68,7 +68,7 @@ import java.util.Optional;
 //  8. Special Enchantments for Wands, School Uniforms/Armor, etc.
 //     Perhaps each Spell could be in an Enchantment for use with any tool, or Sticks!
 //  X. Banner patterns for each house.
-//  10. Magic Brooms?z
+//  10. Magic Brooms?
 public class MagiaBorras implements ModInitializer {
     public static final String MOD_ID = "magiaborras";
     public static final Random RNG = Random.create();
@@ -115,7 +115,7 @@ public class MagiaBorras implements ModInitializer {
 
     // Persistent States
     public static PlayerDataPS playerDataPS = new PlayerDataPS();
-    public static final Identifier PACK_MAGICNUM_SAVESTATE_ID = Identifier.of(MOD_ID, "magic_number");
+    public static final Identifier PLAYER_DATA_PS_ID = Identifier.of(MOD_ID, "saved_player_data");
 
     public static final Identifier FLOO_NETWORK_ID = Identifier.of(MOD_ID, "floo_network");
 
@@ -230,7 +230,7 @@ public class MagiaBorras implements ModInitializer {
 
         // Persistent States
         ServerLifecycleEvents.SERVER_STARTED.register(
-                PACK_MAGICNUM_SAVESTATE_ID, server -> playerDataPS = PlayerDataPS.getServerState(server)
+                PLAYER_DATA_PS_ID, server -> playerDataPS = PlayerDataPS.getServerState(server)
         );
 
         // Commands
