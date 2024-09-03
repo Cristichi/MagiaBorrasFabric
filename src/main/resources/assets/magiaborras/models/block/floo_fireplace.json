@@ -1,7 +1,13 @@
 {
-  "parent": "block/cube_all",
+  "parent": "block/cube",
   "textures": {
-    "all": "magiaborras:block/floo_fireplace"
+    "up": "magiaborras:block/floo_fireplace_up",
+    "west": "minecraft:block/oak_planks",
+    "east": "minecraft:block/oak_planks",
+    "south": "minecraft:block/oak_planks",
+    "north": "minecraft:block/oak_planks",
+    "down": "minecraft:block/oak_planks",
+    "particle": "minecraft:block/oak_planks"
   }
 }
 
