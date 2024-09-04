@@ -29,7 +29,9 @@ public class ArrestoMomentum extends Spell {
         List<Entity> entities = world.getOtherEntities(null, magicUser.getBoundingBox().expand(area));
         for(Entity entity : entities){
             entity.setVelocity(0, 0, 0);
+            entity.speed = 0;
             entity.fallDistance = 0;
+            entity.velocityDirty = true;
             if (entity instanceof LivingEntity livingEntity){
                 livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 10));
             }
