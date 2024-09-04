@@ -52,7 +52,7 @@
   "item.magiaborras.spellbook_depulso": "Spell Book (Depulso)",
   "item.magiaborras.spellbook_incendio": "Spell Book (Incendio)",
 
-  "item.magiaborras.wand.broken": "Oh no! The wand is broken. You will need to craft a new one.",
+  "item.magiaborras.wand.broken": "Oh no! The wand is broken. I fixed it for you, try again.",
 
   "magiaborras.wandcore.none": "????",
   "magiaborras.wandcore.dragon_heartstring": "Dragon Heartstring",

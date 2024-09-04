@@ -30,10 +30,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Predicate;
 
 public class WandItem extends Item {
@@ -57,7 +54,21 @@ public class WandItem extends Item {
     }
 
     @Override
+    public void onCraft(ItemStack stack, World world) {
+        MagiaBorras.LOGGER.info("xD onCraft");
+        if (!world.isClient()) {
+            try {
+                WandProperties props = new WandProperties();
+                props.apply(stack);
+            } catch (Exception e) {
+                MagiaBorras.LOGGER.error("Oh no", e);
+            }
+        }
+    }
+
+    @Override
     public void onCraftByPlayer(ItemStack stack, World world, PlayerEntity player) {
+        MagiaBorras.LOGGER.info("xD onCraftByPlayer");
         if (world.isClient()) {
             player.playSound(SoundEvents.BLOCK_CONDUIT_ACTIVATE, 1.0F, 1.0F);
         } else {
@@ -157,6 +168,8 @@ public class WandItem extends Item {
                 }
             } else {
                 user.sendMessage(Text.translatable("item.magiaborras.wand.broken"));
+                prop = new WandProperties();
+                prop.apply(stack);
             }
         }
         return TypedActionResult.fail(user.getStackInHand(hand));
