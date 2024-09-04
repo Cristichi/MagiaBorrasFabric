@@ -2,12 +2,14 @@ package es.cristichi.mod.magiaborras.perdata;
 
 import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.spells.Spell;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.datafixer.DataFixTypes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.PersistentState;
 import net.minecraft.world.PersistentStateManager;
@@ -18,6 +20,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.UUID;
 
 public class PlayerDataPS extends PersistentState {
@@ -36,6 +39,9 @@ public class PlayerDataPS extends PersistentState {
     public void updateUserData(@NotNull PlayerEntity player, PlayerMagicData data) {
         values.put(player.getUuid(), data);
         this.markDirty();
+        if (player instanceof ServerPlayerEntity serverPlayer){
+            ServerPlayNetworking.send(serverPlayer, new PlayerDataSyncPayload(data.unlockedSpells));
+        }
     }
 
     @Override
@@ -112,6 +118,15 @@ public class PlayerDataPS extends PersistentState {
 
         public String[] getUnlockedSpells() {
             return unlockedSpells;
+        }
+
+        public void replaceAllSpells(String data, String delim){
+            StringTokenizer st = new StringTokenizer(data,delim);
+            String[] newArray = new String[st.countTokens()];
+            for (int i = 0; st.hasMoreTokens(); i++){
+                newArray[i] = st.nextToken();
+            }
+            unlockedSpells = newArray;
         }
 
         public boolean addSpell(@NotNull Spell spell){

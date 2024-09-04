@@ -13,6 +13,7 @@ import es.cristichi.mod.magiaborras.items.SpellBook;
 import es.cristichi.mod.magiaborras.items.wand.WandItem;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.perdata.PlayerDataPS;
+import es.cristichi.mod.magiaborras.perdata.PlayerDataSyncPayload;
 import es.cristichi.mod.magiaborras.spells.*;
 import es.cristichi.mod.magiaborras.spells.net.SpellChangeInHandPayload;
 import es.cristichi.mod.magiaborras.spells.net.SpellHitPayload;
@@ -26,6 +27,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -162,6 +164,8 @@ public class MagiaBorras implements ModInitializer {
     public static SoundEvent INCENDIO_CAST = SoundEvent.of(SOUND_INCENDIO_ID);
 
     // Networking
+    public static final Identifier NET_PLAYER_DATA_SYNC_ID = Identifier.of(MOD_ID, "magia_player_data");
+
     public static final Identifier NET_CHANGE_SPELL_ID = Identifier.of(MOD_ID, "change_spell");
     public static final Identifier NET_SPELL_HIT_ID = Identifier.of(MOD_ID, "spell_hit");
 
@@ -249,6 +253,14 @@ public class MagiaBorras implements ModInitializer {
         Registry.register(Registries.SOUND_EVENT, SOUND_BOMBARDA_ID, BOMBARDA_CAST);
         Registry.register(Registries.SOUND_EVENT, SOUND_DEPULSO_ID, DEPULSO_CAST);
         Registry.register(Registries.SOUND_EVENT, SOUND_INCENDIO_ID, INCENDIO_CAST);
+
+        // Player Data Sync Packet S -> C
+        PayloadTypeRegistry.playS2C().register(PlayerDataSyncPayload.ID, PlayerDataSyncPayload.CODEC);
+        // Player onJoin update unlocked Spells to client
+        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
+            PlayerDataPS.PlayerMagicData data = playerDataPS.getOrGenerateData(handler.player);
+            ServerPlayNetworking.send(handler.player, new PlayerDataSyncPayload(data.getUnlockedSpells()));
+        });
 
         // Spell Hit Packet S -> C
         PayloadTypeRegistry.playS2C().register(SpellHitPayload.ID, SpellHitPayload.CODEC);
