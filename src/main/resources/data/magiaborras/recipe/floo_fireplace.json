@@ -2,12 +2,15 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "FFF",
-    "FFF",
-    "FFF"
+    "PPP",
+    "PPP"
   ],
   "key": {
     "F": {
       "item": "magiaborras:floo_powder"
+    },
+    "P": {
+      "tag": "minecraft:planks"
     }
   },
   "result": {
