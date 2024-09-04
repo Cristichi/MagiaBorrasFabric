@@ -312,6 +312,7 @@ public class MagiaBorras implements ModInitializer {
             ItemStack handStack = inv.getMainHandStack();
             if (handStack.getItem() instanceof FlooPowderItem){
                 BlockPos pPos = context.player().getBlockPos();
+                context.player().getWorld().getBlockState(payload.objective()); // Need to load the chunk first
 
                 if (context.player().teleport(payload.objective().getX()+0.5, payload.objective().getY()+1, payload.objective().getZ()+0.5, false)){
                     if (!context.player().isCreative()){
