@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class ArrestoMomentum extends Spell {
-    private static final double area = 50;
+    private static final double area = 5;
 
     public ArrestoMomentum() {
         super("arresto", Text.translatable("magiaborras.spell.arresto"), List.of(SpellCastType.USE),
