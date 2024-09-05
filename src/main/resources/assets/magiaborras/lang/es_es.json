@@ -36,6 +36,7 @@
   "magiaborras.spell.bombarda": "Bombarda",
   "magiaborras.spell.depulso": "Depulso",
   "magiaborras.spell.incendio": "Incendio",
+  "magiaborras.spell.expelliarmus": "Expelliarmus",
 
   "item.magiaborras.spellbook.consumed": "Has aprendido el Conjuro %s.",
   "item.magiaborras.spellbook.already_know": "Ya conoces el Conjuro %s.",
@@ -49,6 +50,7 @@
   "item.magiaborras.spellbook_bombarda": "Libro de Magia (Bombarda)",
   "item.magiaborras.spellbook_depulso": "Libro de Magia (Depulso)",
   "item.magiaborras.spellbook_incendio": "Libro de Magia (Incendio)",
+  "item.magiaborras.spellbook_expelliarmus": "Libro de Magia (Expelliarmus)",
 
   "item.magiaborras.wand.broken": "¡Rayos y retruécanos! La varita está rota. Te la he arreglado yo, prueba de nuevo.",
 

@@ -58,6 +58,12 @@
     "sounds": [
       "magiaborras:incendio"
     ]
+  },
+  "expelliarmus": {
+    "subtitle": "magiaborras.spell.expelliarmus",
+    "sounds": [
+      "magiaborras:expelliarmus"
+    ]
   }
 }
 

@@ -30,7 +30,7 @@ public abstract class Spell {
     //  X Avada
     //  - Crucio
     //  X Depulso
-    //  - Expelliarmus
+    //  X Expelliarmus
     //  - Finite (if I figure out what to do with it)
     //  - Imperio
     //  X Incendio (add functionality for furnaces :D)
@@ -43,6 +43,7 @@ public abstract class Spell {
     //  ? Lumos (I need to wait for other people to work dynamic lights on Minecraft 1.21)
     //  - Bombarda
     //  X Diffindo (as a substitute of the "Default" HL spell, since my "Default" does something different)
+    //  - Revelio (glow all entities in the area)
 
     // TODO: Other Spells I'd love to implement (do I record the Spell cast .ogg myself?)
     //  - Morsmorde (for my friend, who clearly is not a Death Eater)
@@ -51,7 +52,7 @@ public abstract class Spell {
     // TODO: Unique Spells:
     //  ? Tree Chopper Spell
     //  ? Redstone Spell
-    //  ?
+    //  - Spell that marks a place to all players in the area
 
     static final Predicate<Entity> LIVING_ENTITIES = (entity -> !entity.isSpectator() && entity.canBeHitByProjectile());
     static final Predicate<Entity> ANY_ENTITY = (entity -> true);

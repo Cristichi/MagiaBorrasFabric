@@ -162,6 +162,8 @@ public class MagiaBorras implements ModInitializer {
     public static SoundEvent DEPULSO_CAST = SoundEvent.of(SOUND_DEPULSO_ID);
     public static final Identifier SOUND_INCENDIO_ID = Identifier.of(MOD_ID, "incendio");
     public static SoundEvent INCENDIO_CAST = SoundEvent.of(SOUND_INCENDIO_ID);
+    public static final Identifier SOUND_EXPELLIARMUS_ID = Identifier.of(MOD_ID, "expelliarmus");
+    public static SoundEvent EXPELLIARMUS_CAST = SoundEvent.of(SOUND_EXPELLIARMUS_ID);
 
     // Networking
     public static final Identifier NET_PLAYER_DATA_SYNC_ID = Identifier.of(MOD_ID, "magia_player_data");
@@ -226,11 +228,12 @@ public class MagiaBorras implements ModInitializer {
         initSpell(Accio.class);
         initSpell(Diffindo.class);
         initSpell(WingardiumLeviosa.class);
-        initSpell(Lumos.class);
+//        initSpell(Lumos.class); I mean, since it doesn't work...
         initSpell(ArrestoMomentum.class);
         initSpell(Bombarda.class);
         initSpell(Depulso.class);
         initSpell(Incendio.class);
+        initSpell(Expelliarmus.class);
 
         // Persistent States
         ServerLifecycleEvents.SERVER_STARTED.register(
@@ -253,6 +256,7 @@ public class MagiaBorras implements ModInitializer {
         Registry.register(Registries.SOUND_EVENT, SOUND_BOMBARDA_ID, BOMBARDA_CAST);
         Registry.register(Registries.SOUND_EVENT, SOUND_DEPULSO_ID, DEPULSO_CAST);
         Registry.register(Registries.SOUND_EVENT, SOUND_INCENDIO_ID, INCENDIO_CAST);
+        Registry.register(Registries.SOUND_EVENT, SOUND_EXPELLIARMUS_ID, EXPELLIARMUS_CAST);
 
         // Player Data Sync Packet S -> C
         PayloadTypeRegistry.playS2C().register(PlayerDataSyncPayload.ID, PlayerDataSyncPayload.CODEC);

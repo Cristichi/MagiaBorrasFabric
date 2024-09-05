@@ -38,6 +38,7 @@
   "magiaborras.spell.bombarda": "Bombarda",
   "magiaborras.spell.depulso": "Depulso",
   "magiaborras.spell.incendio": "Incendio",
+  "magiaborras.spell.expelliarmus": "Expelliarmus",
 
   "item.magiaborras.spellbook.consumed": "You learned the Spell %s.",
   "item.magiaborras.spellbook.already_know": "You already know the Spell %s.",
@@ -51,6 +52,7 @@
   "item.magiaborras.spellbook_bombarda": "Spell Book (Bombarda)",
   "item.magiaborras.spellbook_depulso": "Spell Book (Depulso)",
   "item.magiaborras.spellbook_incendio": "Spell Book (Incendio)",
+  "item.magiaborras.spellbook_expelliarmus": "Spell Book (Expelliarmus)",
 
   "item.magiaborras.wand.broken": "Oh no! The wand is broken. I fixed it for you, try again.",
 
