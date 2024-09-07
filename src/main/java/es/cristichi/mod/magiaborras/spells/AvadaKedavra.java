@@ -31,7 +31,7 @@ public class AvadaKedavra extends Spell {
             Entity ent = hitEnt.getEntity();
             if (ent instanceof LivingEntity livingEntity){
                 if (!(ent instanceof ArmorStandEntity)){
-                    livingEntity.damage(magicUser.getDamageSources().magic(), livingEntity.getMaxHealth());
+                    livingEntity.damage(magicUser.getDamageSources().mobAttack(magicUser), livingEntity.getMaxHealth());
                 }
                 return new Result(ActionResult.SUCCESS, baseCooldown,
                         List.of(MagiaBorras.AVADA_CAST, SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER));
