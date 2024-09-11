@@ -64,6 +64,12 @@
     "sounds": [
       "magiaborras:expelliarmus"
     ]
+  },
+  "revelio": {
+    "subtitle": "magiaborras.spell.revelio",
+    "sounds": [
+      "magiaborras:revelio"
+    ]
   }
 }
 

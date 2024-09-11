@@ -34,6 +34,8 @@ import java.util.*;
 import java.util.function.Predicate;
 
 public class WandItem extends Item {
+    public static final double MAX_DISTANCE = 500;
+
     public WandItem(Settings settings) {
         super(settings.maxCount(1));
     }
@@ -87,8 +89,6 @@ public class WandItem extends Item {
             }
         }
     }
-
-    private static final double MAX_DISTANCE = 500;
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {

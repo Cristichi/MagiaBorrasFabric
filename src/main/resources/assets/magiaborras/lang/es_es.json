@@ -37,6 +37,7 @@
   "magiaborras.spell.depulso": "Depulso",
   "magiaborras.spell.incendio": "Incendio",
   "magiaborras.spell.expelliarmus": "Expelliarmus",
+  "magiaborras.spell.revelio": "Revelio",
 
   "item.magiaborras.spellbook.consumed": "Has aprendido el Conjuro %s.",
   "item.magiaborras.spellbook.already_know": "Ya conoces el Conjuro %s.",

@@ -39,6 +39,7 @@
   "magiaborras.spell.depulso": "Depulso",
   "magiaborras.spell.incendio": "Incendio",
   "magiaborras.spell.expelliarmus": "Expelliarmus",
+  "magiaborras.spell.revelio": "Revelio",
 
   "item.magiaborras.spellbook.consumed": "You learned the Spell %s.",
   "item.magiaborras.spellbook.already_know": "You already know the Spell %s.",
