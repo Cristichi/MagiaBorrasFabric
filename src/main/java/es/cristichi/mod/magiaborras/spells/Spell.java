@@ -40,19 +40,20 @@ public abstract class Spell {
 
     // TODO: More Spells from H.L. I like that are not in the old version:
     //  X Alohomora (it opens iron doors/trapdoors)
-    //  ? Lumos (I need to wait for other people to work dynamic lights on Minecraft 1.21)
-    //  - Bombarda
+    //  ! Lumos (I need to wait for other people to work dynamic lights on Minecraft 1.21)
+    //  X Bombarda
     //  X Diffindo (as a substitute of the "Default" HL spell, since my "Default" does something different)
-    //  - Revelio (glow all entities in the area)
+    //  X Revelio (glow all entities in the area)
+    //  - Protego (Probably metadata/persistent data? Different keybind? Time to think!)
 
-    // TODO: Other Spells I'd love to implement (do I record the Spell cast .ogg myself?)
+    // TODO: Other non H.L. Spells I'd love to implement (do I record the Spell cast .ogg myself?)
     //  - Morsmorde (for my friend, who clearly is not a Death Eater)
     //  - Finite Incantatem (for me to stop the annoying Morsmorde spam)
 
-    // TODO: Unique Spells:
-    //  ? Tree Chopper Spell
-    //  ? Redstone Spell
-    //  - Spell that marks a place to all players in the area
+    // TODO: Unique Spells?
+    //  - Tree Chopper Spell
+    //  - Redstone Spell
+    //  - Spell that marks a place to all players in the area, like a ping
 
     static final Predicate<Entity> LIVING_ENTITIES = (entity -> !entity.isSpectator() && entity.canBeHitByProjectile());
     static final Predicate<Entity> ANY_ENTITY = (entity -> true);
