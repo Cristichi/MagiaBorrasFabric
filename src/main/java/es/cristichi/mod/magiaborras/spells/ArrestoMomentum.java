@@ -36,6 +36,6 @@ public class ArrestoMomentum extends Spell {
                 livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 10));
             }
         }
-        return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.ARRESTO_CAST));
+        return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.ARRESTO_SOUNDEVENT));
     }
 }

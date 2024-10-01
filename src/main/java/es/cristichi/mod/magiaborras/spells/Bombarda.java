@@ -31,6 +31,6 @@ public class Bombarda extends Spell {
         world.createExplosion(null, world.getDamageSources().mobAttack(magicUser),
                 new AdvancedExplosionBehavior(true, true, Optional.of(0.5f * power), Optional.empty()),
                 hit.getPos(), 4f * power + 1f, false, World.ExplosionSourceType.TNT);
-        return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.BOMBARDA_CAST));
+        return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.BOMBARDA_SOUNDEVENT));
     }
 }

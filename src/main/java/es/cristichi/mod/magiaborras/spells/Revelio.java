@@ -30,6 +30,6 @@ public class Revelio extends Spell {
             ent.setGlowing(true);
             ((RevelioStopTimerAccess) ent).magiaborras_setRevelioTimer(baseCooldown);
         }
-        return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.REVELIO_CAST));
+        return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.REVELIO_SOUNDEVENT));
     }
 }

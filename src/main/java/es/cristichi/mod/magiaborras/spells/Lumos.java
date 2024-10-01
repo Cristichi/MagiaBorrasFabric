@@ -30,7 +30,7 @@ public class Lumos extends Spell {
             sounds = List.of(SoundEvents.BLOCK_REDSTONE_TORCH_BURNOUT);
         } else {
             properties.lumos = true;
-            sounds = List.of(MagiaBorras.LUMOS_CAST);
+            sounds = List.of(MagiaBorras.LUMOS_SOUNDEVENT);
         }
 //        if (!world.isClient()) {
             properties.apply(wand);

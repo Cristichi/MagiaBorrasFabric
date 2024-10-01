@@ -31,7 +31,7 @@ public class Diffindo extends Spell {
             if (ent instanceof LivingEntity livingEntity && !(ent instanceof ArmorStandEntity)){
                 livingEntity.damage(world.getDamageSources().mobAttack(magicUser), 8 * properties.getPower(magicUser));
             }
-            return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.DIFFINDO_CAST));
+            return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.DIFFINDO_SOUNDEVENT));
         } else {
             return new Result(ActionResult.FAIL, 0, null);
         }

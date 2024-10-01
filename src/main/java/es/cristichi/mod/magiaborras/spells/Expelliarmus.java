@@ -36,7 +36,7 @@ public class Expelliarmus extends Spell {
                     if (dropped != null){
                         livingEnt.setStackInHand(Hand.MAIN_HAND, ItemStack.EMPTY);
                         dropped.setGlowing(true);
-                        return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.EXPELLIARMUS_CAST));
+                        return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.EXPELLIARMUS_SOUNDEVENT));
                     }
                 }
             }

@@ -29,7 +29,7 @@ public class Depulso extends Spell {
             Entity ent = hitEnt.getEntity();
             //ent.move(MovementType.PLAYER, ent.getPos().subtract(magicUser.getPos()).normalize().multiply(power*5));
             ent.addVelocity(ent.getPos().subtract(magicUser.getPos()).normalize().multiply(power*5));
-            return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.DEPULSO_CAST));
+            return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.DEPULSO_SOUNDEVENT));
         }
         return new Result(ActionResult.FAIL, 0, new ArrayList<>(0));
     }

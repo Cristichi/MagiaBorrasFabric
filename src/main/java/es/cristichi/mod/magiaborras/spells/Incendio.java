@@ -28,7 +28,7 @@ public class Incendio extends Spell {
     @Override
     public Result cast(ItemStack wand, WandProperties properties, ServerPlayerEntity magicUser, World world, HitResult hit) {
         if (hit.getType().equals(HitResult.Type.MISS)){
-            return new Result(ActionResult.FAIL, baseCooldown/5, List.of(MagiaBorras.INCENDIO_CAST));
+            return new Result(ActionResult.FAIL, baseCooldown/5, List.of(MagiaBorras.INCENDIO_SOUNDEVENT));
         }
         if (!world.isClient()){
             float power = properties.getPower(magicUser);
@@ -61,6 +61,6 @@ public class Incendio extends Spell {
             }
         }
 
-        return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.INCENDIO_CAST));
+        return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.INCENDIO_SOUNDEVENT));
     }
 }

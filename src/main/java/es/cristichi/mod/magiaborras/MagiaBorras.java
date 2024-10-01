@@ -143,29 +143,31 @@ public class MagiaBorras implements ModInitializer {
 
     // Sounds
     public static final Identifier SOUND_AVADA_ID = Identifier.of(MOD_ID, "avada");
-    public static SoundEvent AVADA_CAST = SoundEvent.of(SOUND_AVADA_ID);
+    public static SoundEvent AVADA_SOUNDEVENT = SoundEvent.of(SOUND_AVADA_ID);
     public static final Identifier SOUND_ALOHOMORA_ID = Identifier.of(MOD_ID, "alohomora");
-    public static SoundEvent ALOHOMORA_CAST = SoundEvent.of(SOUND_ALOHOMORA_ID);
+    public static SoundEvent ALOHOMORA_SOUNDEVENT = SoundEvent.of(SOUND_ALOHOMORA_ID);
     public static final Identifier SOUND_ACCIO_ID = Identifier.of(MOD_ID, "accio");
-    public static SoundEvent ACCIO_CAST = SoundEvent.of(SOUND_ACCIO_ID);
+    public static SoundEvent ACCIO_SOUNDEVENT = SoundEvent.of(SOUND_ACCIO_ID);
     public static final Identifier SOUND_DIFFINDO_ID = Identifier.of(MOD_ID, "diffindo");
-    public static SoundEvent DIFFINDO_CAST = SoundEvent.of(SOUND_DIFFINDO_ID);
+    public static SoundEvent DIFFINDO_SOUNDEVENT = SoundEvent.of(SOUND_DIFFINDO_ID);
     public static final Identifier SOUND_WING_LEV_ID = Identifier.of(MOD_ID, "wingardium_leviosa");
-    public static SoundEvent WING_LEV_CAST = SoundEvent.of(SOUND_WING_LEV_ID);
+    public static SoundEvent WINGARDIUM_SOUNDEVENT = SoundEvent.of(SOUND_WING_LEV_ID);
     public static final Identifier SOUND_LUMOS_ID = Identifier.of(MOD_ID, "lumos");
-    public static SoundEvent LUMOS_CAST = SoundEvent.of(SOUND_LUMOS_ID);
+    public static SoundEvent LUMOS_SOUNDEVENT = SoundEvent.of(SOUND_LUMOS_ID);
     public static final Identifier SOUND_ARRESTO_ID = Identifier.of(MOD_ID, "arresto");
-    public static SoundEvent ARRESTO_CAST = SoundEvent.of(SOUND_ARRESTO_ID);
+    public static SoundEvent ARRESTO_SOUNDEVENT = SoundEvent.of(SOUND_ARRESTO_ID);
     public static final Identifier SOUND_BOMBARDA_ID = Identifier.of(MOD_ID, "bombarda");
-    public static SoundEvent BOMBARDA_CAST = SoundEvent.of(SOUND_BOMBARDA_ID);
+    public static SoundEvent BOMBARDA_SOUNDEVENT = SoundEvent.of(SOUND_BOMBARDA_ID);
     public static final Identifier SOUND_DEPULSO_ID = Identifier.of(MOD_ID, "depulso");
-    public static SoundEvent DEPULSO_CAST = SoundEvent.of(SOUND_DEPULSO_ID);
+    public static SoundEvent DEPULSO_SOUNDEVENT = SoundEvent.of(SOUND_DEPULSO_ID);
     public static final Identifier SOUND_INCENDIO_ID = Identifier.of(MOD_ID, "incendio");
-    public static SoundEvent INCENDIO_CAST = SoundEvent.of(SOUND_INCENDIO_ID);
+    public static SoundEvent INCENDIO_SOUNDEVENT = SoundEvent.of(SOUND_INCENDIO_ID);
     public static final Identifier SOUND_EXPELLIARMUS_ID = Identifier.of(MOD_ID, "expelliarmus");
-    public static SoundEvent EXPELLIARMUS_CAST = SoundEvent.of(SOUND_EXPELLIARMUS_ID);
+    public static SoundEvent EXPELLIARMUS_SOUNDEVENT = SoundEvent.of(SOUND_EXPELLIARMUS_ID);
     public static final Identifier SOUND_REVELIO_ID = Identifier.of(MOD_ID, "revelio");
-    public static SoundEvent REVELIO_CAST = SoundEvent.of(SOUND_REVELIO_ID);
+    public static SoundEvent REVELIO_SOUNDEVENT = SoundEvent.of(SOUND_REVELIO_ID);
+    public static final Identifier SOUND_PROTEGO_ID = Identifier.of(MOD_ID, "protego");
+    public static SoundEvent PROTEGO_SOUNDEVENT = SoundEvent.of(SOUND_PROTEGO_ID);
 
     // Networking
     public static final Identifier NET_PLAYER_DATA_SYNC_ID = Identifier.of(MOD_ID, "magia_player_data");
@@ -251,18 +253,18 @@ public class MagiaBorras implements ModInitializer {
         );
 
         // Sounds
-        Registry.register(Registries.SOUND_EVENT, SOUND_AVADA_ID, AVADA_CAST);
-        Registry.register(Registries.SOUND_EVENT, SOUND_ALOHOMORA_ID, ALOHOMORA_CAST);
-        Registry.register(Registries.SOUND_EVENT, SOUND_ACCIO_ID, ACCIO_CAST);
-        Registry.register(Registries.SOUND_EVENT, SOUND_DIFFINDO_ID, DIFFINDO_CAST);
-        Registry.register(Registries.SOUND_EVENT, SOUND_WING_LEV_ID, WING_LEV_CAST);
-        Registry.register(Registries.SOUND_EVENT, SOUND_LUMOS_ID, LUMOS_CAST);
-        Registry.register(Registries.SOUND_EVENT, SOUND_ARRESTO_ID, ARRESTO_CAST);
-        Registry.register(Registries.SOUND_EVENT, SOUND_BOMBARDA_ID, BOMBARDA_CAST);
-        Registry.register(Registries.SOUND_EVENT, SOUND_DEPULSO_ID, DEPULSO_CAST);
-        Registry.register(Registries.SOUND_EVENT, SOUND_INCENDIO_ID, INCENDIO_CAST);
-        Registry.register(Registries.SOUND_EVENT, SOUND_EXPELLIARMUS_ID, EXPELLIARMUS_CAST);
-        Registry.register(Registries.SOUND_EVENT, SOUND_REVELIO_ID, REVELIO_CAST);
+        Registry.register(Registries.SOUND_EVENT, SOUND_AVADA_ID, AVADA_SOUNDEVENT);
+        Registry.register(Registries.SOUND_EVENT, SOUND_ALOHOMORA_ID, ALOHOMORA_SOUNDEVENT);
+        Registry.register(Registries.SOUND_EVENT, SOUND_ACCIO_ID, ACCIO_SOUNDEVENT);
+        Registry.register(Registries.SOUND_EVENT, SOUND_DIFFINDO_ID, DIFFINDO_SOUNDEVENT);
+        Registry.register(Registries.SOUND_EVENT, SOUND_WING_LEV_ID, WINGARDIUM_SOUNDEVENT);
+        Registry.register(Registries.SOUND_EVENT, SOUND_LUMOS_ID, LUMOS_SOUNDEVENT);
+        Registry.register(Registries.SOUND_EVENT, SOUND_ARRESTO_ID, ARRESTO_SOUNDEVENT);
+        Registry.register(Registries.SOUND_EVENT, SOUND_BOMBARDA_ID, BOMBARDA_SOUNDEVENT);
+        Registry.register(Registries.SOUND_EVENT, SOUND_DEPULSO_ID, DEPULSO_SOUNDEVENT);
+        Registry.register(Registries.SOUND_EVENT, SOUND_INCENDIO_ID, INCENDIO_SOUNDEVENT);
+        Registry.register(Registries.SOUND_EVENT, SOUND_EXPELLIARMUS_ID, EXPELLIARMUS_SOUNDEVENT);
+        Registry.register(Registries.SOUND_EVENT, SOUND_REVELIO_ID, REVELIO_SOUNDEVENT);
 
         // Player Data Sync Packet S -> C
         PayloadTypeRegistry.playS2C().register(PlayerDataSyncPayload.ID, PlayerDataSyncPayload.CODEC);

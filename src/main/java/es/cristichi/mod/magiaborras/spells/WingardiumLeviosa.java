@@ -36,7 +36,7 @@ public class WingardiumLeviosa extends Spell {
             } else {
                 ent.setVelocity(ent.getVelocity().add(new Vec3d(0, .3, 0)));
             }
-            return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.WING_LEV_CAST));
+            return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.WINGARDIUM_SOUNDEVENT));
         } else {
             return new Result(ActionResult.FAIL, 0, null);
         }

@@ -37,7 +37,7 @@ public class Accio extends Spell {
             ent.move(MovementType.PLAYER, velocity);
             ent.move(MovementType.PLAYER, velocity);
             ent.setNoGravity(gravity);
-            return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.ACCIO_CAST));
+            return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.ACCIO_SOUNDEVENT));
         } else {
             return new Result(ActionResult.FAIL, 0, null);
         }
