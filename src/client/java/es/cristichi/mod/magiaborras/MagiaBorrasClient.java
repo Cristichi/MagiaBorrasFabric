@@ -54,26 +54,24 @@ public class MagiaBorrasClient implements ClientModInitializer {
         }));
 
         // Spell hit Packet
-        ClientPlayNetworking.registerGlobalReceiver(SpellHitPayload.ID, (payload, context) -> {
-            context.client().execute(() -> {
-                if (context.client() != null && context.client().player != null) {
-                    DustColorTransitionParticleEffect particleEffect = new DustColorTransitionParticleEffect(
-                            payload.color(), payload.color(), 0.6f
-                    );
+        ClientPlayNetworking.registerGlobalReceiver(SpellHitPayload.ID, (payload, context) -> context.client().execute(() -> {
+            if (context.client() != null && context.client().player != null) {
+                DustColorTransitionParticleEffect particleEffect = new DustColorTransitionParticleEffect(
+                        payload.color(), payload.color(), 0.6f
+                );
 
-                    Vec3d current = payload.eyeSource();
+                Vec3d current = payload.eyeSource();
 
-                    while (current.distanceTo(payload.hit()) > 1) {
-                        Vec3d step = payload.hit().subtract(current).normalize().multiply(0.1);
-                        context.client().world.addParticle(particleEffect,
-                                current.getX(), current.getY(), current.getZ(),
-                                step.x, step.y, step.z);
+                while (current.distanceTo(payload.hit()) > 1) {
+                    Vec3d step = payload.hit().subtract(current).normalize().multiply(0.1);
+                    context.client().world.addParticle(particleEffect,
+                            current.getX(), current.getY(), current.getZ(),
+                            step.x, step.y, step.z);
 
-                        current = current.add(step);
-                    }
+                    current = current.add(step);
                 }
-            });
-        });
+            }
+        }));
 
         // Floo Fireplace rename Packets
         ClientPlayNetworking.registerGlobalReceiver(FlooFireRenamePayload.ID, (payload, context) -> context.client().execute(() -> {
