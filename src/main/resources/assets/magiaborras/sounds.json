@@ -70,6 +70,18 @@
     "sounds": [
       "magiaborras:revelio"
     ]
+  },
+  "protego": {
+    "subtitle": "magiaborras.spell.protego",
+    "sounds": [
+      "magiaborras:protego"
+    ]
+  },
+  "spell_blocked": {
+    "subtitle": "magiaborras.spell_blocked",
+    "sounds": [
+      "magiaborras:spell_blocked"
+    ]
   }
 }
 

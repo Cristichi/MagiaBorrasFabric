@@ -38,6 +38,9 @@
   "magiaborras.spell.incendio": "Incendio",
   "magiaborras.spell.expelliarmus": "Expelliarmus",
   "magiaborras.spell.revelio": "Revelio",
+  "magiaborras.spell.protego": "Protego",
+
+  "magiaborras.spell_blocked": "Protección contra Conjuros",
 
   "item.magiaborras.spellbook.consumed": "Has aprendido el Conjuro %s.",
   "item.magiaborras.spellbook.already_know": "Ya conoces el Conjuro %s.",
@@ -53,6 +56,7 @@
   "item.magiaborras.spellbook_incendio": "Libro de Magia (Incendio)",
   "item.magiaborras.spellbook_expelliarmus": "Libro de Magia (Expelliarmus)",
   "item.magiaborras.spellbook_revelio": "Libro de Magia (Revelio)",
+  "item.magiaborras.spellbook_protego": "Libro de Magia (Protego)",
 
   "item.magiaborras.wand.broken": "¡Rayos y retruécanos! La varita está rota. Te la he arreglado yo, prueba de nuevo.",
 

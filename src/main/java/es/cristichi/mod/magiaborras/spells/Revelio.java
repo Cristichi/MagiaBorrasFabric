@@ -3,7 +3,7 @@ package es.cristichi.mod.magiaborras.spells;
 import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
-import es.cristichi.mod.magiaborras.timer.RevelioStopTimerAccess;
+import es.cristichi.mod.magiaborras.timer.SpellTimersAccess;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -28,7 +28,7 @@ public class Revelio extends Spell {
         List<Entity> ents = world.getOtherEntities(magicUser, magicUser.getBoundingBox().expand(MAX_AREA*power));
         for (Entity ent : ents){
             ent.setGlowing(true);
-            ((RevelioStopTimerAccess) ent).magiaborras_setRevelioTimer(baseCooldown);
+            ((SpellTimersAccess) ent).magiaborras_setRevelioTimer(baseCooldown);
         }
         return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.REVELIO_SOUNDEVENT));
     }
