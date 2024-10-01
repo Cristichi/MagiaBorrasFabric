@@ -1,20 +1,17 @@
 package es.cristichi.mod.magiaborras.items;
 
 import es.cristichi.mod.magiaborras.MagiaBorras;
-import es.cristichi.mod.magiaborras.spells.Spell;
 import es.cristichi.mod.magiaborras.perdata.PlayerDataPS;
+import es.cristichi.mod.magiaborras.spells.Spell;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
-
-import java.util.List;
 
 public class SpellBook extends Item {
     private final Spell spell;
@@ -26,7 +23,8 @@ public class SpellBook extends Item {
 
     @Override
     public Text getName() {
-        return super.getName();
+        //return super.getName();
+        return Text.translatable("item.magiaborras.spellbook_generic");
     }
 
     public Spell getSpell() {
@@ -48,10 +46,5 @@ public class SpellBook extends Item {
             }
         }
         return TypedActionResult.fail(user.getStackInHand(hand));
-    }
-
-    @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-        tooltip.add(spell.getName());
     }
 }
