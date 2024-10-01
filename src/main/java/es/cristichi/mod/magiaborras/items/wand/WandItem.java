@@ -1,10 +1,10 @@
 package es.cristichi.mod.magiaborras.items.wand;
 
 import es.cristichi.mod.magiaborras.MagiaBorras;
-import es.cristichi.mod.magiaborras.perdata.PlayerDataPS;
 import es.cristichi.mod.magiaborras.items.wand.prop.*;
-import es.cristichi.mod.magiaborras.spells.net.SpellHitPayload;
+import es.cristichi.mod.magiaborras.perdata.PlayerDataPS;
 import es.cristichi.mod.magiaborras.spells.Spell;
+import es.cristichi.mod.magiaborras.spells.net.SpellHitPayload;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -22,6 +22,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
@@ -30,14 +31,17 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 public class WandItem extends Item {
     public static final double MAX_DISTANCE = 500;
 
     public WandItem(Settings settings) {
-        super(settings.maxCount(1));
+        super(settings.maxCount(1).fireproof().rarity(Rarity.RARE));
     }
 
     @Override
@@ -57,20 +61,18 @@ public class WandItem extends Item {
 
     @Override
     public void onCraft(ItemStack stack, World world) {
-        MagiaBorras.LOGGER.info("xD onCraft");
         if (!world.isClient()) {
             try {
                 WandProperties props = new WandProperties();
                 props.apply(stack);
             } catch (Exception e) {
-                MagiaBorras.LOGGER.error("Oh no", e);
+                MagiaBorras.LOGGER.error("Error when trying to craft Wand.", e);
             }
         }
     }
 
     @Override
     public void onCraftByPlayer(ItemStack stack, World world, PlayerEntity player) {
-        MagiaBorras.LOGGER.info("xD onCraftByPlayer");
         if (world.isClient()) {
             player.playSound(SoundEvents.BLOCK_CONDUIT_ACTIVATE, 1.0F, 1.0F);
         } else {
@@ -85,7 +87,7 @@ public class WandItem extends Item {
                 }
                 player.unlockRecipes(recipes);
             } catch (Exception e) {
-                MagiaBorras.LOGGER.error("Oh no", e);
+                MagiaBorras.LOGGER.error("Error when player trying to craft Wand.", e);
             }
         }
     }

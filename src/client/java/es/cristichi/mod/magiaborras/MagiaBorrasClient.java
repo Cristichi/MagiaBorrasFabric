@@ -16,18 +16,18 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.particle.DustColorTransitionParticleEffect;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.glfw.GLFW;
 
-import java.util.Arrays;
-
 public class MagiaBorrasClient implements ClientModInitializer {
     private static KeyBinding keyChangeSpell;
+    public static final EntityModelLayer MODEL_MAGIC_BROOM_LAYER = new EntityModelLayer(Identifier.of(MagiaBorras.MOD_ID, "magic_broom"), "main");
 
-    @SuppressWarnings("DataFlowIssue")
     @Override
     public void onInitializeClient() {
         // Keybindings
@@ -50,29 +50,30 @@ public class MagiaBorrasClient implements ClientModInitializer {
                 PlayerDataPS.PlayerMagicData data = MagiaBorras.playerDataPS.getOrGenerateData(context.player());
                 data.replaceAllSpells(payload.unlocked(), PlayerDataSyncPayload.DELIM);
                 MagiaBorras.playerDataPS.updateUserData(context.player(), data);
-                MagiaBorras.LOGGER.info(Arrays.toString(data.getUnlockedSpells()));
             }
         }));
 
         // Spell hit Packet
-        ClientPlayNetworking.registerGlobalReceiver(SpellHitPayload.ID, (payload, context) -> context.client().execute(() -> {
-            if (context.client() != null && context.client().player != null && context.client().world != null){
-                DustColorTransitionParticleEffect particleEffect = new DustColorTransitionParticleEffect(
-                        payload.color(), payload.color(), 0.6f
-                );
+        ClientPlayNetworking.registerGlobalReceiver(SpellHitPayload.ID, (payload, context) -> {
+            context.client().execute(() -> {
+                if (context.client() != null && context.client().player != null) {
+                    DustColorTransitionParticleEffect particleEffect = new DustColorTransitionParticleEffect(
+                            payload.color(), payload.color(), 0.6f
+                    );
 
-                Vec3d current = payload.eyeSource();
+                    Vec3d current = payload.eyeSource();
 
-                while (current.distanceTo(payload.hit()) > 1) {
-                    Vec3d step = payload.hit().subtract(current).normalize().multiply(0.1);
-                    context.client().world.addParticle(particleEffect,
-                            current.getX(), current.getY(), current.getZ(),
-                            step.x, step.y, step.z);
+                    while (current.distanceTo(payload.hit()) > 1) {
+                        Vec3d step = payload.hit().subtract(current).normalize().multiply(0.1);
+                        context.client().world.addParticle(particleEffect,
+                                current.getX(), current.getY(), current.getZ(),
+                                step.x, step.y, step.z);
 
-                    current = current.add(step);
+                        current = current.add(step);
+                    }
                 }
-            }
-        }));
+            });
+        });
 
         // Floo Fireplace rename Packets
         ClientPlayNetworking.registerGlobalReceiver(FlooFireRenamePayload.ID, (payload, context) -> context.client().execute(() -> {
@@ -95,7 +96,7 @@ public class MagiaBorrasClient implements ClientModInitializer {
                 context.client().setScreen(new FlooMenuScreen(payload.fireplaces()) {
                     @Override
                     public void close() {
-                        if (getSelected() != null){
+                        if (client != null && client.world != null && getSelected() != null){
                             client.world.getChunk(getSelected()).getBlockState(getSelected());
                             for (int i=0; i< 1000; i++){
                                 client.world.addParticle(FlooFireplaceBlock.tpParticles, true,

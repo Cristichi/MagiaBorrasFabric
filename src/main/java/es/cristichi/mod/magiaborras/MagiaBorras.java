@@ -70,7 +70,7 @@ import java.util.Optional;
 //  8. Special Enchantments for Wands, School Uniforms/Armor, etc.
 //     Perhaps each Spell could be in an Enchantment for use with any tool, or Sticks!
 //  X. Banner patterns for each house.
-//  10. Magic Brooms?
+//  10. Magic Brooms? (good to keep: https://discord.com/channels/507304429255393322/1281175260217217044/1281301709649350708)
 public class MagiaBorras implements ModInitializer {
     public static final String MOD_ID = "magiaborras";
     public static final Random RNG = Random.create();
@@ -136,7 +136,7 @@ public class MagiaBorras implements ModInitializer {
             }
         } catch (NoSuchMethodException | InstantiationException |
                  IllegalAccessException | InvocationTargetException error) {
-            LOGGER.error("Error when registering Spell \"{}.java\" due to an error by Cristichi (the author).",
+            LOGGER.error("Error when registering Spell \"{}.java\" due to Cristichi (the author) forgetting to setup that Spell's Book.",
                     spellClass.getName(), error);
         }
     }
@@ -212,6 +212,8 @@ public class MagiaBorras implements ModInitializer {
                 new BlockItem(FLOO_FIREPLACE_BLOCK, new Item.Settings()));
 
         Registry.register(Registries.BLOCK_ENTITY_TYPE, Identifier.of(MOD_ID, "floo_fireplace_blocke"), FLOO_FIREPLACE_BLOCK_ENTITY_TYPE);
+
+        // Entities
 
         // Items Creative Tab
         Registry.register(Registries.ITEM_GROUP, Identifier.of(MOD_ID, "magic_items_tab"), MAGIC_GROUP);

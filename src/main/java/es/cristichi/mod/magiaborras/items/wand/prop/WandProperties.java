@@ -99,7 +99,7 @@ public class WandProperties {
                         lumos
                 );
             } catch (NullPointerException e) {
-                MagiaBorras.LOGGER.warn("Wand is incomplete. Oh no!", e);
+                MagiaBorras.LOGGER.warn("Wand has some Wand-specific properties but it is missing others. It is broken.", e);
                 return null;
             }
         }

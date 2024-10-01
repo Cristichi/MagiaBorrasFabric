@@ -14,21 +14,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class RevelioStopTimer implements RevelioStopTimerAccess {
     @Shadow public abstract void setGlowing(boolean glowing);
 
-    @Shadow public abstract Text getName();
+    @Shadow public abstract Text getDisplayName();
 
     @Unique
-    private Long ticksUntilSomething;
+    private Long ticksLeftRevelio;
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void tick(CallbackInfo ci){
-        if (ticksUntilSomething != null && --this.ticksUntilSomething <= 0L) {
+        if (ticksLeftRevelio != null && --this.ticksLeftRevelio <= 0L) {
             this.setGlowing(false);
-            ticksUntilSomething = null;
+            ticksLeftRevelio = null;
         }
     }
 
     @Override
     public void magiaborras_setRevelioTimer(long ticksUntilSomething) {
-        this.ticksUntilSomething = ticksUntilSomething;
+        this.ticksLeftRevelio = ticksUntilSomething;
     }
 }

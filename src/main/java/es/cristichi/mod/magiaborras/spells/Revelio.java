@@ -27,10 +27,8 @@ public class Revelio extends Spell {
         double power = properties.getPower(magicUser);
         List<Entity> ents = world.getOtherEntities(magicUser, magicUser.getBoundingBox().expand(MAX_AREA*power));
         for (Entity ent : ents){
-            if (!ent.isGlowing()){
-                ent.setGlowing(true);
-                ((RevelioStopTimerAccess) ent).magiaborras_setRevelioTimer(baseCooldown);
-            }
+            ent.setGlowing(true);
+            ((RevelioStopTimerAccess) ent).magiaborras_setRevelioTimer(baseCooldown);
         }
         return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.REVELIO_CAST));
     }
