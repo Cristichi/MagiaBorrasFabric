@@ -23,8 +23,7 @@ public class SpellBook extends Item {
 
     @Override
     public Text getName() {
-        //return super.getName();
-        return Text.translatable("item.magiaborras.spellbook_generic");
+        return super.getName();
     }
 
     public Spell getSpell() {
