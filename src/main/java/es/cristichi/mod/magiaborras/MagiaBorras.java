@@ -169,7 +169,7 @@ public class MagiaBorras implements ModInitializer {
     public static final Identifier SOUND_PROTEGO_ID = Identifier.of(MOD_ID, "protego");
     public static SoundEvent PROTEGO_SOUNDEVENT = SoundEvent.of(SOUND_PROTEGO_ID);
     public static final Identifier SOUND_SPELLBLOCKED_ID = Identifier.of(MOD_ID, "spell_blocked");
-    public static SoundEvent SPELLBLOCKED_SOUNDEVENT = SoundEvent.of(SOUND_PROTEGO_ID);
+    public static SoundEvent SPELLBLOCKED_SOUNDEVENT = SoundEvent.of(SOUND_SPELLBLOCKED_ID);
 
     // Networking
     public static final Identifier NET_PLAYER_DATA_SYNC_ID = Identifier.of(MOD_ID, "magia_player_data");

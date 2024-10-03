@@ -29,6 +29,6 @@ public class Protego extends Spell {
     @Override
     public Result cast(ItemStack wand, WandProperties properties, ServerPlayerEntity magicUser, World world, HitResult hit) {
         ((SpellTimersAccess) magicUser).magiaborras_setProtegoTimer(baseCooldown* 2L);
-        return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.SPELLBLOCKED_SOUNDEVENT));
+        return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.PROTEGO_SOUNDEVENT));
     }
 }
