@@ -45,7 +45,7 @@ public abstract class Spell {
     //  X Bombarda
     //  X Diffindo (as a substitute of the "Default" HL spell, since my "Default" does something different)
     //  X Revelio (glow all entities in the area)
-    //  TEST Protego (Probably metadata/persistent data? Different keybind? Time to think!)
+    //  X Protego (Probably metadata/persistent data? Different keybind? Time to think!)
 
     // TODO: Other non H.L. Spells I'd love to implement (do I record the Spell cast .ogg myself?)
     //  - Morsmorde (for my friend, who clearly is not a Death Eater)
