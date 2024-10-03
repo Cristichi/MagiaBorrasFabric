@@ -22,7 +22,7 @@ public class Protego extends Spell {
     public Protego() {
         super("protego", Text.translatable("magiaborras.spell.protego"), List.of(SpellCastType.USE),
                 Spell.NO_ENTITY, Spell.NO_BLOCK,
-                new SpellParticlesBuilder().setRadius(2).setvMar(0.5).sethMar(0.5).setType(SpellParticles.SpellParticleType.SPHERE).setColorStart(new Vector3f(0.2f, 0.2f, 1f))crappe.build(),
+                new SpellParticlesBuilder().setRadius(2).setvMar(0.5).sethMar(0.5).setType(SpellParticles.SpellParticleType.SPHERE).setColorStart(new Vector3f(0.2f, 0.2f, 1f)).build(),
                 20);
     }
 
