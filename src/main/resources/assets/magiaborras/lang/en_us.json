@@ -160,8 +160,7 @@
   "category.magiaborras.keybinds": "MagiaBorras keys",
   "key.magiaborras.change_spell": "Change Spell",
   "magiaborras.change_spell.nowand": "You need to hold a Wand to apply a Spell to it.",
-  "key.magiaborras.quick_protego": "Quick Protego",
-  "magiaborras.quick_protego.nowand": "You need to hold a Wand to cast a quick Protego.",
+  "magiaborras.quick_cast.nowand": "You need to hold a Wand to cast a quick Spell.",
 
   "magiaborras.screen.spells.title": "Spell List",
   "magiaborras.screen.spells.tooltip": "Apply the Spell %s to the Wand in your hand.",

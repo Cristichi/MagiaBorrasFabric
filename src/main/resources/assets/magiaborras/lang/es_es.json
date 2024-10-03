@@ -158,7 +158,7 @@
   "category.magiaborras.keybinds": "MagiaBorras",
   "key.magiaborras.change_spell": "Cambiar Conjuro",
   "magiaborras.change_spell.nowand": "Necesitas tener una Varita en la mano para aplicarle un Conjuro.",
-  "key.magiaborras.quick_protego": "Protego Rápìdo",
+  "magiaborras.quick_cast.nowand": "Necesitas una Varita en la mano para lanzar Conjuros Rápidos.",
 
   "magiaborras.screen.spells.title": "Lista de Conjuros",
   "magiaborras.screen.spells.tooltip": "Aplica el Conjuro %s a la Varita de su mano.",

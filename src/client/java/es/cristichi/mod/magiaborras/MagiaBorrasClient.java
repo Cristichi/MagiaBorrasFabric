@@ -27,8 +27,12 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MagiaBorrasClient implements ClientModInitializer {
-    private static KeyBinding keyChangeSpell, keyQuickProtego;
+    private static KeyBinding keyChangeSpell;
+    private static HashMap<String, KeyBinding> keysQuickSpell;
     public static final EntityModelLayer MODEL_MAGIC_BROOM_LAYER = new EntityModelLayer(Identifier.of(MagiaBorras.MOD_ID, "magic_broom"), "main");
 
     @Override
@@ -36,8 +40,13 @@ public class MagiaBorrasClient implements ClientModInitializer {
         // Keybindings
         keyChangeSpell = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.magiaborras.change_spell", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "category.magiaborras.keybinds"));
-        keyQuickProtego = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.magiaborras.quick_protego", InputUtil.Type.MOUSE, GLFW.GLFW_MOUSE_BUTTON_4, "category.magiaborras.keybinds"));
+        keysQuickSpell = new HashMap<>(MagiaBorras.SPELLS.size());
+        for (String id : MagiaBorras.SPELLS.keySet()){
+            if (!id.equals("")){
+                keysQuickSpell.put(id, KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                        "magiaborras.spell."+id, InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "category.magiaborras.keybinds")));
+            }
+        }
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             assert client.player != null;
             if (keyChangeSpell.wasPressed()) {
@@ -46,14 +55,17 @@ public class MagiaBorrasClient implements ClientModInitializer {
                 } else {
                     client.player.sendMessage(Text.translatable("magiaborras.change_spell.nowand"));
                 }
-            } else if (keyQuickProtego.wasPressed()){
-
-                WandProperties prop = WandProperties.check(client.player.getInventory().getMainHandStack());
-                if (client.player.getInventory().getMainHandStack().getItem() instanceof WandItem wand
-                && prop != null){
-                    ClientPlayNetworking.send(new QuickSpellPayload(MagiaBorras.SPELLS.get("protego")));
-                } else {
-                    client.player.sendMessage(Text.translatable("magiaborras.quick_protego.nowand"));
+            } else {
+                for (Map.Entry<String, KeyBinding> entry : keysQuickSpell.entrySet()){
+                    if (entry.getValue().wasPressed()){
+                        WandProperties prop = WandProperties.check(client.player.getInventory().getMainHandStack());
+                        if (client.player.getInventory().getMainHandStack().getItem() instanceof WandItem wand
+                                && prop != null){
+                            ClientPlayNetworking.send(new QuickSpellPayload(MagiaBorras.SPELLS.get(entry.getKey())));
+                        } else {
+                            client.player.sendMessage(Text.translatable("magiaborras.quick_cast.nowand"));
+                        }
+                    }
                 }
             }
         });
