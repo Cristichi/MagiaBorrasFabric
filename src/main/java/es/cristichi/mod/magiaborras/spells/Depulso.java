@@ -4,6 +4,7 @@ import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
 import es.cristichi.mod.magiaborras.spells.prop.SpellParticles;
+import es.cristichi.mod.magiaborras.spells.prop.SpellParticlesBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -21,7 +22,7 @@ public class Depulso extends Spell {
     public Depulso() {
         super("depulso", Text.translatable("magiaborras.spell.depulso"), List.of(SpellCastType.USE),
                 Spell.ANY_ENTITY, Spell.NO_BLOCK,
-                new SpellParticles(SpellParticles.SpellParticleType.RAY, new Vector3f(0.5f, 0.5f, 0.5f)),
+                new SpellParticlesBuilder().setType(SpellParticles.SpellParticleType.RAY).setColorStart(new Vector3f(0.5f, 0.5f, 0.5f)).build(),
                 80);
     }
 

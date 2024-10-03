@@ -4,6 +4,7 @@ import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
 import es.cristichi.mod.magiaborras.spells.prop.SpellParticles;
+import es.cristichi.mod.magiaborras.spells.prop.SpellParticlesBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.item.ItemStack;
@@ -21,7 +22,7 @@ import java.util.List;
 public class Accio extends Spell {
     public Accio() {
         super("accio", Text.translatable("magiaborras.spell.accio"), List.of(SpellCastType.USE), Spell.ANY_ENTITY, Spell.NO_BLOCK,
-                new SpellParticles(SpellParticles.SpellParticleType.RAY, new Vector3f(1f, 0, 0)),
+                new SpellParticlesBuilder().setType(SpellParticles.SpellParticleType.RAY).setColorStart(new Vector3f(1f, 0, 0)).build(),
                 20);
     }
 

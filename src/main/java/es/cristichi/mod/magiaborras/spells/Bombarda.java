@@ -4,6 +4,7 @@ import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
 import es.cristichi.mod.magiaborras.spells.prop.SpellParticles;
+import es.cristichi.mod.magiaborras.spells.prop.SpellParticlesBuilder;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
@@ -21,7 +22,7 @@ public class Bombarda extends Spell {
     public Bombarda() {
         super("bombarda", Text.translatable("magiaborras.spell.bombarda"), List.of(SpellCastType.USE),
                 Spell.ANY_ENTITY, Spell.ANY_BLOCK,
-                new SpellParticles(SpellParticles.SpellParticleType.RAY, new Vector3f(0.9f, 0.9f, 0.9f)),
+                new SpellParticlesBuilder().setType(SpellParticles.SpellParticleType.RAY).setColorStart(new Vector3f(0.9f, 0.9f, 0.9f)).build(),
                 120);
     }
 

@@ -3,6 +3,7 @@ package es.cristichi.mod.magiaborras.spells;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
 import es.cristichi.mod.magiaborras.spells.prop.SpellParticles;
+import es.cristichi.mod.magiaborras.spells.prop.SpellParticlesBuilder;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.s2c.play.ParticleS2CPacket;
@@ -24,7 +25,7 @@ public class DefaultSpell extends Spell {
     public DefaultSpell() {
         super("", Text.translatable("magiaborras.spell.none"), List.of(SpellCastType.USE),
                 Spell.NO_ENTITY, Spell.NO_BLOCK,
-                new SpellParticles(SpellParticles.SpellParticleType.NO_PARTICLES),
+                new SpellParticlesBuilder().setType(SpellParticles.SpellParticleType.NO_PARTICLES).build(),
                 10);
 
     }

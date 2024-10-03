@@ -4,6 +4,7 @@ import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
 import es.cristichi.mod.magiaborras.spells.prop.SpellParticles;
+import es.cristichi.mod.magiaborras.spells.prop.SpellParticlesBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
@@ -23,7 +24,7 @@ public class Expelliarmus extends Spell {
     public Expelliarmus() {
         super("expelliarmus", Text.translatable("magiaborras.spell.expelliarmus"), List.of(SpellCastType.USE),
                 Spell.LIVING_ENTITIES, Spell.NO_BLOCK,
-                new SpellParticles(SpellParticles.SpellParticleType.RAY, new Vector3f(0.8f, 0, 0)),
+                new SpellParticlesBuilder().setType(SpellParticles.SpellParticleType.RAY).setColorStart(new Vector3f(0.8f, 0, 0)).build(),
                 40);
     }
 

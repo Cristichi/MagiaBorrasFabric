@@ -4,6 +4,7 @@ import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
 import es.cristichi.mod.magiaborras.spells.prop.SpellParticles;
+import es.cristichi.mod.magiaborras.spells.prop.SpellParticlesBuilder;
 import es.cristichi.mod.magiaborras.timer.SpellTimersAccess;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -21,7 +22,7 @@ public class Protego extends Spell {
     public Protego() {
         super("protego", Text.translatable("magiaborras.spell.protego"), List.of(SpellCastType.USE),
                 Spell.NO_ENTITY, Spell.NO_BLOCK,
-                new SpellParticles(2, 0.5, 0.5, SpellParticles.SpellParticleType.SPHERE, new Vector3f(0.2f, 0.2f, 1f)),
+                new SpellParticlesBuilder().setRadius(2).setvMar(0.5).sethMar(0.5).setType(SpellParticles.SpellParticleType.SPHERE).setColorStart(new Vector3f(0.2f, 0.2f, 1f)).setBorderOnly(true).build(),
                 20);
     }
 

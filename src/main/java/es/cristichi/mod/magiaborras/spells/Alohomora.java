@@ -4,6 +4,7 @@ import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
 import es.cristichi.mod.magiaborras.spells.prop.SpellParticles;
+import es.cristichi.mod.magiaborras.spells.prop.SpellParticlesBuilder;
 import net.minecraft.block.*;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
@@ -24,7 +25,7 @@ public class Alohomora extends Spell {
         super("alohomora", Text.translatable("magiaborras.spell.alohomora"), List.of(SpellCastType.USE),
                 Spell.NO_ENTITY,
                 (blockState -> blockState.getBlock() instanceof DoorBlock || blockState.getBlock() instanceof TrapdoorBlock),
-                new SpellParticles(SpellParticles.SpellParticleType.RAY, new Vector3f(0, 0, 0)),
+                new SpellParticlesBuilder().setType(SpellParticles.SpellParticleType.RAY).setColorStart(new Vector3f(0, 0, 0)).build(),
                 20);
     }
 

@@ -4,6 +4,7 @@ import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
 import es.cristichi.mod.magiaborras.spells.prop.SpellParticles;
+import es.cristichi.mod.magiaborras.spells.prop.SpellParticlesBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -23,7 +24,7 @@ public class WingardiumLeviosa extends Spell {
     public WingardiumLeviosa() {
         super("wingardium_leviosa", Text.translatable("magiaborras.spell.wingardium_leviosa"), List.of(SpellCastType.USE),
                 Spell.ANY_ENTITY, Spell.NO_BLOCK,
-                new SpellParticles(SpellParticles.SpellParticleType.NO_PARTICLES),
+                new SpellParticlesBuilder().setType(SpellParticles.SpellParticleType.NO_PARTICLES).build(),
                 80);
     }
 

@@ -58,7 +58,7 @@ public class MagiaBorrasClient implements ClientModInitializer {
         ClientPlayNetworking.registerGlobalReceiver(SpellHitPayload.ID, (payload, context) -> context.client().execute(() -> {
             if (context.client() != null && context.client().player != null) {
                 DustColorTransitionParticleEffect particleEffect = new DustColorTransitionParticleEffect(
-                        payload.particles().getColorStart(), payload.particles().getColorEnd(), 0.6f
+                        payload.particles().getColorStart(), payload.particles().getColorEnd(), payload.particles().getSize()
                 );
 
                 final double radius = payload.particles().getRadius();
@@ -86,7 +86,8 @@ public class MagiaBorrasClient implements ClientModInitializer {
                             for (double y = center.y-radius; y <= center.y+radius; y += vertMargin) {
                                 for (double z = center.z-radius; z <= center.z+radius; z += horiMargin) {
                                     Vec3d current = new Vec3d(x,y,z);
-                                    if (current.distanceTo(center) <= radius){
+                                    if (payload.particles().isBorderOnly() && current.distanceTo(center) <= radius
+                                            || !payload.particles().isBorderOnly() && current.distanceTo(center) <= radius){
                                         context.client().world.addParticle(particleEffect,
                                                 current.getX(), current.getY(), current.getZ(),
                                                 0,0,0);

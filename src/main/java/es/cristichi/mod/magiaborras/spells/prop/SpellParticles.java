@@ -2,6 +2,10 @@ package es.cristichi.mod.magiaborras.spells.prop;
 
 import org.joml.Vector3f;
 
+/**
+ * This class contains all the possible information needed for drawing Spell particles in clients.
+ * It is important to note that only the SpellParticleType is mandatory, and the rest are used in different types.
+ */
 public final class SpellParticles {
     private double radius;
     private double vMar;
@@ -9,51 +13,18 @@ public final class SpellParticles {
     private SpellParticleType type;
     private Vector3f colorStart;
     private Vector3f colorEnd;
+    private float size;
+    private boolean borderOnly;
 
-    public SpellParticles(double radius, double vMar, double hMar, SpellParticleType type, Vector3f colorStart, Vector3f colorEnd) {
+    public SpellParticles(double radius, double vMar, double hMar, SpellParticleType type, Vector3f colorStart, Vector3f colorEnd, float size, boolean borderOnly) {
         this.radius = radius;
         this.vMar = vMar;
         this.hMar = hMar;
         this.type = type;
         this.colorStart = colorStart;
         this.colorEnd = colorEnd;
-    }
-
-    public SpellParticles(SpellParticleType type, Vector3f colorStart, Vector3f colorEnd) {
-        this.radius = 0;
-        this.vMar = 0;
-        this.hMar = 0;
-        this.type = type;
-        this.colorStart = colorStart;
-        this.colorEnd = colorEnd;
-    }
-
-
-    public SpellParticles(SpellParticleType type, Vector3f colorStart) {
-        this.radius = 0;
-        this.vMar = 0;
-        this.hMar = 0;
-        this.type = type;
-        this.colorStart = colorStart;
-        this.colorEnd = colorStart;
-    }
-
-    public SpellParticles(double radius, double vMar, double hMar, SpellParticleType type, Vector3f colorStart) {
-        this.radius = radius;
-        this.vMar = vMar;
-        this.hMar = hMar;
-        this.type = type;
-        this.colorStart = colorStart;
-        this.colorEnd = colorStart;
-    }
-
-    public SpellParticles(SpellParticleType type) {
-        this.radius = 0;
-        this.vMar = 0;
-        this.hMar = 0;
-        this.type = type;
-        this.colorStart = new Vector3f(0,0,0);
-        this.colorEnd = colorStart;
+        this.size = size;
+        this.borderOnly = borderOnly;
     }
 
     public double getRadius() {
@@ -102,6 +73,22 @@ public final class SpellParticles {
 
     public void setColorEnd(Vector3f colorEnd) {
         this.colorEnd = colorEnd;
+    }
+
+    public float getSize() {
+        return size;
+    }
+
+    public void setSize(float size) {
+        this.size = size;
+    }
+
+    public boolean isBorderOnly() {
+        return borderOnly;
+    }
+
+    public void setBorderOnly(boolean borderOnly) {
+        this.borderOnly = borderOnly;
     }
 
     public enum SpellParticleType {

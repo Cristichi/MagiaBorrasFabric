@@ -2,6 +2,7 @@ package es.cristichi.mod.magiaborras.spells.net;
 
 import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.spells.prop.SpellParticles;
+import es.cristichi.mod.magiaborras.spells.prop.SpellParticlesBuilder;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.packet.CustomPayload;
@@ -15,13 +16,7 @@ public record SpellHitPayload(Vec3d eyeSource, Vec3d hit, SpellParticles particl
             return new SpellHitPayload(
                     new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble()),
                     new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble()),
-                    new SpellParticles(
-                            buf.readDouble(),
-                            buf.readDouble(),
-                            buf.readDouble(),
-                            SpellParticles.SpellParticleType.values()[buf.readInt()],
-                            buf.readVector3f(),
-                            buf.readVector3f())
+                    new SpellParticlesBuilder().setRadius(buf.readDouble()).setvMar(buf.readDouble()).sethMar(buf.readDouble()).setType(SpellParticles.SpellParticleType.values()[buf.readInt()]).setColorStart(buf.readVector3f()).setColorEnd(buf.readVector3f()).setSize(buf.readFloat()).setBorderOnly(buf.readBoolean()).build()
             );
         }
 
@@ -42,6 +37,8 @@ public record SpellHitPayload(Vec3d eyeSource, Vec3d hit, SpellParticles particl
             buf.writeInt(value.particles.getType().ordinal());
             buf.writeVector3f(value.particles.getColorStart());
             buf.writeVector3f(value.particles.getColorEnd());
+            buf.writeFloat(value.particles.getSize());
+            buf.writeBoolean(value.particles.isBorderOnly());
         }
     };
 
