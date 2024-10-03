@@ -17,6 +17,7 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.joml.Vector3f;
 
 import java.util.List;
 
@@ -24,7 +25,14 @@ public class WingardiumLeviosa extends Spell {
     public WingardiumLeviosa() {
         super("wingardium_leviosa", Text.translatable("magiaborras.spell.wingardium_leviosa"), List.of(SpellCastType.USE),
                 Spell.ANY_ENTITY, Spell.NO_BLOCK,
-                new SpellParticlesBuilder().setType(SpellParticles.SpellParticleType.NO_PARTICLES).build(),
+                new SpellParticlesBuilder()
+                        .setType(SpellParticles.SpellParticleType.SPHERE)
+                        .setRadius(0.1)
+                        .setColorStart(new Vector3f(1f, 1f, 0))
+                        .setSize(2f)
+                        .setvMar(0.1)
+                        .sethMar(0.1)
+                        .build(),
                 80);
     }
 
