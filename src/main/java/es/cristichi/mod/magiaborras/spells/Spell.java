@@ -4,6 +4,7 @@ package es.cristichi.mod.magiaborras.spells;
 import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
+import es.cristichi.mod.magiaborras.spells.prop.SpellParticles;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -17,8 +18,6 @@ import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
-import org.joml.Vector3f;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -44,7 +43,7 @@ public abstract class Spell {
     //  X Bombarda
     //  X Diffindo (as a substitute of the "Default" HL spell, since my "Default" does something different)
     //  X Revelio (glow all entities in the area)
-    //  - Protego (Probably metadata/persistent data? Different keybind? Time to think!)
+    //  TEST Protego (Probably metadata/persistent data? Different keybind? Time to think!)
 
     // TODO: Other non H.L. Spells I'd love to implement (do I record the Spell cast .ogg myself?)
     //  - Morsmorde (for my friend, who clearly is not a Death Eater)
@@ -66,18 +65,18 @@ public abstract class Spell {
     protected List<SpellCastType> castTypes;
     protected Predicate<Entity> affectableEntities;
     protected Predicate<BlockState> affectableBlocks;
-    @Nullable
-    protected Vector3f partColor;
+    protected SpellParticles particles;
     protected int baseCooldown;
 
     protected Spell(String id, Text name, List<SpellCastType> castTypes, Predicate<Entity> affectableEntities,
-                    Predicate<BlockState> affectableBlocks, @Nullable Vector3f partColor, int baseCooldown) {
+                    Predicate<BlockState> affectableBlocks, SpellParticles particles,
+                    int baseCooldown) {
         this.id = id;
         this.name = name;
         this.affectableEntities = affectableEntities;
         this.affectableBlocks = affectableBlocks;
         this.castTypes = castTypes;
-        this.partColor = partColor;
+        this.particles = particles;
         this.baseCooldown = baseCooldown;
     }
 
@@ -101,8 +100,8 @@ public abstract class Spell {
         return affectableBlocks;
     }
 
-    public @Nullable Vector3f getParticlesColor() {
-        return partColor;
+    public SpellParticles getParticles() {
+        return particles;
     }
 
     public abstract Spell.Result cast(ItemStack wand, WandProperties properties,

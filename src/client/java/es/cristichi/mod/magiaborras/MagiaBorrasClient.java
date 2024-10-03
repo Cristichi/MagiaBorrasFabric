@@ -11,6 +11,7 @@ import es.cristichi.mod.magiaborras.screens.FlooMenuScreen;
 import es.cristichi.mod.magiaborras.screens.FlooNameScreen;
 import es.cristichi.mod.magiaborras.screens.SpellListScreen;
 import es.cristichi.mod.magiaborras.spells.net.SpellHitPayload;
+import es.cristichi.mod.magiaborras.spells.prop.SpellParticles;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -57,19 +58,59 @@ public class MagiaBorrasClient implements ClientModInitializer {
         ClientPlayNetworking.registerGlobalReceiver(SpellHitPayload.ID, (payload, context) -> context.client().execute(() -> {
             if (context.client() != null && context.client().player != null) {
                 DustColorTransitionParticleEffect particleEffect = new DustColorTransitionParticleEffect(
-                        payload.color(), payload.color(), 0.6f
+                        payload.particles().colorStart(), payload.particles().colorEnd(), 0.6f
                 );
 
-                Vec3d current = payload.eyeSource();
+                final double radius = payload.particles().radius();
+                final double vertMargin = Math.max(payload.particles().vMar(), 0.1);
+                final double horiMargin = Math.max(payload.particles().hMar(), 0.1);
+                SpellParticles.SpellParticleType type = payload.particles().type();
 
-                while (current.distanceTo(payload.hit()) > 1) {
-                    Vec3d step = payload.hit().subtract(current).normalize().multiply(0.1);
-                    context.client().world.addParticle(particleEffect,
-                            current.getX(), current.getY(), current.getZ(),
-                            step.x, step.y, step.z);
+                switch (type){
+                    case RAY -> {
+                        Vec3d current = payload.eyeSource();
 
-                    current = current.add(step);
+                        while (current.distanceTo(payload.hit()) > 1) {
+                            Vec3d step = payload.hit().subtract(current).normalize().multiply(0.1);
+                            context.client().world.addParticle(particleEffect,
+                                    current.getX(), current.getY(), current.getZ(),
+                                    step.x, step.y, step.z);
+
+                            current = current.add(step);
+                        }
+                    }
+                    case SPHERE -> {
+                        Vec3d center = payload.eyeSource().subtract(0, 0.5, 0);
+
+                        for (double x = center.x-radius; x <= center.x+radius; x += horiMargin) {
+                            for (double y = center.y-radius; y <= center.y+radius; y += vertMargin) {
+                                for (double z = center.z-radius; z <= center.z+radius; z += horiMargin) {
+                                    Vec3d current = new Vec3d(x,y,z);
+                                    if (current.distanceTo(center) <= radius){
+                                        context.client().world.addParticle(particleEffect,
+                                                current.getX(), current.getY(), current.getZ(),
+                                                0,0,0);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    case FLOOR -> {
+                        Vec3d center = payload.eyeSource().subtract(0, 1, 0);
+
+                        double y = center.y;
+                        for (double x = center.x-radius; x <= center.x+radius; x += horiMargin) {
+                            for (double z = center.z-radius; z <= center.z+radius; z += horiMargin) {
+                                Vec3d current = new Vec3d(x,y,z);
+                                if (current.distanceTo(center) <= radius) {
+                                    context.client().world.addParticle(particleEffect,
+                                            x, y, z, 0, 0, 0);
+                                }
+                            }
+                        }
+                    }
                 }
+
             }
         }));
 

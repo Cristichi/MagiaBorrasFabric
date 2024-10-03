@@ -1,13 +1,13 @@
 package es.cristichi.mod.magiaborras.spells.net;
 
 import es.cristichi.mod.magiaborras.MagiaBorras;
+import es.cristichi.mod.magiaborras.spells.prop.SpellParticles;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.util.math.Vec3d;
-import org.joml.Vector3f;
 
-public record SpellHitPayload(Vec3d eyeSource, Vec3d hit, Vector3f color) implements CustomPayload {
+public record SpellHitPayload(Vec3d eyeSource, Vec3d hit, SpellParticles particles) implements CustomPayload {
     public static final Id<SpellHitPayload> ID = new Id<>(MagiaBorras.NET_SPELL_HIT_ID);
     public static final PacketCodec<RegistryByteBuf, SpellHitPayload> CODEC = new PacketCodec<>() {
         @Override
@@ -15,7 +15,13 @@ public record SpellHitPayload(Vec3d eyeSource, Vec3d hit, Vector3f color) implem
             return new SpellHitPayload(
                     new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble()),
                     new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble()),
-                    new Vector3f(buf.readFloat(), buf.readFloat(), buf.readFloat())
+                    new SpellParticles(
+                            buf.readDouble(),
+                            buf.readDouble(),
+                            buf.readDouble(),
+                            SpellParticles.SpellParticleType.values()[buf.readInt()],
+                            buf.readVector3f(),
+                            buf.readVector3f())
             );
         }
 
@@ -29,9 +35,13 @@ public record SpellHitPayload(Vec3d eyeSource, Vec3d hit, Vector3f color) implem
             buf.writeDouble(value.hit.y);
             buf.writeDouble(value.hit.z);
 
-            buf.writeFloat(value.color.x);
-            buf.writeFloat(value.color.y);
-            buf.writeFloat(value.color.z);
+
+            buf.writeDouble(value.particles.radius());
+            buf.writeDouble(value.particles.vMar());
+            buf.writeDouble(value.particles.hMar());
+            buf.writeInt(value.particles.type().ordinal());
+            buf.writeVector3f(value.particles.colorStart());
+            buf.writeVector3f(value.particles.colorEnd());
         }
     };
 

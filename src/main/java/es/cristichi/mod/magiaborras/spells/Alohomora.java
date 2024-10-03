@@ -3,6 +3,7 @@ package es.cristichi.mod.magiaborras.spells;
 import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
+import es.cristichi.mod.magiaborras.spells.prop.SpellParticles;
 import net.minecraft.block.*;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
@@ -14,14 +15,17 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
+import org.joml.Vector3f;
 
 import java.util.List;
 
 public class Alohomora extends Spell {
     public Alohomora() {
         super("alohomora", Text.translatable("magiaborras.spell.alohomora"), List.of(SpellCastType.USE),
-                Spell.NO_ENTITY, (blockState -> blockState.getBlock() instanceof DoorBlock || blockState.getBlock() instanceof TrapdoorBlock),
-                null, 20);
+                Spell.NO_ENTITY,
+                (blockState -> blockState.getBlock() instanceof DoorBlock || blockState.getBlock() instanceof TrapdoorBlock),
+                new SpellParticles(SpellParticles.SpellParticleType.RAY, new Vector3f(0, 0, 0)),
+                20);
     }
 
     @Override

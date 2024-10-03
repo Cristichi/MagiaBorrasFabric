@@ -3,6 +3,7 @@ package es.cristichi.mod.magiaborras.spells;
 import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
+import es.cristichi.mod.magiaborras.spells.prop.SpellParticles;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.ArmorStandEntity;
@@ -21,7 +22,9 @@ import java.util.List;
 public class AvadaKedavra extends Spell {
     public AvadaKedavra() {
         super("avada", Text.translatable("magiaborras.spell.avada"), List.of(SpellCastType.USE),
-                Spell.LIVING_ENTITIES, Spell.NO_BLOCK, new Vector3f(0, 0.9f, 0), 240);
+                Spell.LIVING_ENTITIES, Spell.NO_BLOCK,
+                new SpellParticles(SpellParticles.SpellParticleType.RAY, new Vector3f(0, 1f, 0), new Vector3f(0, 0.5f, 0)),
+                240);
     }
 
     @Override

@@ -3,6 +3,7 @@ package es.cristichi.mod.magiaborras.spells;
 import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
+import es.cristichi.mod.magiaborras.spells.prop.SpellParticles;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
@@ -11,13 +12,15 @@ import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
+import org.joml.Vector3f;
 
 import java.util.List;
 
 public class Lumos extends Spell {
     public Lumos() {
         super("lumos", Text.translatable("magiaborras.spell.lumos"), List.of(SpellCastType.USE),
-                Spell.NO_ENTITY, Spell.NO_BLOCK, null, 20);
+                Spell.NO_ENTITY, Spell.NO_BLOCK,
+                new SpellParticles(SpellParticles.SpellParticleType.NO_PARTICLES, new Vector3f(1f, 1f, 0f)), 20);
     }
 
     @Override

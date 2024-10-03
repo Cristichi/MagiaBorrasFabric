@@ -7,6 +7,7 @@ import es.cristichi.mod.magiaborras.spells.Protego;
 import es.cristichi.mod.magiaborras.spells.Spell;
 import es.cristichi.mod.magiaborras.spells.net.SpellHitPayload;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
+import es.cristichi.mod.magiaborras.spells.prop.SpellParticles;
 import es.cristichi.mod.magiaborras.timer.SpellTimersAccess;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -29,7 +30,6 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -162,15 +162,13 @@ public class WandItem extends Item {
                             }
 
                             // Particles of the Spell
-                            if (prop.spell.getParticlesColor() != null){
-                                Vector3f color = prop.spell.getParticlesColor();
-                                if (blocked){
-                                    color = new Vector3f(0,0,0);
-                                }
+                            if (prop.spell.getParticles().type() != SpellParticles.SpellParticleType.NO_PARTICLES){
                                 Collection<ServerPlayerEntity> players = PlayerLookup.tracking((ServerWorld) world, user.getBlockPos());
                                 for (ServerPlayerEntity player : players){
                                     ServerPlayNetworking.send(player, new SpellHitPayload(
-                                            user.getEyePos().add(0, -0.2, 0), hit.getPos(), color));
+                                            user.getEyePos().add(0, -0.2, 0), hit.getPos(),
+                                            prop.spell.getParticles()
+                                            ));
                                 }
                             }
                         }

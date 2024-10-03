@@ -3,6 +3,7 @@ package es.cristichi.mod.magiaborras.spells;
 import es.cristichi.mod.magiaborras.MagiaBorras;
 import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
+import es.cristichi.mod.magiaborras.spells.prop.SpellParticles;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -13,6 +14,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
+import org.joml.Vector3f;
 
 import java.util.List;
 
@@ -21,7 +23,10 @@ public class ArrestoMomentum extends Spell {
 
     public ArrestoMomentum() {
         super("arresto", Text.translatable("magiaborras.spell.arresto"), List.of(SpellCastType.USE),
-                Spell.NO_ENTITY, Spell.NO_BLOCK, null, 20);
+                Spell.NO_ENTITY, Spell.NO_BLOCK,
+                new SpellParticles(area, 0, 0.1, SpellParticles.SpellParticleType.FLOOR,
+                        new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(0.8f, 0.8f, 0.8f)),
+                20);
     }
 
     @Override
