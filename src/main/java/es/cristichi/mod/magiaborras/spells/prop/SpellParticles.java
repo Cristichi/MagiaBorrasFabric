@@ -14,9 +14,8 @@ public final class SpellParticles {
     private Vector3f colorStart;
     private Vector3f colorEnd;
     private float size;
-    private boolean borderOnly;
 
-    public SpellParticles(double radius, double vMar, double hMar, SpellParticleType type, Vector3f colorStart, Vector3f colorEnd, float size, boolean borderOnly) {
+    public SpellParticles(double radius, double vMar, double hMar, SpellParticleType type, Vector3f colorStart, Vector3f colorEnd, float size) {
         this.radius = radius;
         this.vMar = vMar;
         this.hMar = hMar;
@@ -24,7 +23,6 @@ public final class SpellParticles {
         this.colorStart = colorStart;
         this.colorEnd = colorEnd;
         this.size = size;
-        this.borderOnly = borderOnly;
     }
 
     public double getRadius() {
@@ -81,14 +79,6 @@ public final class SpellParticles {
 
     public void setSize(float size) {
         this.size = size;
-    }
-
-    public boolean isBorderOnly() {
-        return borderOnly;
-    }
-
-    public void setBorderOnly(boolean borderOnly) {
-        this.borderOnly = borderOnly;
     }
 
     public enum SpellParticleType {

@@ -86,8 +86,7 @@ public class MagiaBorrasClient implements ClientModInitializer {
                             for (double y = center.y-radius; y <= center.y+radius; y += vertMargin) {
                                 for (double z = center.z-radius; z <= center.z+radius; z += horiMargin) {
                                     Vec3d current = new Vec3d(x,y,z);
-                                    if (payload.particles().isBorderOnly() && current.distanceTo(center) <= radius
-                                            || !payload.particles().isBorderOnly() && current.distanceTo(center) <= radius){
+                                    if (current.distanceTo(center) <= radius){
                                         context.client().world.addParticle(particleEffect,
                                                 current.getX(), current.getY(), current.getZ(),
                                                 0,0,0);

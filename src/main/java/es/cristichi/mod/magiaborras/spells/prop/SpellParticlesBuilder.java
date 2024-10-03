@@ -10,7 +10,6 @@ public class SpellParticlesBuilder {
     private Vector3f colorStart = new Vector3f(0, 0, 0);
     private Vector3f colorEnd = null;
     private float size = 0.6f;
-    private boolean borderOnly = false;
 
     public SpellParticlesBuilder setRadius(double radius) {
         this.radius = radius;
@@ -47,12 +46,7 @@ public class SpellParticlesBuilder {
         return this;
     }
 
-    public SpellParticlesBuilder setBorderOnly(boolean borderOnly) {
-        this.borderOnly = borderOnly;
-        return this;
-    }
-
     public SpellParticles build() {
-        return new SpellParticles(radius, vMar, hMar, type, colorStart, (colorEnd == null) ? colorStart : colorEnd, size, borderOnly);
+        return new SpellParticles(radius, vMar, hMar, type, colorStart, (colorEnd == null) ? colorStart : colorEnd, size);
     }
 }
