@@ -162,13 +162,13 @@ public class WandItem extends Item {
                             }
 
                             // Particles of the Spell
-                            if (prop.spell.getParticles().type() != SpellParticles.SpellParticleType.NO_PARTICLES){
+                            SpellParticles particles = result.particles()==null?prop.spell.getDefaultParticles():result.particles();
+                            if (particles.getType() != SpellParticles.SpellParticleType.NO_PARTICLES){
                                 Collection<ServerPlayerEntity> players = PlayerLookup.tracking((ServerWorld) world, user.getBlockPos());
                                 for (ServerPlayerEntity player : players){
                                     ServerPlayNetworking.send(player, new SpellHitPayload(
                                             user.getEyePos().add(0, -0.2, 0), hit.getPos(),
-                                            prop.spell.getParticles()
-                                            ));
+                                            particles));
                                 }
                             }
                         }

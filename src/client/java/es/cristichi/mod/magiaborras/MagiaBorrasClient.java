@@ -58,13 +58,13 @@ public class MagiaBorrasClient implements ClientModInitializer {
         ClientPlayNetworking.registerGlobalReceiver(SpellHitPayload.ID, (payload, context) -> context.client().execute(() -> {
             if (context.client() != null && context.client().player != null) {
                 DustColorTransitionParticleEffect particleEffect = new DustColorTransitionParticleEffect(
-                        payload.particles().colorStart(), payload.particles().colorEnd(), 0.6f
+                        payload.particles().getColorStart(), payload.particles().getColorEnd(), 0.6f
                 );
 
-                final double radius = payload.particles().radius();
-                final double vertMargin = Math.max(payload.particles().vMar(), 0.1);
-                final double horiMargin = Math.max(payload.particles().hMar(), 0.1);
-                SpellParticles.SpellParticleType type = payload.particles().type();
+                final double radius = payload.particles().getRadius();
+                final double vertMargin = Math.max(payload.particles().getVMar(), 0.1);
+                final double horiMargin = Math.max(payload.particles().getHMar(), 0.1);
+                SpellParticles.SpellParticleType type = payload.particles().getType();
 
                 switch (type){
                     case RAY -> {

@@ -36,12 +36,12 @@ public record SpellHitPayload(Vec3d eyeSource, Vec3d hit, SpellParticles particl
             buf.writeDouble(value.hit.z);
 
 
-            buf.writeDouble(value.particles.radius());
-            buf.writeDouble(value.particles.vMar());
-            buf.writeDouble(value.particles.hMar());
-            buf.writeInt(value.particles.type().ordinal());
-            buf.writeVector3f(value.particles.colorStart());
-            buf.writeVector3f(value.particles.colorEnd());
+            buf.writeDouble(value.particles.getRadius());
+            buf.writeDouble(value.particles.getVMar());
+            buf.writeDouble(value.particles.getHMar());
+            buf.writeInt(value.particles.getType().ordinal());
+            buf.writeVector3f(value.particles.getColorStart());
+            buf.writeVector3f(value.particles.getColorEnd());
         }
     };
 

@@ -22,18 +22,21 @@ public class Revelio extends Spell {
     public Revelio() {
         super("revelio", Text.translatable("magiaborras.spell.revelio"), List.of(SpellCastType.USE),
                 Spell.NO_ENTITY, Spell.NO_BLOCK,
-                new SpellParticles(10, 1, 1, SpellParticles.SpellParticleType.SPHERE, new Vector3f(1f,1f,0)),
+                new SpellParticles(MAX_AREA, 1, 1, SpellParticles.SpellParticleType.SPHERE, new Vector3f(1f,1f,0)),
                 60);
     }
 
     @Override
     public Result cast(ItemStack wand, WandProperties properties, ServerPlayerEntity magicUser, World world, HitResult hit) {
         double power = properties.getPower(magicUser);
-        List<Entity> ents = world.getOtherEntities(magicUser, magicUser.getBoundingBox().expand(MAX_AREA*power));
+        double radius = MAX_AREA*power;
+        List<Entity> ents = world.getOtherEntities(magicUser, magicUser.getBoundingBox().expand(radius));
         for (Entity ent : ents){
             ent.setGlowing(true);
             ((SpellTimersAccess) ent).magiaborras_setRevelioTimer(baseCooldown);
         }
-        return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.REVELIO_SOUNDEVENT));
+        SpellParticles particles = getDefaultParticles();
+        particles.setRadius(radius);
+        return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.REVELIO_SOUNDEVENT), particles);
     }
 }

@@ -18,8 +18,10 @@ import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 public abstract class Spell {
@@ -65,18 +67,18 @@ public abstract class Spell {
     protected List<SpellCastType> castTypes;
     protected Predicate<Entity> affectableEntities;
     protected Predicate<BlockState> affectableBlocks;
-    protected SpellParticles particles;
+    protected SpellParticles defaultParticles;
     protected int baseCooldown;
 
     protected Spell(String id, Text name, List<SpellCastType> castTypes, Predicate<Entity> affectableEntities,
-                    Predicate<BlockState> affectableBlocks, SpellParticles particles,
+                    Predicate<BlockState> affectableBlocks, SpellParticles defaultParticles,
                     int baseCooldown) {
         this.id = id;
         this.name = name;
         this.affectableEntities = affectableEntities;
         this.affectableBlocks = affectableBlocks;
         this.castTypes = castTypes;
-        this.particles = particles;
+        this.defaultParticles = defaultParticles;
         this.baseCooldown = baseCooldown;
     }
 
@@ -100,15 +102,76 @@ public abstract class Spell {
         return affectableBlocks;
     }
 
-    public SpellParticles getParticles() {
-        return particles;
+    public SpellParticles getDefaultParticles() {
+        return defaultParticles;
     }
 
     public abstract Spell.Result cast(ItemStack wand, WandProperties properties,
                                       ServerPlayerEntity magicUser, World world, HitResult hit);
 
-    public record Result(ActionResult actionResult, int cooldown, List<SoundEvent> sounds) {
-    }
+    public static final class Result {
+        private final ActionResult actionResult;
+        private final int cooldown;
+        private final List<SoundEvent> sounds;
+        private final SpellParticles particles;
+
+        public Result(ActionResult actionResult, int cooldown, List<SoundEvent> sounds, SpellParticles particles) {
+            this.actionResult = actionResult;
+            this.cooldown = cooldown;
+            this.sounds = sounds;
+            this.particles = particles;
+        }
+
+        public Result(ActionResult actionResult, int cooldown, List<SoundEvent> sounds) {
+            this.actionResult = actionResult;
+            this.cooldown = cooldown;
+            this.sounds = sounds;
+            this.particles = null;
+        }
+
+        public ActionResult actionResult() {
+            return actionResult;
+        }
+
+        public int cooldown() {
+            return cooldown;
+        }
+
+        public List<SoundEvent> sounds() {
+            return sounds;
+        }
+
+        @Nullable
+        public SpellParticles particles() {
+            return particles;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == this) return true;
+            if (obj == null || obj.getClass() != this.getClass()) return false;
+            var that = (Result) obj;
+            return Objects.equals(this.actionResult, that.actionResult) &&
+                    this.cooldown == that.cooldown &&
+                    Objects.equals(this.sounds, that.sounds) &&
+                    Objects.equals(this.particles, that.particles);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(actionResult, cooldown, sounds, particles);
+        }
+
+        @Override
+        public String toString() {
+            return "Result[" +
+                    "actionResult=" + actionResult + ", " +
+                    "cooldown=" + cooldown + ", " +
+                    "sounds=" + sounds + ", " +
+                    "particles=" + particles + ']';
+        }
+
+        }
 
     public static final PacketCodec<ByteBuf, Spell> PACKET_CODEC = new PacketCodec<>() {
         public Spell decode(ByteBuf byteBuf) {
