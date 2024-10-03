@@ -5,11 +5,13 @@ import es.cristichi.mod.magiaborras.floo.fireplace.packets.FlooFireRenamePayload
 import es.cristichi.mod.magiaborras.floo.fireplace.packets.FlooFireTPPayload;
 import es.cristichi.mod.magiaborras.floo.fireplace.packets.FlooFiresMenuPayload;
 import es.cristichi.mod.magiaborras.items.wand.WandItem;
+import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.perdata.PlayerDataPS;
 import es.cristichi.mod.magiaborras.perdata.PlayerDataSyncPayload;
 import es.cristichi.mod.magiaborras.screens.FlooMenuScreen;
 import es.cristichi.mod.magiaborras.screens.FlooNameScreen;
 import es.cristichi.mod.magiaborras.screens.SpellListScreen;
+import es.cristichi.mod.magiaborras.spells.net.QuickSpellPayload;
 import es.cristichi.mod.magiaborras.spells.net.SpellHitPayload;
 import es.cristichi.mod.magiaborras.spells.prop.SpellParticles;
 import net.fabricmc.api.ClientModInitializer;
@@ -26,7 +28,7 @@ import net.minecraft.util.math.Vec3d;
 import org.lwjgl.glfw.GLFW;
 
 public class MagiaBorrasClient implements ClientModInitializer {
-    private static KeyBinding keyChangeSpell;
+    private static KeyBinding keyChangeSpell, keyQuickProtego;
     public static final EntityModelLayer MODEL_MAGIC_BROOM_LAYER = new EntityModelLayer(Identifier.of(MagiaBorras.MOD_ID, "magic_broom"), "main");
 
     @Override
@@ -34,13 +36,24 @@ public class MagiaBorrasClient implements ClientModInitializer {
         // Keybindings
         keyChangeSpell = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.magiaborras.change_spell", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "category.magiaborras.keybinds"));
+        keyQuickProtego = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.magiaborras.quick_protego", InputUtil.Type.MOUSE, GLFW.GLFW_MOUSE_BUTTON_4, "category.magiaborras.keybinds"));
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             assert client.player != null;
             if (keyChangeSpell.wasPressed()) {
                 if (client.player.getInventory().getMainHandStack().getItem() instanceof WandItem){
                     client.setScreen(new SpellListScreen());
                 } else {
-                    client.player.sendMessage(Text.translatable("magiaborras.screen.spells.nowand"));
+                    client.player.sendMessage(Text.translatable("magiaborras.change_spell.nowand"));
+                }
+            } else if (keyQuickProtego.wasPressed()){
+
+                WandProperties prop = WandProperties.check(client.player.getInventory().getMainHandStack());
+                if (client.player.getInventory().getMainHandStack().getItem() instanceof WandItem wand
+                && prop != null){
+                    ClientPlayNetworking.send(new QuickSpellPayload(MagiaBorras.SPELLS.get("protego")));
+                } else {
+                    client.player.sendMessage(Text.translatable("magiaborras.quick_protego.nowand"));
                 }
             }
         });

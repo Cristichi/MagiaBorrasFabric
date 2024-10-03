@@ -15,6 +15,7 @@ import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.perdata.PlayerDataPS;
 import es.cristichi.mod.magiaborras.perdata.PlayerDataSyncPayload;
 import es.cristichi.mod.magiaborras.spells.*;
+import es.cristichi.mod.magiaborras.spells.net.QuickSpellPayload;
 import es.cristichi.mod.magiaborras.spells.net.SpellChangeInHandPayload;
 import es.cristichi.mod.magiaborras.spells.net.SpellHitPayload;
 import es.cristichi.mod.magiaborras.uniform.ModArmorMaterials;
@@ -175,6 +176,7 @@ public class MagiaBorras implements ModInitializer {
     public static final Identifier NET_PLAYER_DATA_SYNC_ID = Identifier.of(MOD_ID, "magia_player_data");
 
     public static final Identifier NET_CHANGE_SPELL_ID = Identifier.of(MOD_ID, "change_spell");
+    public static final Identifier NET_QUICK_SPELL_ID = Identifier.of(MOD_ID, "quick_spell");
     public static final Identifier NET_SPELL_HIT_ID = Identifier.of(MOD_ID, "spell_hit");
 
     public static final Identifier NET_FLOO_RENAME_ID = Identifier.of(MOD_ID, "floo_rename");
@@ -294,6 +296,19 @@ public class MagiaBorras implements ModInitializer {
                 magicUser.sendMessage(Text.translatable("magiaborras.spell.changed_spell", spell.getName()));
                 prop.spell = spell;
                 prop.apply(hand);
+            }
+        });
+
+        //  Quick Spell cast C -> S
+        PayloadTypeRegistry.playC2S().register(QuickSpellPayload.ID, QuickSpellPayload.CODEC);
+        ServerPlayNetworking.registerGlobalReceiver(QuickSpellPayload.ID, (payload, context) -> {
+            Spell spell = payload.spell();
+            ServerPlayerEntity magicUser = context.player();
+
+            ItemStack hand = magicUser.getStackInHand(Hand.MAIN_HAND);
+            WandProperties prop = WandProperties.check(hand);
+            if (hand.getItem() instanceof WandItem wandItem && prop != null) {
+                wandItem.useWithSpell(magicUser.getWorld(), magicUser, hand, prop, spell);
             }
         });
 

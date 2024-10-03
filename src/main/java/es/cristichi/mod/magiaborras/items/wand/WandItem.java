@@ -94,19 +94,21 @@ public class WandItem extends Item {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-
-        if (!world.isClient()){
-            ItemStack stack = user.getStackInHand(hand);
-            WandProperties prop = WandProperties.check(stack);
+        ItemStack stack = user.getStackInHand(hand);
+        WandProperties prop = WandProperties.check(stack);
+        return useWithSpell(world, user, stack, prop, prop.spell);
+    }
+    public TypedActionResult<ItemStack> useWithSpell(World world, PlayerEntity user, ItemStack stack, WandProperties prop, Spell spell) {
+        if (!world.isClient() && !user.getItemCooldownManager().isCoolingDown(this)){
             PlayerDataPS.PlayerMagicData data = MagiaBorras.playerDataPS.getOrGenerateData(user);
             if (prop != null) {
-                if (prop.spell.getCastTypes().contains(SpellCastType.USE)) {
-                    if (user.isCreative() || prop.spell.getId().equals("") || data.containsSpell(prop.spell)) {
+                if (spell.getCastTypes().contains(SpellCastType.USE)) {
+                    if (user.isCreative() || spell.getId().equals("") || data.containsSpell(spell)) {
                         Vec3d camPos = user.getCameraPosVec(0);
                         Vec3d rotation = user.getRotationVec(0);
                         Vec3d ray = camPos.add(rotation.x * MAX_DISTANCE, rotation.y * MAX_DISTANCE, rotation.z * MAX_DISTANCE);
                         Box box = user.getBoundingBox().stretch(rotation.multiply(MAX_DISTANCE)).expand(1d, 1d, 1d);
-                        HitResult hit = WandItem.raycast(user, camPos, ray, box, prop.spell.getAffectableEntities(), MAX_DISTANCE);
+                        HitResult hit = WandItem.raycast(user, camPos, ray, box, spell.getAffectableEntities(), MAX_DISTANCE);
                         if (hit instanceof EntityHitResult entityHitResult && entityHitResult.getEntity() == null){
                             hit = new HitResult(hit.getPos()) {
                                 @Override
@@ -118,7 +120,7 @@ public class WandItem extends Item {
                         // This is always a block hit
                         HitResult hitBlock = user.raycast(MAX_DISTANCE, 0, false);
                         if (hitBlock instanceof BlockHitResult blockHitResult
-                                && !prop.spell.getAffectableBlocks().test(world.getBlockState(blockHitResult.getBlockPos()))){
+                                && !spell.getAffectableBlocks().test(world.getBlockState(blockHitResult.getBlockPos()))){
                             hitBlock = new HitResult(hitBlock.getPos()) {
                                 @Override
                                 public Type getType() {
@@ -145,7 +147,7 @@ public class WandItem extends Item {
                             result = new Spell.Result(
                                     ActionResult.SUCCESS, Protego.PUNISH_COOLDOWM, List.of(MagiaBorras.SPELLBLOCKED_SOUNDEVENT));
                         } else {
-                            result = prop.spell.cast(stack, prop, (ServerPlayerEntity) user, world, hit);
+                            result = spell.cast(stack, prop, (ServerPlayerEntity) user, world, hit);
                         }
                         // CD of the Spell. Spells can determine a CD based on the outcome, including failing.
                         // For example, the avada gives you some CD on missing while Diffindo allows you to
@@ -162,7 +164,7 @@ public class WandItem extends Item {
                             }
 
                             // Particles of the Spell
-                            SpellParticles particles = result.particles()==null?prop.spell.getDefaultParticles():result.particles();
+                            SpellParticles particles = result.particles()==null?spell.getDefaultParticles():result.particles();
                             if (particles.getType() != SpellParticles.SpellParticleType.NO_PARTICLES){
                                 Collection<ServerPlayerEntity> players = PlayerLookup.tracking((ServerWorld) world, user.getBlockPos());
                                 for (ServerPlayerEntity player : players){
@@ -185,7 +187,7 @@ public class WandItem extends Item {
                 prop.apply(stack);
             }
         }
-        return TypedActionResult.fail(user.getStackInHand(hand));
+        return TypedActionResult.fail(stack);
     }
 
 

@@ -146,7 +146,6 @@
   "magiaborras.wandlength.long": "Larga",
 
   "magiaborras.spell.changed_spell": "Has preparado el Conjuro %s en tu Varita.",
-  "magiaborras.spell.change_spell_no_wand": "Necesitas tener la Varita en la mano.",
   "magiaborras.spell.changed_no_spell": "Has quitado el Conjuro preparado de tu Varita.",
   "magiaborras.spell.changed_wrong_spell": "Ese Conjuro, \"%s\", no existe.",
 
@@ -158,9 +157,10 @@
 
   "category.magiaborras.keybinds": "MagiaBorras",
   "key.magiaborras.change_spell": "Cambiar Conjuro",
+  "magiaborras.change_spell.nowand": "Necesitas tener una Varita en la mano para aplicarle un Conjuro.",
+  "key.magiaborras.quick_protego": "Protego Rápìdo",
 
   "magiaborras.screen.spells.title": "Lista de Conjuros",
-  "magiaborras.screen.spells.nowand": "Necesitas tener una Varita en la mano para aplicarle un Conjuro.",
   "magiaborras.screen.spells.tooltip": "Aplica el Conjuro %s a la Varita de su mano.",
   "magiaborras.screen.spells.tooltip_locked": "Necesitas desbloquear %s antes de poder usarlo.",
   "magiaborras.screen.spells.name_locked": "(Bloqueado) %s",

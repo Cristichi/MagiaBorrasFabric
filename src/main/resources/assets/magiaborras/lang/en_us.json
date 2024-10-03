@@ -148,7 +148,6 @@
   "magiaborras.wandlength.long": "Longer than average",
 
   "magiaborras.spell.changed_spell": "You loaded the Spell %s to your Wand.",
-  "magiaborras.spell.change_spell_no_wand": "You need a wand in your hand to change its Spell.",
   "magiaborras.spell.changed_no_spell": "You removed the Spell of your Wand.",
   "magiaborras.spell.changed_wrong_spell": "That Spell, \"%s\", does not exist.",
 
@@ -160,9 +159,11 @@
 
   "category.magiaborras.keybinds": "MagiaBorras keys",
   "key.magiaborras.change_spell": "Change Spell",
+  "magiaborras.change_spell.nowand": "You need to hold a Wand to apply a Spell to it.",
+  "key.magiaborras.quick_protego": "Quick Protego",
+  "magiaborras.quick_protego.nowand": "You need to hold a Wand to cast a quick Protego.",
 
   "magiaborras.screen.spells.title": "Spell List",
-  "magiaborras.screen.spells.nowand": "You need to hold a Wand to apply a Spell to it.",
   "magiaborras.screen.spells.tooltip": "Apply the Spell %s to the Wand in your hand.",
   "magiaborras.screen.spells.tooltip_locked": "You need to unlock %s first.",
   "magiaborras.screen.spells.name_locked": "(Locked) %s",
