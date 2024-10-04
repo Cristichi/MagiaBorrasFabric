@@ -238,7 +238,7 @@ public class MagiaBorras implements ModInitializer {
         initSpell(Accio.class);
         initSpell(Diffindo.class);
         initSpell(WingardiumLeviosa.class);
-//        initSpell(Lumos.class); I mean, since it doesn't work...
+        //initSpell(Lumos.class); // Waiting for Dynamic Lights for 1.21.1
         initSpell(ArrestoMomentum.class);
         initSpell(Bombarda.class);
         initSpell(Depulso.class);
@@ -339,7 +339,6 @@ public class MagiaBorras implements ModInitializer {
         // Floo Fireplace TP
         PayloadTypeRegistry.playC2S().register(FlooFireTPPayload.ID, FlooFireTPPayload.CODEC);
         ServerPlayNetworking.registerGlobalReceiver(FlooFireTPPayload.ID, (payload, context) -> {
-
             PlayerInventory inv = context.player().getInventory();
             ItemStack handStack = inv.getMainHandStack();
             if (handStack.getItem() instanceof FlooPowderItem){
@@ -371,11 +370,20 @@ public class MagiaBorras implements ModInitializer {
                 } else {
                     context.player().sendMessage(Text.translatable("magiaborras.screen.floonet.cant_tp"));
                 }
-
-
             }
 
         });
+
+        // Dynamic lights for Lumos (ITEM entity form)
+//        DynamicLightHandlers.registerDynamicLightHandler(EntityType.ITEM, entity -> {
+//            if (entity.getStack().getItem() instanceof WandItem) {
+//                WandProperties prop = WandProperties.check(entity.getStack());
+//                if (prop != null){
+//                    return prop.lumos?15:0;
+//                }
+//            }
+//            return 0;
+//        });
 
         LOGGER.info("Loaded, against all odds.");
     }
