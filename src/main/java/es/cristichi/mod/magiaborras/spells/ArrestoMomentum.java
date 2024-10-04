@@ -20,7 +20,7 @@ import org.joml.Vector3f;
 import java.util.List;
 
 public class ArrestoMomentum extends Spell {
-    private static final double area = 5;
+    private static final double area = 10;
 
     public ArrestoMomentum() {
         super("arresto", Text.translatable("magiaborras.spell.arresto"), List.of(SpellCastType.USE),
@@ -31,16 +31,17 @@ public class ArrestoMomentum extends Spell {
 
     @Override
     public Result cast(ItemStack wand, WandProperties properties, ServerPlayerEntity magicUser, World world, HitResult hit) {
-        List<Entity> entities = world.getOtherEntities(null, magicUser.getBoundingBox().expand(area));
+        double finalArea = properties.getPower(magicUser)*area;
+        List<Entity> entities = world.getOtherEntities(null, magicUser.getBoundingBox().expand(finalArea));
         for(Entity entity : entities){
             entity.setVelocity(0, 0, 0);
-            entity.speed = 0;
             entity.fallDistance = 0;
-            entity.velocityDirty = true;
             if (entity instanceof LivingEntity livingEntity){
                 livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 10));
             }
         }
-        return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.ARRESTO_SOUNDEVENT));
+        SpellParticles particles = getDefaultParticles();
+        particles.setRadius(finalArea);
+        return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.ARRESTO_SOUNDEVENT), particles);
     }
 }
