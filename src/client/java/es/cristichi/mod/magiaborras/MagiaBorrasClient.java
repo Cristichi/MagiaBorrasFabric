@@ -44,7 +44,7 @@ public class MagiaBorrasClient implements ClientModInitializer {
         for (String id : MagiaBorras.SPELLS.keySet()){
             if (!id.equals("")){
                 keysQuickSpell.put(id, KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                        "magiaborras.spell."+id, InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "category.magiaborras.keybinds")));
+                        "magiaborras.spell."+id, InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "category.magiaborras.quick_spells")));
             }
         }
         ClientTickEvents.END_CLIENT_TICK.register(client -> {

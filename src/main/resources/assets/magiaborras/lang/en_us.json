@@ -160,6 +160,7 @@
   "category.magiaborras.keybinds": "MagiaBorras keys",
   "key.magiaborras.change_spell": "Change Spell",
   "magiaborras.change_spell.nowand": "You need to hold a Wand to apply a Spell to it.",
+  "category.magiaborras.quick_spells": "MagiaBorras Quick Spell casting",
   "magiaborras.quick_cast.nowand": "You need to hold a Wand to cast a quick Spell.",
 
   "magiaborras.screen.spells.title": "Spell List",
