@@ -16,6 +16,10 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+
+	maven {
+		url = "https://api.modrinth.com/maven"
+	}
 }
 
 loom {
@@ -42,6 +46,10 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+	// I tested RyoamicLights but it doesn't allow me to implement Lumos how I like it
+	// I'll just wait for https://modrinth.com/mod/lambdynamiclights/versions#all-versions
+	//modApi("maven.modrinth:ryoamiclights:0.2.11+mc1.21.1-fabric")
 }
 
 processResources {
