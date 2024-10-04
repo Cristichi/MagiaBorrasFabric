@@ -41,6 +41,7 @@
   "magiaborras.spell.expelliarmus": "Expelliarmus",
   "magiaborras.spell.revelio": "Revelio",
   "magiaborras.spell.protego": "Protego",
+  "magiaborras.spell.ascendio": "Ascendio",
 
   "magiaborras.spell_blocked": "Protection against Spells",
 
@@ -59,6 +60,7 @@
   "item.magiaborras.spellbook_expelliarmus": "Spell Book (Expelliarmus)",
   "item.magiaborras.spellbook_revelio": "Spell Book (Revelio)",
   "item.magiaborras.spellbook_protego": "Spell Book (Protego)",
+  "item.magiaborras.spellbook_ascendio": "Spell Book (Ascendio)",
 
   "item.magiaborras.wand.broken": "Oh no! The wand is broken. I fixed it for you, try again.",
 

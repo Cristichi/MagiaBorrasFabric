@@ -1,4 +1,10 @@
 {
+  "spell_blocked": {
+    "subtitle": "magiaborras.spell_blocked",
+    "sounds": [
+      "magiaborras:spell_blocked"
+    ]
+  },
   "avada": {
     "subtitle": "magiaborras.spell.avada",
     "sounds": [
@@ -77,10 +83,10 @@
       "magiaborras:protego"
     ]
   },
-  "spell_blocked": {
-    "subtitle": "magiaborras.spell_blocked",
+  "ascendio": {
+    "subtitle": "magiaborras.ascendio",
     "sounds": [
-      "magiaborras:spell_blocked"
+      "magiaborras:ascendio"
     ]
   }
 }

@@ -24,10 +24,18 @@ public abstract class EntitySpellsMixin implements EntitySpellsAccess {
 
     @Shadow public abstract void setNoGravity(boolean noGravity);
 
+    @Shadow public abstract void setOnGround(boolean onGround);
+
+    @Shadow public abstract void setVelocityClient(double x, double y, double z);
+
+    @Shadow public abstract void setVelocity(Vec3d velocity);
+
     @Unique
     private Long ticksLeftRevelio;
     @Unique
     private Long ticksLeftProtego;
+    @Unique
+    private MovementType movementType;
     @Unique
     private Vec3d stepMovement;
     @Unique
@@ -43,7 +51,7 @@ public abstract class EntitySpellsMixin implements EntitySpellsAccess {
             ticksLeftProtego = null;
         }
         if (ticksLeftMovement != null && stepMovement != null) {
-            move(MovementType.PLAYER, stepMovement);
+            move(movementType, stepMovement);
             if (--this.ticksLeftMovement <= 0L){
                 ticksLeftMovement = null;
                 stepMovement = null;
@@ -63,9 +71,10 @@ public abstract class EntitySpellsMixin implements EntitySpellsAccess {
     }
 
     @Override
-    public void magiaborras_setMovement(long ticks, Vec3d step) {
+    public void magiaborras_setMovement(long ticks, Vec3d step, MovementType type) {
         ticksLeftMovement = ticks;
         stepMovement = step;
+        movementType = type;
         setNoGravity(true);
     }
 
