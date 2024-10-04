@@ -36,7 +36,6 @@ public abstract class Spell {
     //  - Imperio
     //  X Incendio (add functionality for furnaces :D)
     //  - Petrificus Totalus
-    //  - Stupefy
     //  X Wingardium Leviosa
 
     // TODO: More Spells from H.L. I like that are not in the old version:
