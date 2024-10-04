@@ -96,6 +96,10 @@ public class WandItem extends Item {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
         WandProperties prop = WandProperties.check(stack);
+
+        if (prop == null) {
+            return TypedActionResult.fail(stack);
+        }
         return useWithSpell(world, user, stack, prop, prop.spell);
     }
     public TypedActionResult<ItemStack> useWithSpell(World world, PlayerEntity user, ItemStack stack, WandProperties prop, Spell spell) {
