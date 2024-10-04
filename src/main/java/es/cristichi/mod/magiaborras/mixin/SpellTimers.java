@@ -2,7 +2,9 @@ package es.cristichi.mod.magiaborras.mixin;
 
 import es.cristichi.mod.magiaborras.timer.SpellTimersAccess;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.MovementType;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -18,10 +20,16 @@ public abstract class SpellTimers implements SpellTimersAccess {
 
     @Shadow public abstract void sendMessage(Text message);
 
+    @Shadow public abstract void move(MovementType movementType, Vec3d movement);
+
     @Unique
     private Long ticksLeftRevelio;
     @Unique
     private Long ticksLeftProtego;
+    @Unique
+    private Vec3d stepMovement;
+    @Unique
+    private Long ticksLeftMovement;
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void tick(CallbackInfo ci){
@@ -31,6 +39,13 @@ public abstract class SpellTimers implements SpellTimersAccess {
         }
         if (ticksLeftProtego != null && --this.ticksLeftProtego <= 0L) {
             ticksLeftProtego = null;
+        }
+        if (ticksLeftMovement != null && stepMovement != null) {
+            move(MovementType.PLAYER, stepMovement);
+            if (--this.ticksLeftMovement <= 0L){
+                ticksLeftMovement = null;
+                stepMovement = null;
+            }
         }
     }
 
@@ -42,6 +57,12 @@ public abstract class SpellTimers implements SpellTimersAccess {
     @Override
     public void magiaborras_setProtegoTimer(long ticks) {
         ticksLeftProtego = ticks;
+    }
+
+    @Override
+    public void magiaborras_setMovement(long ticks, Vec3d step) {
+        ticksLeftMovement = ticks;
+        stepMovement = step;
     }
 
     @Override
