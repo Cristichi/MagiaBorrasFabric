@@ -181,7 +181,7 @@ public class WandItem extends Item {
                         return new TypedActionResult<>(result.actionResult(), stack);
 
                     } else {
-                        user.sendMessage(Text.translatable("magiaborras.spell.locked"));
+                        user.sendMessage(Text.translatable("magiaborras.spell.locked", spell.getName()));
                         return TypedActionResult.fail(stack);
                     }
                 }

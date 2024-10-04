@@ -27,7 +27,7 @@
   "item.magiaborras.wand.tooltip_power": "Power: %d",
 
   "magiaborras.spell.none": "No Spell prepared",
-  "magiaborras.spell.locked": "You have not unlocked this Spell.",
+  "magiaborras.spell.locked": "You have not learned %s yet.",
   "magiaborras.spell.avada": "Killing Curse",
   "magiaborras.spell.accio": "Accio",
   "magiaborras.spell.alohomora": "Alohomora",

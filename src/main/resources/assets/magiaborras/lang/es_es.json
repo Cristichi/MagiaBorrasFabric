@@ -25,7 +25,7 @@
   "item.magiaborras.wand.tooltip_power": "Poder: %d",
 
   "magiaborras.spell.none": "Ningún Conjuro preparado",
-  "magiaborras.spell.locked": "No has desbloqueado este Conjuro.",
+  "magiaborras.spell.locked": "No has aprendido %s todavía.",
   "magiaborras.spell.avada": "Maldición Asesina",
   "magiaborras.spell.accio": "Accio",
   "magiaborras.spell.alohomora": "Alohomora",
