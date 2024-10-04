@@ -8,7 +8,7 @@ import es.cristichi.mod.magiaborras.spells.Spell;
 import es.cristichi.mod.magiaborras.spells.net.SpellHitPayload;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
 import es.cristichi.mod.magiaborras.spells.prop.SpellParticles;
-import es.cristichi.mod.magiaborras.timer.SpellTimersAccess;
+import es.cristichi.mod.magiaborras.mixinaccess.EntitySpellsAccess;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.Entity;
@@ -141,7 +141,7 @@ public class WandItem extends Item {
                         }
                         boolean blocked = false;
                         if (hit instanceof EntityHitResult entityHitResult){
-                            if (entityHitResult.getEntity() instanceof SpellTimersAccess ent){
+                            if (entityHitResult.getEntity() instanceof EntitySpellsAccess ent){
                                 blocked = ent.magiaborras_isProtegoActive();
                             }
                         }

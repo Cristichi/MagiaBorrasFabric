@@ -5,7 +5,7 @@ import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
 import es.cristichi.mod.magiaborras.spells.prop.SpellParticles;
 import es.cristichi.mod.magiaborras.spells.prop.SpellParticlesBuilder;
-import es.cristichi.mod.magiaborras.timer.SpellTimersAccess;
+import es.cristichi.mod.magiaborras.mixinaccess.EntitySpellsAccess;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -40,7 +40,7 @@ public class Accio extends Spell {
 //            ent.move(MovementType.PLAYER, velocity);
 //            ent.move(MovementType.PLAYER, velocity);
 //            ent.setNoGravity(gravity);
-            ((SpellTimersAccess) ent).magiaborras_setMovement(5, velocity);
+            ((EntitySpellsAccess) ent).magiaborras_setMovement(5, velocity);
             return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.ACCIO_SOUNDEVENT));
         } else {
             return new Result(ActionResult.FAIL, 0, null);

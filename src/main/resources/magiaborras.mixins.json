@@ -3,7 +3,7 @@
   "package": "es.cristichi.mod.magiaborras.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "SpellTimers"
+    "EntitySpellsMixin"
   ],
   "injectors": {
     "defaultRequire": 1

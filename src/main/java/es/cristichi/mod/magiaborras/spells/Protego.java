@@ -5,7 +5,7 @@ import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
 import es.cristichi.mod.magiaborras.spells.prop.SpellParticles;
 import es.cristichi.mod.magiaborras.spells.prop.SpellParticlesBuilder;
-import es.cristichi.mod.magiaborras.timer.SpellTimersAccess;
+import es.cristichi.mod.magiaborras.mixinaccess.EntitySpellsAccess;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
@@ -28,7 +28,7 @@ public class Protego extends Spell {
 
     @Override
     public Result cast(ItemStack wand, WandProperties properties, ServerPlayerEntity magicUser, World world, HitResult hit) {
-        ((SpellTimersAccess) magicUser).magiaborras_setProtegoTimer(baseCooldown* 2L);
+        ((EntitySpellsAccess) magicUser).magiaborras_setProtegoTimer(baseCooldown* 2L);
         return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.PROTEGO_SOUNDEVENT));
     }
 }

@@ -5,7 +5,7 @@ import es.cristichi.mod.magiaborras.items.wand.prop.WandProperties;
 import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
 import es.cristichi.mod.magiaborras.spells.prop.SpellParticles;
 import es.cristichi.mod.magiaborras.spells.prop.SpellParticlesBuilder;
-import es.cristichi.mod.magiaborras.timer.SpellTimersAccess;
+import es.cristichi.mod.magiaborras.mixinaccess.EntitySpellsAccess;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -35,7 +35,7 @@ public class Depulso extends Spell {
             Entity ent = hitEnt.getEntity();
             //ent.addVelocity(ent.getPos().subtract(magicUser.getPos()).normalize().multiply(power*5));
             Vec3d velocity = ent.getPos().subtract(magicUser.getPos()).multiply(power);
-            ((SpellTimersAccess) ent).magiaborras_setMovement(5, velocity);
+            ((EntitySpellsAccess) ent).magiaborras_setMovement(5, velocity);
             return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.DEPULSO_SOUNDEVENT));
         }
         return new Result(ActionResult.FAIL, 0, new ArrayList<>(0));

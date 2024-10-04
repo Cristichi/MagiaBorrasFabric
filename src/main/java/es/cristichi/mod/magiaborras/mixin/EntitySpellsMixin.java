@@ -1,6 +1,6 @@
 package es.cristichi.mod.magiaborras.mixin;
 
-import es.cristichi.mod.magiaborras.timer.SpellTimersAccess;
+import es.cristichi.mod.magiaborras.mixinaccess.EntitySpellsAccess;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.text.Text;
@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Entity.class)
-public abstract class SpellTimers implements SpellTimersAccess {
+public abstract class EntitySpellsMixin implements EntitySpellsAccess {
     @Shadow public abstract void setGlowing(boolean glowing);
 
     @Shadow public abstract Text getDisplayName();
