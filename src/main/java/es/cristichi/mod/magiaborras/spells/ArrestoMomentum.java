@@ -25,7 +25,7 @@ public class ArrestoMomentum extends Spell {
     public ArrestoMomentum() {
         super("arresto", Text.translatable("magiaborras.spell.arresto"), List.of(SpellCastType.USE),
                 Spell.NO_ENTITY, Spell.NO_BLOCK,
-                new SpellParticlesBuilder().setRadius(area).setvMar(0).sethMar(0.1).setType(SpellParticles.SpellParticleType.FLOOR).setColorStart(new Vector3f(0.4f, 0.4f, 0.4f)).setColorEnd(new Vector3f(0.8f, 0.8f, 0.8f)).build(),
+                new SpellParticlesBuilder().setRadius(area).sethMar(0.2).setType(SpellParticles.SpellParticleType.FLOOR).setColorStart(new Vector3f(0.4f, 0.4f, 0.4f)).setColorEnd(new Vector3f(0.8f, 0.8f, 0.8f)).build(),
                 20);
     }
 
