@@ -29,12 +29,12 @@ public class Ascendio extends Spell {
                         .setRadius(1)
                         .setColorStart(new Vector3f(0, 0, 1f))
                         .build(),
-                20);
+                40);
     }
 
     @Override
     public @NotNull Result resolveEffect(ItemStack wand, WandProperties properties, ServerPlayerEntity magicUser, ServerWorld world, HitResult hit) {
-        ((EntitySpellsAccess) magicUser).magiaborras_setMovement(baseCooldown-5, step, MovementType.PLAYER);
+        ((EntitySpellsAccess) magicUser).magiaborras_setMovement(20, step, MovementType.PLAYER);
         return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.ASCENDIO_SOUNDEVENT));
     }
 }
