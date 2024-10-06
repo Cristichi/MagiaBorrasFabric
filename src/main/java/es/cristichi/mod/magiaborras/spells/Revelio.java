@@ -19,7 +19,6 @@ import org.joml.Vector3f;
 import java.util.List;
 
 public class Revelio extends Spell {
-    // TODO I need to allow border-only particles to fix them for huge areas like this one
     private static final double MIN_AREA = 10;
     private static final double MAX_AREA = 30;
 
