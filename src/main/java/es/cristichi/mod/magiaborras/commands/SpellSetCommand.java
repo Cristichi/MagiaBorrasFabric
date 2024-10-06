@@ -32,7 +32,7 @@ public class SpellSetCommand {
                                 prop.apply(hand);
                                 return 1;
                             }
-                            throw new SimpleCommandExceptionType(Text.translatable("magiaborras.spell.change_spell_no_wand")).create();
+                            throw new SimpleCommandExceptionType(Text.translatable("magiaborras.change_spell.nowand")).create();
                         })
                         .suggests(new SpellSuggestionProvider())
                         .then(CommandManager.argument("spell", StringArgumentType.string())
