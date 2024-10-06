@@ -25,9 +25,11 @@ public class Ascendio extends Spell {
     public Ascendio() {
         super("ascendio", Text.translatable("magiaborras.spell.ascendio"), List.of(SpellCastType.USE), Spell.NO_ENTITY, Spell.NO_BLOCK,
                 new SpellParticlesBuilder()
-                        .setType(SpellParticles.SpellParticleType.SPHERE)
+                        .setType(SpellParticles.SpellParticleType.FLOOR)
                         .setRadius(1)
                         .setColorStart(new Vector3f(0, 0, 1f))
+                        .setFill(false)
+                        .setSize(1f)
                         .build(),
                 40);
     }
