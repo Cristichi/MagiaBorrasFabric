@@ -25,7 +25,12 @@ public class AvadaKedavra extends Spell {
     public AvadaKedavra() {
         super("avada", Text.translatable("magiaborras.spell.avada"), List.of(SpellCastType.USE),
                 Spell.LIVING_ENTITIES, Spell.NO_BLOCK,
-                new SpellParticlesBuilder().setType(SpellParticles.SpellParticleType.RAY).setColorStart(new Vector3f(0, 1f, 0)).setColorEnd(new Vector3f(0, 0.5f, 0)).build(),
+                new SpellParticlesBuilder()
+                        .setType(SpellParticles.SpellParticleType.RAY)
+                        .setColorStart(new Vector3f(0, 1f, 0))
+                        .setColorEnd(new Vector3f(0, 0.5f, 0))
+                        .setSize(4f)
+                        .build(),
                 240);
     }
 
