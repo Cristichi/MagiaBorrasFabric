@@ -279,7 +279,7 @@ public abstract class Spell {
             }
         }
 
-        return new EntityHitResult(currentTarget, currentTargetHit);
+        return new EntityHitResult(currentTarget, currentTargetHit==null?furthestHitPossible:currentTargetHit);
     }
 
     public static final class Result {
