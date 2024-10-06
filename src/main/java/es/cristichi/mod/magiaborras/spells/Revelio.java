@@ -33,7 +33,6 @@ public class Revelio extends Spell {
         double radius = MAX_AREA*power;
         List<Entity> ents = world.getOtherEntities(magicUser, magicUser.getBoundingBox().expand(radius));
         for (Entity ent : ents){
-            ent.setGlowing(true);
             ((EntitySpellsAccess) ent).magiaborras_setRevelioTimer(baseCooldown);
         }
         SpellParticles particles = getDefaultParticles();

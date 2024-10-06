@@ -3,7 +3,6 @@ package es.cristichi.mod.magiaborras.mixin;
 import es.cristichi.mod.magiaborras.mixinaccess.EntitySpellsAccess;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MovementType;
-import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -16,20 +15,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class EntitySpellsMixin implements EntitySpellsAccess {
     @Shadow public abstract void setGlowing(boolean glowing);
 
-    @Shadow public abstract Text getDisplayName();
-
-    @Shadow public abstract void sendMessage(Text message);
-
     @Shadow public abstract void move(MovementType movementType, Vec3d movement);
 
     @Shadow public abstract void setNoGravity(boolean noGravity);
 
-    @Shadow public abstract void setOnGround(boolean onGround);
-
-    @Shadow public abstract void setVelocityClient(double x, double y, double z);
-
-    @Shadow public abstract void setVelocity(Vec3d velocity);
-
+    @Shadow public float speed;
+    @Shadow public float horizontalSpeed;
+    @Shadow public boolean velocityDirty;
     @Unique
     private Long ticksLeftRevelio;
     @Unique
@@ -61,8 +53,9 @@ public abstract class EntitySpellsMixin implements EntitySpellsAccess {
     }
 
     @Override
-    public void magiaborras_setRevelioTimer(long ticksUntilSomething) {
-        this.ticksLeftRevelio = ticksUntilSomething;
+    public void magiaborras_setRevelioTimer(long ticks) {
+        this.ticksLeftRevelio = ticks;
+        setGlowing(true);
     }
 
     @Override
