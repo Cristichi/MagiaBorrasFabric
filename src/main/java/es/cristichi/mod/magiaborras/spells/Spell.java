@@ -66,7 +66,7 @@ public abstract class Spell {
     //  - Morsmorde (for my friend, who clearly is not a Death Eater)
     //  - Finite Incantatem (for me to stop the annoying Morsmorde spam)
     //  X Ascendio
-    //  - Periculum
+    //  - Verdimillius
 
     // TODO: Unique Spells?
     //  - Tree Chopper Spell
@@ -122,7 +122,7 @@ public abstract class Spell {
     }
 
     public SpellParticles getDefaultParticles() {
-        return defaultParticles;
+        return new SpellParticles(defaultParticles);
     }
 
     /**

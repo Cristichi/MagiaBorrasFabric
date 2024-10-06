@@ -24,6 +24,7 @@ public record SpellHitPayload(Vec3d eyeSource, Vec3d hit, SpellParticles particl
                             .setColorStart(buf.readVector3f())
                             .setColorEnd(buf.readVector3f())
                             .setSize(buf.readFloat())
+                            .setFill(buf.readBoolean())
                             .build()
             );
         }
@@ -46,6 +47,7 @@ public record SpellHitPayload(Vec3d eyeSource, Vec3d hit, SpellParticles particl
             buf.writeVector3f(value.particles.getColorStart());
             buf.writeVector3f(value.particles.getColorEnd());
             buf.writeFloat(value.particles.getSize());
+            buf.writeBoolean(value.particles.getFill());
         }
     };
 

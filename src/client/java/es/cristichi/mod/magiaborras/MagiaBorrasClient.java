@@ -106,12 +106,15 @@ public class MagiaBorrasClient implements ClientModInitializer {
                     }
                     case SPHERE -> {
                         Vec3d center = payload.eyeSource().subtract(0, 0.5, 0);
+                        double maxMargin = Math.min(horiMargin, vertMargin);
 
                         for (double x = center.x-radius; x <= center.x+radius; x += horiMargin) {
                             for (double y = center.y-radius; y <= center.y+radius; y += vertMargin) {
                                 for (double z = center.z-radius; z <= center.z+radius; z += horiMargin) {
                                     Vec3d current = new Vec3d(x,y,z);
-                                    if (current.distanceTo(center) <= radius){
+                                    double dist = current.distanceTo(center);
+                                    if (dist <= radius &&
+                                            (payload.particles().getFill() || dist > radius - maxMargin)){
                                         context.client().world.addParticle(particleEffect,
                                                 current.getX(), current.getY(), current.getZ(),
                                                 0,0,0);
@@ -122,12 +125,15 @@ public class MagiaBorrasClient implements ClientModInitializer {
                     }
                     case FLOOR -> {
                         Vec3d center = payload.eyeSource().subtract(0, 1, 0);
+                        double maxMargin = Math.min(horiMargin, vertMargin);
 
                         double y = center.y;
                         for (double x = center.x-radius; x <= center.x+radius; x += horiMargin) {
                             for (double z = center.z-radius; z <= center.z+radius; z += horiMargin) {
                                 Vec3d current = new Vec3d(x,y,z);
-                                if (current.distanceTo(center) <= radius) {
+                                double dist = current.distanceTo(center);
+                                if (dist <= radius &&
+                                        (payload.particles().getFill() || dist > radius - maxMargin)) {
                                     context.client().world.addParticle(particleEffect,
                                             x, y, z, 0, 0, 0);
                                 }

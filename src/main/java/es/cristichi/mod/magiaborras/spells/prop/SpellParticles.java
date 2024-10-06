@@ -14,8 +14,9 @@ public final class SpellParticles {
     private Vector3f colorStart;
     private Vector3f colorEnd;
     private float size;
+    private boolean fill;
 
-    public SpellParticles(double radius, double vMar, double hMar, SpellParticleType type, Vector3f colorStart, Vector3f colorEnd, float size) {
+    public SpellParticles(double radius, double vMar, double hMar, SpellParticleType type, Vector3f colorStart, Vector3f colorEnd, float size, boolean fill) {
         this.radius = radius;
         this.vMar = vMar;
         this.hMar = hMar;
@@ -23,6 +24,11 @@ public final class SpellParticles {
         this.colorStart = colorStart;
         this.colorEnd = colorEnd;
         this.size = size;
+        this.fill = fill;
+    }
+
+    public SpellParticles(SpellParticles copy){
+        this(copy.radius, copy.vMar, copy.hMar, copy.type, copy.colorStart, copy.colorEnd, copy.size, copy.fill);
     }
 
     public double getRadius() {
@@ -79,6 +85,14 @@ public final class SpellParticles {
 
     public void setSize(float size) {
         this.size = size;
+    }
+
+    public boolean getFill() {
+        return fill;
+    }
+
+    public void setFill(boolean fill) {
+        this.fill = fill;
     }
 
     public enum SpellParticleType {

@@ -19,25 +19,40 @@ import org.joml.Vector3f;
 import java.util.List;
 
 public class Revelio extends Spell {
-    private static final double MAX_AREA = 20;
+    // TODO I need to allow border-only particles to fix them for huge areas like this one
+    private static final double MIN_AREA = 10;
+    private static final double MAX_AREA = 30;
 
     public Revelio() {
         super("revelio", Text.translatable("magiaborras.spell.revelio"), List.of(SpellCastType.USE),
                 Spell.NO_ENTITY, Spell.NO_BLOCK,
-                new SpellParticlesBuilder().setRadius(MAX_AREA).setvMar(1).sethMar(1).setType(SpellParticles.SpellParticleType.SPHERE).setColorStart(new Vector3f(1f, 1f, 0)).build(),
+                new SpellParticlesBuilder()
+                        .setType(SpellParticles.SpellParticleType.SPHERE)
+                        .setRadius(MAX_AREA)
+                        .sethMar(1)
+                        .setvMar(1)
+                        .setColorStart(new Vector3f(1f, 1f, 0))
+                        .setSize(5f)
+                        .setFill(false)
+                        .build(),
                 60);
     }
 
     @Override
     public @NotNull Result resolveEffect(ItemStack wand, WandProperties properties, ServerPlayerEntity magicUser, ServerWorld world, HitResult hit) {
         double power = properties.getPower(magicUser);
-        double radius = MAX_AREA*power;
+        double radius = (MAX_AREA-MIN_AREA)*power+MIN_AREA;
         List<Entity> ents = world.getOtherEntities(magicUser, magicUser.getBoundingBox().expand(radius));
         for (Entity ent : ents){
             ((EntitySpellsAccess) ent).magiaborras_setRevelioTimer(baseCooldown);
         }
         SpellParticles particles = getDefaultParticles();
-        particles.setRadius(radius);
+        double partRad = Math.min(radius, magicUser.getViewDistance());
+        float percent = (float)(partRad/MAX_AREA + 0.2f);
+        particles.setRadius(partRad);
+        particles.sethMar(particles.getHMar()*1/percent);
+        particles.setvMar(particles.getVMar()*1/percent);
+        particles.setSize(particles.getSize()*percent);
         return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.REVELIO_SOUNDEVENT), particles);
     }
 }
