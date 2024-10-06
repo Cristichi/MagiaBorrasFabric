@@ -66,7 +66,7 @@ public abstract class Spell {
     //  - Morsmorde (for my friend, who clearly is not a Death Eater)
     //  - Finite Incantatem (for me to stop the annoying Morsmorde spam)
     //  X Ascendio
-    //  - Verdimillius
+    //  X Vermillious
 
     // TODO: Unique Spells?
     //  - Tree Chopper Spell
