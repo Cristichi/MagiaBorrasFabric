@@ -13,10 +13,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Entity.class)
 public abstract class EntitySpellsMixin implements EntitySpellsAccess {
-    @Shadow public float speed;
-    @Shadow public float horizontalSpeed;
-    @Shadow public boolean velocityDirty;
-
     @Shadow public abstract void setGlowing(boolean glowing);
     @Shadow public abstract void setNoGravity(boolean noGravity);
     @Shadow public abstract void setVelocity(Vec3d velocity);
