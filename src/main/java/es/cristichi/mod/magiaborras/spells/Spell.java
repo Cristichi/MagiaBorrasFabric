@@ -66,13 +66,14 @@ public abstract class Spell {
     //  - Morsmorde (for my friend, who clearly is not a Death Eater)
     //  - Finite Incantatem (for me to stop the annoying Morsmorde spam)
     //  X Ascendio
+    //  - Periculum
 
     // TODO: Unique Spells?
     //  - Tree Chopper Spell
     //  - Redstone Spell
     //  - Spell that marks a place to all players in the area, like a ping
 
-    public static final double MAX_DISTANCE = 500;
+    public static final double MAX_RANGE = 50000;
 
     static final Predicate<Entity> LIVING_ENTITIES = (entity -> !entity.isSpectator() && entity.canBeHitByProjectile());
     static final Predicate<Entity> ANY_ENTITY = (entity -> true);
@@ -156,11 +157,8 @@ public abstract class Spell {
             if (properties != null) {
                 if (getCastTypes().contains(SpellCastType.USE)) {
                     if (user.isCreative() || getId().equals("") || data.containsSpell(this)) {
-                        Vec3d camPos = user.getCameraPosVec(0);
-                        Vec3d rotation = user.getRotationVec(0);
-                        Vec3d ray = camPos.add(rotation.x * MAX_DISTANCE, rotation.y * MAX_DISTANCE, rotation.z * MAX_DISTANCE);
-                        Box box = user.getBoundingBox().stretch(rotation.multiply(MAX_DISTANCE)).expand(1d, 1d, 1d);
-                        HitResult hit = raycast(user, camPos, ray, box, this.getAffectableEntities(), MAX_DISTANCE);
+
+                        HitResult hit = raycast((ServerPlayerEntity) user, this.getAffectableEntities(), MAX_RANGE);
                         if (hit instanceof EntityHitResult entityHitResult && entityHitResult.getEntity() == null){
                             hit = new HitResult(hit.getPos()) {
                                 @Override
@@ -170,7 +168,7 @@ public abstract class Spell {
                             };
                         }
                         // This is always a block hit
-                        HitResult hitBlock = user.raycast(MAX_DISTANCE, 0, false);
+                        HitResult hitBlock = user.raycast(MAX_RANGE, 0, false);
                         if (hitBlock instanceof BlockHitResult blockHitResult
                                 && !getAffectableBlocks().test(world.getBlockState(blockHitResult.getBlockPos()))){
                             hitBlock = new HitResult(hitBlock.getPos()) {
@@ -242,40 +240,46 @@ public abstract class Spell {
         return TypedActionResult.fail(wand);
     }
 
-    private static EntityHitResult raycast(Entity entity, Vec3d min, Vec3d max, Box box, Predicate<Entity> predicate, double maxDistance) {
-        World world = entity.getWorld();
-        double d = maxDistance;
-        Entity entity2 = null;
-        Vec3d vec3d = null;
+    private static EntityHitResult raycast(ServerPlayerEntity user, Predicate<Entity> targettable, double maxDistance) {
+        ServerWorld world = (ServerWorld) user.getWorld();
+        Vec3d startPoint = user.getCameraPosVec(0);
+        Vec3d rotation = user.getRotationVec(0);
+        Vec3d furthestHitPossible = startPoint.add(rotation.x * MAX_RANGE, rotation.y * MAX_RANGE, rotation.z * MAX_RANGE);
 
-        for (Entity entity3 : world.getOtherEntities(entity, box, predicate)) {
-            Box box2 = entity3.getBoundingBox().expand(entity3.getTargetingMargin());
-            Optional<Vec3d> optional = box2.raycast(min, max);
-            if (box2.contains(min)) {
-                if (d >= 0.0) {
-                    entity2 = entity3;
-                    vec3d = optional.orElse(min);
-                    d = 0.0;
+        Entity currentTarget = null;
+        Vec3d currentTargetHit = null;
+        double currentTargetDistance = maxDistance;
+
+        Collection<Entity> targets = world.getOtherEntities(user, user.getBoundingBox().expand(MAX_RANGE), targettable);
+
+        for (Entity potentialTarget : targets) {
+            Box boxCollisionPotTarget = potentialTarget.getBoundingBox().expand(potentialTarget.getTargetingMargin());
+            Optional<Vec3d> pointCrossedBox = boxCollisionPotTarget.raycast(startPoint, furthestHitPossible);
+            if (boxCollisionPotTarget.contains(startPoint)) {
+                if (currentTargetDistance >= 0.0) {
+                    currentTarget = potentialTarget;
+                    currentTargetHit = pointCrossedBox.orElse(startPoint);
+                    currentTargetDistance = 0.0;
                 }
-            } else if (optional.isPresent()) {
-                Vec3d vec3d2 = optional.get();
-                double e = min.squaredDistanceTo(vec3d2);
-                if (e < d || d == 0.0) {
-                    if (entity3.getRootVehicle() == entity.getRootVehicle()) {
-                        if (d == 0.0) {
-                            entity2 = entity3;
-                            vec3d = vec3d2;
+            } else if (pointCrossedBox.isPresent()) {
+                Vec3d vec3d2 = pointCrossedBox.get();
+                double e = startPoint.squaredDistanceTo(vec3d2);
+                if (e < currentTargetDistance || currentTargetDistance == 0.0) {
+                    if (potentialTarget.getRootVehicle() == user.getRootVehicle()) {
+                        if (currentTargetDistance == 0.0) {
+                            currentTarget = potentialTarget;
+                            currentTargetHit = vec3d2;
                         }
                     } else {
-                        entity2 = entity3;
-                        vec3d = vec3d2;
-                        d = e;
+                        currentTarget = potentialTarget;
+                        currentTargetHit = vec3d2;
+                        currentTargetDistance = e;
                     }
                 }
             }
         }
 
-        return new EntityHitResult(entity2, vec3d);
+        return new EntityHitResult(currentTarget, currentTargetHit);
     }
 
     public static final class Result {
