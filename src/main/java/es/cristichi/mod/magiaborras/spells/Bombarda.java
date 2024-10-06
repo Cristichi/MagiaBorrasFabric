@@ -7,11 +7,13 @@ import es.cristichi.mod.magiaborras.spells.prop.SpellParticles;
 import es.cristichi.mod.magiaborras.spells.prop.SpellParticlesBuilder;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.AdvancedExplosionBehavior;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
@@ -27,7 +29,7 @@ public class Bombarda extends Spell {
     }
 
     @Override
-    public Result cast(ItemStack wand, WandProperties properties, ServerPlayerEntity magicUser, World world, HitResult hit) {
+    public @NotNull Result resolveEffect(ItemStack wand, WandProperties properties, ServerPlayerEntity magicUser, ServerWorld world, HitResult hit) {
         if (hit.getType().equals(HitResult.Type.MISS)){
             return new Result(ActionResult.FAIL, baseCooldown/5, new ArrayList<>());
         }

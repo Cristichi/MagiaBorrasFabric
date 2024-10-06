@@ -9,13 +9,14 @@ import net.minecraft.block.*;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class Alohomora extends Spell {
     }
 
     @Override
-    public Result cast(ItemStack wand, WandProperties properties, ServerPlayerEntity magicUser, World world, HitResult hit) {
+    public @NotNull Result resolveEffect(ItemStack wand, WandProperties properties, ServerPlayerEntity magicUser, ServerWorld world, HitResult hit) {
         if (hit.getType() == HitResult.Type.BLOCK) {
             BlockHitResult hitLego = (BlockHitResult) hit;
             BlockState blockState = world.getBlockState(hitLego.getBlockPos());

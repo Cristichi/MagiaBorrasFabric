@@ -312,7 +312,7 @@ public class MagiaBorras implements ModInitializer {
             ItemStack hand = magicUser.getStackInHand(Hand.MAIN_HAND);
             WandProperties prop = WandProperties.check(hand);
             if (hand.getItem() instanceof WandItem wandItem && prop != null) {
-                wandItem.useWithSpell(magicUser.getWorld(), magicUser, hand, prop, spell);
+                spell.cast(magicUser.getWorld(), magicUser, hand, prop);
             }
         });
 

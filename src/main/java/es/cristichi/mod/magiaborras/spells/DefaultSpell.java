@@ -16,7 +16,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.List;
@@ -31,7 +31,7 @@ public class DefaultSpell extends Spell {
     }
 
     @Override
-    public Result cast(ItemStack wand, WandProperties properties, ServerPlayerEntity magicUser, World world, HitResult hit) {
+    public @NotNull Result resolveEffect(ItemStack wand, WandProperties properties, ServerPlayerEntity magicUser, ServerWorld world, HitResult hit) {
         float power = properties.getPower(magicUser);
         int count = 100 + (int) (power*200);
         SoundEvent sound = SoundEvents.ENTITY_ENDER_DRAGON_GROWL;
