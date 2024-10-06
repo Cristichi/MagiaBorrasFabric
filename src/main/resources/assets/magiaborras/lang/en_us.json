@@ -42,6 +42,7 @@
   "magiaborras.spell.revelio": "Revelio",
   "magiaborras.spell.protego": "Protego",
   "magiaborras.spell.ascendio": "Ascendio",
+  "magiaborras.spell.vermillious": "Vermillious",
 
   "magiaborras.spell_blocked": "Protection against Spells",
 
@@ -61,6 +62,7 @@
   "item.magiaborras.spellbook_revelio": "Spell Book (Revelio)",
   "item.magiaborras.spellbook_protego": "Spell Book (Protego)",
   "item.magiaborras.spellbook_ascendio": "Spell Book (Ascendio)",
+  "item.magiaborras.spellbook_vermillious": "Spell Book (Vermillious)",
 
   "item.magiaborras.wand.broken": "Oh no! The wand is broken. I fixed it for you, try again.",
 

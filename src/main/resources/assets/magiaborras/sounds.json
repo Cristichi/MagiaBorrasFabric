@@ -88,6 +88,12 @@
     "sounds": [
       "magiaborras:ascendio"
     ]
+  },
+  "vermillious": {
+    "subtitle": "magiaborras.vermillious",
+    "sounds": [
+      "magiaborras:vermillious"
+    ]
   }
 }
 

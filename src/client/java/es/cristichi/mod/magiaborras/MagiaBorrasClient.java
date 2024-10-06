@@ -31,6 +31,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MagiaBorrasClient implements ClientModInitializer {
+    private static final int MAX_RAY_PARTICLES = 100;
+
     private static KeyBinding keyChangeSpell;
     private static HashMap<String, KeyBinding> keysQuickSpell;
     public static final EntityModelLayer MODEL_MAGIC_BROOM_LAYER = new EntityModelLayer(Identifier.of(MagiaBorras.MOD_ID, "magic_broom"), "main");
@@ -94,9 +96,10 @@ public class MagiaBorrasClient implements ClientModInitializer {
                 switch (type){
                     case RAY -> {
                         Vec3d current = payload.eyeSource();
+                        Vec3d step = payload.hit().subtract(current).normalize().multiply(horiMargin);
 
-                        while (current.distanceTo(payload.hit()) > 1) {
-                            Vec3d step = payload.hit().subtract(current).normalize().multiply(0.1);
+                        double dist;
+                        for(int i = 0; (dist = current.distanceTo(payload.hit())) >= 1 && i< MAX_RAY_PARTICLES; i++) {
                             context.client().world.addParticle(particleEffect,
                                     current.getX(), current.getY(), current.getZ(),
                                     step.x, step.y, step.z);
