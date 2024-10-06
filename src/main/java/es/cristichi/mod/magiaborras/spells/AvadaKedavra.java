@@ -27,11 +27,11 @@ public class AvadaKedavra extends Spell {
                 Spell.LIVING_ENTITIES, Spell.NO_BLOCK,
                 new SpellParticlesBuilder()
                         .setType(SpellParticles.SpellParticleType.RAY)
-                        .setColorStart(new Vector3f(0, 1f, 0))
-                        .setColorEnd(new Vector3f(0, 0.5f, 0))
+                        .setColorStart(new Vector3f(0, 1, 0))
+                        .setColorEnd(new Vector3f(0, 0.2f, 0))
                         .setSize(4f)
                         .build(),
-                240);
+                200);
     }
 
     @Override
