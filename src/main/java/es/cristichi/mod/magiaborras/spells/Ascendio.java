@@ -19,7 +19,7 @@ import org.joml.Vector3f;
 import java.util.List;
 
 public class Ascendio extends Spell {
-    private static final Vec3d step = new Vec3d(0, 200, 0);
+    private static final Vec3d step = new Vec3d(0, 0.5, 0);
 
     public Ascendio() {
         super("ascendio", Text.translatable("magiaborras.spell.ascendio"), List.of(SpellCastType.USE), Spell.NO_ENTITY, Spell.NO_BLOCK,
@@ -33,7 +33,7 @@ public class Ascendio extends Spell {
 
     @Override
     public Result cast(ItemStack wand, WandProperties properties, ServerPlayerEntity magicUser, World world, HitResult hit) {
-        ((EntitySpellsAccess) magicUser).magiaborras_setMovement(10, step, MovementType.PLAYER);
+        ((EntitySpellsAccess) magicUser).magiaborras_setMovement(baseCooldown-5, step, MovementType.PLAYER);
         return new Result(ActionResult.SUCCESS, baseCooldown, List.of(MagiaBorras.ASCENDIO_SOUNDEVENT));
     }
 }

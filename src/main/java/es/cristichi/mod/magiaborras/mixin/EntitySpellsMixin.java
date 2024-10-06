@@ -13,15 +13,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Entity.class)
 public abstract class EntitySpellsMixin implements EntitySpellsAccess {
-    @Shadow public abstract void setGlowing(boolean glowing);
-
-    @Shadow public abstract void move(MovementType movementType, Vec3d movement);
-
-    @Shadow public abstract void setNoGravity(boolean noGravity);
-
     @Shadow public float speed;
     @Shadow public float horizontalSpeed;
     @Shadow public boolean velocityDirty;
+
+    @Shadow public abstract void setGlowing(boolean glowing);
+    @Shadow public abstract void setNoGravity(boolean noGravity);
+    @Shadow public abstract void setVelocity(Vec3d velocity);
+    @Shadow protected abstract void scheduleVelocityUpdate();
+
+    @Shadow public float fallDistance;
     @Unique
     private Long ticksLeftRevelio;
     @Unique
@@ -43,7 +44,9 @@ public abstract class EntitySpellsMixin implements EntitySpellsAccess {
             ticksLeftProtego = null;
         }
         if (ticksLeftMovement != null && stepMovement != null) {
-            move(movementType, stepMovement);
+            //move(movementType, stepMovement);
+            setVelocity(stepMovement);
+            scheduleVelocityUpdate();
             if (--this.ticksLeftMovement <= 0L){
                 ticksLeftMovement = null;
                 stepMovement = null;
