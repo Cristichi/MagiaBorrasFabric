@@ -65,7 +65,7 @@ public abstract class Spell {
     // TODO: Other non H.L. Spells I'd love to implement (do I record the Spell cast .ogg myself?)
     //  - Morsmorde (for my friend, who clearly is not a Death Eater)
     //  - Finite Incantatem (for me to stop the annoying Morsmorde spam)
-    //  - Ascendio
+    //  X Ascendio
 
     // TODO: Unique Spells?
     //  - Tree Chopper Spell
@@ -133,7 +133,7 @@ public abstract class Spell {
      * @param world ServerWorld where the Spell is cast
      * @param hit An EntityHitResult if the hit is an Entity, a BlockHitResult if it was a Block, or an empty HitResult
      *            if the caster right clicked looking at the sky or a block/entity too far away
-     * @return a not null Spell.Result that defines whether the Spell was successful and the information needed from the
+     * @return a non null Spell.Result that defines whether the Spell was successful and the information needed from the
      * execution of the Spell to draw particles and play sounds
      */
     @NotNull
