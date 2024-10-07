@@ -30,6 +30,7 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -156,18 +157,23 @@ public abstract class Spell {
             if (properties != null) {
                 if (getCastTypes().contains(SpellCastType.USE)) {
                     if (user.isCreative() || getId().equals("") || data.containsSpell(this)) {
+
                         HitResult hit;
+                        Vec3d userCamPoint = user.getCameraPosVec(0);
+                        Vec3d rotation = user.getRotationVec(0);
+                        Vec3d furthestHitPossible = userCamPoint.add(rotation.x * MAX_RANGE, rotation.y * MAX_RANGE, rotation.z * MAX_RANGE);
+
                         if (affectableEntities == Spell.NO_ENTITY){
-                            hit = new HitResult(user.getCameraPosVec(0)) {
+                            hit = new HitResult(furthestHitPossible) {
                                 @Override
                                 public Type getType() {
                                     return Type.MISS;
                                 }
                             };
                         } else {
-                            EntityHitResult entHit = raycast((ServerPlayerEntity) user, this.getAffectableEntities(), MAX_RANGE);
+                            EntityHitResult entHit = raycast((ServerPlayerEntity) user, this.getAffectableEntities(), userCamPoint, furthestHitPossible, MAX_RANGE);
                             if (entHit.getEntity() == null){
-                                hit = new HitResult(entHit.getPos()) {
+                                hit = new HitResult(furthestHitPossible) {
                                     @Override
                                     public Type getType() {
                                         return Type.MISS;
@@ -179,7 +185,9 @@ public abstract class Spell {
                         }
 
                         // We always check for block hits since Spells don't go through blocks
-                        HitResult hitBlock = user.raycast(MAX_RANGE, 1, false);
+                        //HitResult hitBlock = user.raycast(MAX_RANGE, 1, false);
+                        HitResult hitBlock = world.raycast(new RaycastContext(userCamPoint, furthestHitPossible,
+                                RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, user));
                         if (hitBlock instanceof BlockHitResult blockHitResult
                                 && !getAffectableBlocks().test(world.getBlockState(blockHitResult.getBlockPos()))){
                             hitBlock = new HitResult(hitBlock.getPos()) {
@@ -229,10 +237,11 @@ public abstract class Spell {
                             SpellParticles particles = (result.particles()==null) ? getDefaultParticles() : result.particles();
                             if (particles.getType() != SpellParticles.SpellParticleType.NO_PARTICLES){
                                 Collection<ServerPlayerEntity> players = PlayerLookup.tracking((ServerWorld) world, user.getBlockPos());
+                                SpellHitPayload packet = new SpellHitPayload(
+                                        user.getEyePos().add(0, -0.2, 0), hit.getPos(),
+                                        particles);
                                 for (ServerPlayerEntity player : players){
-                                    ServerPlayNetworking.send(player, new SpellHitPayload(
-                                            user.getEyePos().add(0, -0.2, 0), hit.getPos(),
-                                            particles));
+                                    ServerPlayNetworking.send(player, packet);
                                 }
                             }
                         }
@@ -252,12 +261,9 @@ public abstract class Spell {
         return TypedActionResult.fail(wand);
     }
 
-    private static EntityHitResult raycast(ServerPlayerEntity user, Predicate<Entity> targettable, double maxDistance) {
+    private static EntityHitResult raycast(ServerPlayerEntity user, Predicate<Entity> targettable, Vec3d startPoint, Vec3d endPoint, double maxDistance) {
         ServerWorld world = (ServerWorld) user.getWorld();
-        Vec3d closestPoint = user.getCameraPosVec(0);
-        Vec3d rotation = user.getRotationVec(0);
-        Vec3d furthestHitPossible = closestPoint.add(rotation.x * MAX_RANGE, rotation.y * MAX_RANGE, rotation.z * MAX_RANGE);
-        double dist = closestPoint.distanceTo(furthestHitPossible);
+        double dist = startPoint.distanceTo(endPoint);
 
         Entity currentTargetEnt = null;
         Vec3d currentTargetHitPoint = null;
@@ -270,12 +276,12 @@ public abstract class Spell {
 
         for (Entity potentialTargetEnt : potentialTargets) {
             Box reasonableHitbox = potentialTargetEnt.getBoundingBox().expand(potentialTargetEnt.getTargetingMargin());
-            Optional<Vec3d> pointCrossHitbox = reasonableHitbox.raycast(closestPoint, furthestHitPossible);
+            Optional<Vec3d> pointCrossHitbox = reasonableHitbox.raycast(startPoint, endPoint);
 
             // If the line between closest and furthest crosses the hitbox of this potential target
             if (pointCrossHitbox.isPresent()) {
                 Vec3d potTargetHitPoint = pointCrossHitbox.get();
-                double distancePotEnt = closestPoint.distanceTo(potTargetHitPoint);
+                double distancePotEnt = startPoint.distanceTo(potTargetHitPoint);
                 if (distancePotEnt < currentTargetDistance) {
                     currentTargetEnt = potentialTargetEnt;
                     currentTargetHitPoint = potTargetHitPoint;
@@ -284,7 +290,7 @@ public abstract class Spell {
             }
         }
 
-        return new EntityHitResult(currentTargetEnt, currentTargetHitPoint == null ? furthestHitPossible: currentTargetHitPoint);
+        return new EntityHitResult(currentTargetEnt, currentTargetHitPoint == null ? endPoint : currentTargetHitPoint);
     }
 
     public static final class Result {
