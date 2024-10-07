@@ -50,7 +50,7 @@ public abstract class Spell {
     //  X Expelliarmus
     //  - Finite (if I figure out what to do with it)
     //  - Imperio
-    //  X Incendio (add functionality for furnaces :D)
+    //  X Incendio
     //  - Petrificus Totalus
     //  X Wingardium Leviosa
 
@@ -71,7 +71,6 @@ public abstract class Spell {
     // TODO: Unique Spells?
     //  - Tree Chopper Spell
     //  - Redstone Spell
-    //  - Spell that marks a place to all players in the area, like a ping
 
     public static final double MAX_RANGE = 50000;
 
