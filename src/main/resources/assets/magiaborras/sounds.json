@@ -84,13 +84,13 @@
     ]
   },
   "ascendio": {
-    "subtitle": "magiaborras.ascendio",
+    "subtitle": "magiaborras.spell.ascendio",
     "sounds": [
       "magiaborras:ascendio"
     ]
   },
   "vermillious": {
-    "subtitle": "magiaborras.vermillious",
+    "subtitle": "magiaborras.spell.vermillious",
     "sounds": [
       "magiaborras:vermillious"
     ]
