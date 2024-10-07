@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MagiaBorrasClient implements ClientModInitializer {
-    private static final int MAX_RAY_PARTICLES = 100;
+    private static final int MAX_RAY_PARTICLES = 30;
 
     private static KeyBinding keyChangeSpell;
     private static HashMap<String, KeyBinding> keysQuickSpell;
