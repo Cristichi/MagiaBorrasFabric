@@ -30,7 +30,7 @@ public class Vermillious extends Spell {
                         .setColorEnd(new Vector3f(2f, 0f, 0f))
                         .setSize(DustColorTransitionParticleEffect.MAX_SCALE)
                         .build(),
-                20);
+                3);
     }
 
     @Override
