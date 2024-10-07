@@ -6,6 +6,7 @@ import es.cristichi.mod.magiaborras.spells.prop.SpellCastType;
 import es.cristichi.mod.magiaborras.spells.prop.SpellParticles;
 import es.cristichi.mod.magiaborras.spells.prop.SpellParticlesBuilder;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particle.DustColorTransitionParticleEffect;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
@@ -27,7 +28,7 @@ public class Vermillious extends Spell {
                         .sethMar(1)
                         .setColorStart(new Vector3f(0.4f, 0f, 0f))
                         .setColorEnd(new Vector3f(2f, 0f, 0f))
-                        .setSize(5f)
+                        .setSize(DustColorTransitionParticleEffect.MAX_SCALE)
                         .build(),
                 20);
     }
