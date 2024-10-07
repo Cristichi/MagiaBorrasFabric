@@ -72,7 +72,7 @@ public abstract class Spell {
     //  - Tree Chopper Spell
     //  - Redstone Spell
 
-    public static final double MAX_RANGE = 50000;
+    public static final double MAX_RANGE = 5000;
 
     static final Predicate<Entity> LIVING_ENTITIES = (entity -> !entity.isSpectator() && entity.canBeHitByProjectile());
     static final Predicate<Entity> ANY_ENTITY = (entity -> true);
@@ -156,18 +156,30 @@ public abstract class Spell {
             if (properties != null) {
                 if (getCastTypes().contains(SpellCastType.USE)) {
                     if (user.isCreative() || getId().equals("") || data.containsSpell(this)) {
-
-                        HitResult hit = raycast((ServerPlayerEntity) user, this.getAffectableEntities(), MAX_RANGE);
-                        if (hit instanceof EntityHitResult entityHitResult && entityHitResult.getEntity() == null){
-                            hit = new HitResult(hit.getPos()) {
+                        HitResult hit;
+                        if (affectableEntities == Spell.NO_ENTITY){
+                            hit = new HitResult(user.getCameraPosVec(0)) {
                                 @Override
                                 public Type getType() {
                                     return Type.MISS;
                                 }
                             };
+                        } else {
+                            EntityHitResult entHit = raycast((ServerPlayerEntity) user, this.getAffectableEntities(), MAX_RANGE);
+                            if (entHit.getEntity() == null){
+                                hit = new HitResult(entHit.getPos()) {
+                                    @Override
+                                    public Type getType() {
+                                        return Type.MISS;
+                                    }
+                                };
+                            } else {
+                                hit = entHit;
+                            }
                         }
-                        // This is always a block hit
-                        HitResult hitBlock = user.raycast(MAX_RANGE, 0, false);
+
+                        // We always check for block hits since Spells don't go through blocks
+                        HitResult hitBlock = user.raycast(MAX_RANGE, 1, false);
                         if (hitBlock instanceof BlockHitResult blockHitResult
                                 && !getAffectableBlocks().test(world.getBlockState(blockHitResult.getBlockPos()))){
                             hitBlock = new HitResult(hitBlock.getPos()) {
@@ -178,12 +190,13 @@ public abstract class Spell {
                             };
                         }
 
-                        double distEHit = hit.getPos()==null?Double.MAX_VALUE:user.getEyePos().squaredDistanceTo(hit.getPos());
-                        double distBHit = hitBlock.getPos()==null?Double.MAX_VALUE:user.getEyePos().squaredDistanceTo(hitBlock.getPos());
+                        double distEHit = hit.getPos()==null?MAX_RANGE:user.getEyePos().squaredDistanceTo(hit.getPos());
+                        double distBHit = hitBlock.getPos()==null?MAX_RANGE:user.getEyePos().squaredDistanceTo(hitBlock.getPos());
 
                         if (distEHit > distBHit){
                             hit = hitBlock;
                         }
+
                         boolean blocked = false;
                         if (hit instanceof EntityHitResult entityHitResult){
                             if (entityHitResult.getEntity() instanceof EntitySpellsAccess ent){
@@ -241,44 +254,37 @@ public abstract class Spell {
 
     private static EntityHitResult raycast(ServerPlayerEntity user, Predicate<Entity> targettable, double maxDistance) {
         ServerWorld world = (ServerWorld) user.getWorld();
-        Vec3d startPoint = user.getCameraPosVec(0);
+        Vec3d closestPoint = user.getCameraPosVec(0);
         Vec3d rotation = user.getRotationVec(0);
-        Vec3d furthestHitPossible = startPoint.add(rotation.x * MAX_RANGE, rotation.y * MAX_RANGE, rotation.z * MAX_RANGE);
+        Vec3d furthestHitPossible = closestPoint.add(rotation.x * MAX_RANGE, rotation.y * MAX_RANGE, rotation.z * MAX_RANGE);
+        double dist = closestPoint.distanceTo(furthestHitPossible);
 
-        Entity currentTarget = null;
-        Vec3d currentTargetHit = null;
+        Entity currentTargetEnt = null;
+        Vec3d currentTargetHitPoint = null;
         double currentTargetDistance = maxDistance;
 
-        Collection<Entity> targets = world.getOtherEntities(user, user.getBoundingBox().expand(MAX_RANGE), targettable);
+        Collection<Entity> potentialTargets = world.getOtherEntities(user, user.getBoundingBox().expand(MAX_RANGE), targettable);
+        if (user.getVehicle() != null){
+            potentialTargets.remove(user.getVehicle());
+        }
 
-        for (Entity potentialTarget : targets) {
-            Box boxCollisionPotTarget = potentialTarget.getBoundingBox().expand(potentialTarget.getTargetingMargin());
-            Optional<Vec3d> pointCrossedBox = boxCollisionPotTarget.raycast(startPoint, furthestHitPossible);
-            if (boxCollisionPotTarget.contains(startPoint)) {
-                if (currentTargetDistance >= 0.0) {
-                    currentTarget = potentialTarget;
-                    currentTargetHit = pointCrossedBox.orElse(startPoint);
-                    currentTargetDistance = 0.0;
-                }
-            } else if (pointCrossedBox.isPresent()) {
-                Vec3d vec3d2 = pointCrossedBox.get();
-                double e = startPoint.squaredDistanceTo(vec3d2);
-                if (e < currentTargetDistance || currentTargetDistance == 0.0) {
-                    if (potentialTarget.getRootVehicle() == user.getRootVehicle()) {
-                        if (currentTargetDistance == 0.0) {
-                            currentTarget = potentialTarget;
-                            currentTargetHit = vec3d2;
-                        }
-                    } else {
-                        currentTarget = potentialTarget;
-                        currentTargetHit = vec3d2;
-                        currentTargetDistance = e;
-                    }
+        for (Entity potentialTargetEnt : potentialTargets) {
+            Box reasonableHitbox = potentialTargetEnt.getBoundingBox().expand(potentialTargetEnt.getTargetingMargin());
+            Optional<Vec3d> pointCrossHitbox = reasonableHitbox.raycast(closestPoint, furthestHitPossible);
+
+            // If the line between closest and furthest crosses the hitbox of this potential target
+            if (pointCrossHitbox.isPresent()) {
+                Vec3d potTargetHitPoint = pointCrossHitbox.get();
+                double distancePotEnt = closestPoint.distanceTo(potTargetHitPoint);
+                if (distancePotEnt < currentTargetDistance) {
+                    currentTargetEnt = potentialTargetEnt;
+                    currentTargetHitPoint = potTargetHitPoint;
+                    currentTargetDistance = distancePotEnt;
                 }
             }
         }
 
-        return new EntityHitResult(currentTarget, currentTargetHit==null?furthestHitPossible:currentTargetHit);
+        return new EntityHitResult(currentTargetEnt, currentTargetHitPoint == null ? furthestHitPossible: currentTargetHitPoint);
     }
 
     public static final class Result {
