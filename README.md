@@ -1,13 +1,7 @@
 # Magia Borras [WIP]
 ##### By Cristichi
-Magia Borras is just a mod I have been doing in order to practice modding on
-Minecraft (with Fabric). Since I like Harry Potter (the universe more than anything),
-I thought of using this opportunity for doing a mod with HP's Spells and thematic.
-
-The name comes from an old [children's toy](https://www.magiaborras.com/) to teach
-children to perform some classic magic tricks. At first I wanted to avoid any Copyright,
-but at this point I don't care because I do not plan to publish the mod, or if I do it
-it will not be for profit and I will not maintain it except for my own personal use.
+Magia Borras is just a mod I have been doing in order to practice modding on Minecraft (with Fabric). Since I like Harry Potter (the universe more than anything), I thought of using this opportunity for doing a mod with HP's Spells and thematic. 
+The name comes from an old [children's toy](https://www.magiaborras.com/) to teach children to perform some classic magic tricks.
 
 ## Characteristics
 The mod includes a variety of elements from the Harry Potter universe.
