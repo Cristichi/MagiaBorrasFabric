@@ -97,7 +97,7 @@ public class MagiaBorras implements ModInitializer {
     public static final FlooFireplaceBlock FLOO_FIREPLACE_BLOCK = new FlooFireplaceBlock(Block.Settings.create().luminance(value -> 15));
     public static final BlockEntityType<FlooFireplaceBlockE> FLOO_FIREPLACE_BLOCK_ENTITY_TYPE = BlockEntityType.Builder
             .create(FlooFireplaceBlockE::new, FLOO_FIREPLACE_BLOCK)
-            .build();
+            .build(null);
 
     // World Generation
     public static final RegistryKey<PlacedFeature> MOONSTONE_ORE_PLACED_KEY =
@@ -242,7 +242,7 @@ public class MagiaBorras implements ModInitializer {
         initSpell(Accio.class);
         initSpell(Diffindo.class);
         initSpell(WingardiumLeviosa.class);
-        //initSpell(Lumos.class); // Waiting for Dynamic Lights for 1.21.1
+        initSpell(Lumos.class); // Waiting for Dynamic Lights for 1.21.1
         initSpell(ArrestoMomentum.class);
         initSpell(Bombarda.class);
         initSpell(Depulso.class);
@@ -381,17 +381,6 @@ public class MagiaBorras implements ModInitializer {
             }
 
         });
-
-        // Dynamic lights for Lumos (ITEM entity form)
-//        DynamicLightHandlers.registerDynamicLightHandler(EntityType.ITEM, entity -> {
-//            if (entity.getStack().getItem() instanceof WandItem) {
-//                WandProperties prop = WandProperties.check(entity.getStack());
-//                if (prop != null){
-//                    return prop.lumos?15:0;
-//                }
-//            }
-//            return 0;
-//        });
 
         LOGGER.info("Loaded, against all odds.");
     }

@@ -23,6 +23,9 @@
 		],
 		"fabric-datagen": [
 			"es.cristichi.mod.magiaborras.MagiaBorrasDataGenerator"
+		],
+		"dynamiclights": [
+			"es.cristichi.mod.magiaborras.dymlights.DymLightsIni"
 		]
 	},
 	"mixins": [
@@ -33,8 +36,8 @@
 		}
 	],
 	"depends": {
-		"fabricloader": ">=0.15.11",
-		"minecraft": "~1.21",
+		"fabricloader": ">=0.16.5",
+		"minecraft": "~1.21.1",
 		"java": ">=21",
 		"fabric-api": "*"
 	}

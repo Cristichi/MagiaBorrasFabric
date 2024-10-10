@@ -71,6 +71,9 @@ public class WandProperties {
      */
     @Nullable
     public static WandProperties check(ItemStack stack) {
+        if (stack == null){
+            return null;
+        }
         ComponentMapImpl map = new ComponentMapImpl(stack.getComponents());
         if (map.contains(DATA_CORE) ||
                 map.contains(DATA_WOOD) ||
