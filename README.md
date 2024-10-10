@@ -33,3 +33,7 @@ Here is the list of Spells from the latest release of the mod, v1.0.13:
 * Revelio: Upon use, it will make all entities around you glow. Useful to find sneakers, or easily see all items on the ground.
 * Vermillious: Simple Spell that merely throws red particles in the direction you are looking.
 * Wingardium Leviosa: It makes the target Entity levitate for a short amount of time. You can chain it with another to keep the levitation active.
+
+### Floo Fireplaces
+
+You can craft Floo Fireplaces that allow you to set teleportation point in the world. Simply place one on the ground, then right click to set a name to that fireplace and click on Register Fireplace. Then, place Green Dye on a campfire to create Floo Powder. Now, place another Floo Fireplace on the ground, put yourself on it, and right click on it with Floo Powder. You will see a screen showing you the registered Floo Fireplaces of the world you are in, and you can click to teleport (which will consume one Floo Powder). Press ESCAPE to cancel.
