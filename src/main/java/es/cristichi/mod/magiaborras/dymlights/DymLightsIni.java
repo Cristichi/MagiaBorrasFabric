@@ -14,8 +14,9 @@ public class DymLightsIni implements DynamicLightsInitializer {
         DynamicLightHandlers.registerDynamicLightHandler(EntityType.PLAYER, player -> {
             for (ItemStack item : player.getInventory().main) {
                 WandProperties prop = WandProperties.check(item);
-                if (prop != null)
-                    return prop.lumos?15:0;
+                if (prop != null && prop.lumos) {
+                    return 15;
+                }
             }
             return 0;
         });
@@ -23,8 +24,8 @@ public class DymLightsIni implements DynamicLightsInitializer {
         DynamicLightHandlers.registerDynamicLightHandler(EntityType.ITEM, entity -> {
             if (entity.getStack().getItem() instanceof WandItem) {
                 WandProperties prop = WandProperties.check(entity.getStack());
-                if (prop != null){
-                    return prop.lumos?15:0;
+                if (prop != null && prop.lumos){
+                    return 15;
                 }
             }
             return 0;
