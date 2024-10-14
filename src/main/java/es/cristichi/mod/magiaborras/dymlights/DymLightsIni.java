@@ -11,11 +11,12 @@ import net.minecraft.item.ItemStack;
 public class DymLightsIni implements DynamicLightsInitializer {
     @Override
     public void onInitializeDynamicLights(ItemLightSourceManager itemLightSourceManager) {
-        DynamicLightHandlers.registerDynamicLightHandler(EntityType.PLAYER, entity -> {
-            ItemStack potWand = entity.getInventory().getMainHandStack();
-            WandProperties prop = WandProperties.check(potWand);
-            if (prop != null)
-                return prop.lumos?15:0;
+        DynamicLightHandlers.registerDynamicLightHandler(EntityType.PLAYER, player -> {
+            for (ItemStack item : player.getInventory().main) {
+                WandProperties prop = WandProperties.check(item);
+                if (prop != null)
+                    return prop.lumos?15:0;
+            }
             return 0;
         });
 
