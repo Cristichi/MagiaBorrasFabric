@@ -3,14 +3,17 @@
   "category": "equipment",
   "ingredients": [
     {
-      "item": "magiaborras:moonstone_block"
+      "item": "magiaborras:moonstone"
     },
     {
       "item": "minecraft:stick"
+    },
+    {
+      "item": "minecraft:purple_dye"
     }
   ],
   "result": {
-    "id": "magiaborras:wand_2",
+    "id": "magiaborras:wand_purple",
     "count": 1
   }
 }

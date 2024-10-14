@@ -18,6 +18,7 @@ import org.joml.Vector3f;
 
 import java.util.List;
 
+// TODO: Make it so that revelio'd entities take additional damage from spells
 public class Revelio extends Spell {
     private static final double MIN_AREA = 10;
     private static final double MAX_AREA = 30;

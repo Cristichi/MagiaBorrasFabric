@@ -1,6 +1,7 @@
 {
   "item.magiaborras.wand": "Magic Wand",
-  "item.magiaborras.wand_2": "Magic Wand",
+  "item.magiaborras.wand_purple": "Magic Wand",
+  "item.magiaborras.wand_slytherin": "Magic Wand",
   "item.magiaborras.wand_spell": "Magic Wand (%s)",
 
   "item.magiaborras.moonstone": "Moonstone",

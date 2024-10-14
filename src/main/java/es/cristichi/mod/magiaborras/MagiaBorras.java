@@ -64,7 +64,7 @@ import java.util.Optional;
 //  1. Moar Spells (+ their Spell Book)
 //  X. Moonstone from Hogwarts Legacy
 //  X. Progression. Craftable books that unlock Spells.
-//  X. School Uniforms (Armor)
+//  4. School Uniforms (Armor)
 //  5. Houses Trim? (Instead of dyable armor)
 //  6. Magic HP Potions
 //  7. Floo Powder
@@ -79,7 +79,7 @@ public class MagiaBorras implements ModInitializer {
 
     // Items
     public static final WandItem WAND_ITEM = new WandItem(new WandItem.Settings());
-    public static final WandItem WAND_2_ITEM = new WandItem(new WandItem.Settings());
+    public static final WandItem WAND_PURPLE_ITEM = new WandItem(new WandItem.Settings());
     public static final WandItem WAND_SLYTHERIN_ITEM = new WandItem(new WandItem.Settings());
     public static final MoonStone MOONSTONE_ITEM = new MoonStone(new Item.Settings());
     public static final FlooPowderItem FLOO_POWDER_ITEM = new FlooPowderItem(new Item.Settings());
@@ -193,7 +193,7 @@ public class MagiaBorras implements ModInitializer {
 
         // Items
         Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "wand"), WAND_ITEM);
-        Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "wand_2"), WAND_2_ITEM);
+        Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "wand_purple"), WAND_PURPLE_ITEM);
         Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "wand_slytherin"), WAND_SLYTHERIN_ITEM);
         Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "moonstone"), MOONSTONE_ITEM);
         Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "floo_powder"), FLOO_POWDER_ITEM);
@@ -242,7 +242,7 @@ public class MagiaBorras implements ModInitializer {
         initSpell(Accio.class);
         initSpell(Diffindo.class);
         initSpell(WingardiumLeviosa.class);
-        initSpell(Lumos.class); // Waiting for Dynamic Lights for 1.21.1
+        initSpell(Lumos.class);
         initSpell(ArrestoMomentum.class);
         initSpell(Bombarda.class);
         initSpell(Depulso.class);
@@ -283,7 +283,6 @@ public class MagiaBorras implements ModInitializer {
 
         // Player Data Sync Packet S -> C
         PayloadTypeRegistry.playS2C().register(PlayerDataSyncPayload.ID, PlayerDataSyncPayload.CODEC);
-        // Player onJoin update unlocked Spells to client
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             PlayerDataPS.PlayerMagicData data = playerDataPS.getOrGenerateData(handler.player);
             ServerPlayNetworking.send(handler.player, new PlayerDataSyncPayload(data.getUnlockedSpells()));

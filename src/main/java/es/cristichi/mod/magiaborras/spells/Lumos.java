@@ -27,8 +27,6 @@ public class Lumos extends Spell {
 
     @Override
     public @NotNull Result resolveEffect(ItemStack wand, WandProperties properties, ServerPlayerEntity magicUser, ServerWorld world, HitResult hit) {
-        // TODO: Wait for 1.21 Dynamic Lighs and use it to complete Lumos. Logic is already here, just make it shine!
-        //  https://modrinth.com/mod/lambdynamiclights
         List<SoundEvent> sounds;
         if (properties.lumos) {
             properties.lumos = false;
