@@ -13,6 +13,7 @@ import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -69,9 +70,10 @@ public abstract class Spell {
     //  X Vermillious
 
     // TODO: Unique Spells?
-    //  - Tree Chopper Spell
-    //  - Redstone Spell
-
+    //  - Tree Chopper Spell?
+    //  - Redstone Spell?
+    //  - Return-to-bed Spell?
+    
     public static final double MAX_RANGE = 5000;
 
     static final Predicate<Entity> LIVING_ENTITIES = (entity -> !entity.isSpectator() && entity.canBeHitByProjectile());
@@ -208,6 +210,9 @@ public abstract class Spell {
                         if (hit instanceof EntityHitResult entityHitResult){
                             if (entityHitResult.getEntity() instanceof EntitySpellsAccess ent){
                                 blocked = ent.magiaborras_isProtegoActive();
+                                if (!blocked && ent instanceof LivingEntity livEnt){
+                                    blocked = livEnt.blockedByShield(user.getDamageSources().playerAttack(user));
+                                }
                             }
                         }
 
@@ -216,7 +221,7 @@ public abstract class Spell {
                             result = new Spell.Result(
                                     ActionResult.SUCCESS, Protego.PUNISH_COOLDOWM, List.of(MagiaBorras.SPELLBLOCKED_SOUNDEVENT));
                         } else {
-                            result = resolveEffect(wand, properties, (ServerPlayerEntity) user, (ServerWorld) world, hit);
+                            result = resolveEffect(wand, properties, (ServerPlayerEntity) user, world, hit);
                         }
                         // CD of the Spell. Spells can determine a CD based on the outcome, including failing.
                         // For example, the avada gives you some CD on missing while Diffindo allows you to
@@ -235,7 +240,7 @@ public abstract class Spell {
                             // Particles of the Spell
                             SpellParticles particles = (result.particles()==null) ? getDefaultParticles() : result.particles();
                             if (particles.getType() != SpellParticles.SpellParticleType.NO_PARTICLES){
-                                Collection<ServerPlayerEntity> players = PlayerLookup.tracking((ServerWorld) world, user.getBlockPos());
+                                Collection<ServerPlayerEntity> players = PlayerLookup.tracking(world, user.getBlockPos());
                                 SpellHitPayload packet = new SpellHitPayload(
                                         user.getEyePos().add(0, -0.2, 0), hit.getPos(),
                                         particles);
