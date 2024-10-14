@@ -1,6 +1,6 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "magiaborras:item/wand_2"
+    "layer0": "magiaborras:item/wand_purple"
   }
 }
