@@ -35,9 +35,7 @@ public class Lumos extends Spell {
             properties.lumos = true;
             sounds = List.of(MagiaBorras.LUMOS_SOUNDEVENT);
         }
-//        if (!world.isClient()) {
-            properties.apply(wand);
-//        }
+        properties.apply(wand);
         return new Result(ActionResult.SUCCESS, baseCooldown, sounds);
     }
 }
