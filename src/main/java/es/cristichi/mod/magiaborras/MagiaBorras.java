@@ -42,6 +42,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
@@ -315,7 +316,7 @@ public class MagiaBorras implements ModInitializer {
             ItemStack hand = magicUser.getStackInHand(Hand.MAIN_HAND);
             WandProperties prop = WandProperties.check(hand);
             if (hand.getItem() instanceof WandItem wandItem && prop != null) {
-                spell.cast(magicUser.getWorld(), magicUser, hand, prop);
+                spell.cast((ServerWorld) magicUser.getWorld(), magicUser, hand, prop);
             }
         });
 

@@ -31,7 +31,6 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
-import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -151,8 +150,8 @@ public abstract class Spell {
      * @param properties Properties of that Wand already prepared
      * @return a TypedActionResult indicating whether the casting of the Spell was successful or not
      */
-    public TypedActionResult<ItemStack> cast(World world, PlayerEntity user, ItemStack wand, WandProperties properties) {
-        if (!world.isClient() && !user.getItemCooldownManager().isCoolingDown(wand.getItem())){
+    public TypedActionResult<ItemStack> cast(ServerWorld world, PlayerEntity user, ItemStack wand, WandProperties properties) {
+        if (!user.getItemCooldownManager().isCoolingDown(wand.getItem())){
             PlayerDataPS.PlayerMagicData data = MagiaBorras.playerDataPS.getOrGenerateData(user);
             if (properties != null) {
                 if (getCastTypes().contains(SpellCastType.USE)) {
@@ -252,10 +251,6 @@ public abstract class Spell {
                         return TypedActionResult.fail(wand);
                     }
                 }
-            } else {
-                user.sendMessage(Text.translatable("item.magiaborras.wand.broken"));
-                properties = new WandProperties();
-                properties.apply(wand);
             }
         }
         return TypedActionResult.fail(wand);

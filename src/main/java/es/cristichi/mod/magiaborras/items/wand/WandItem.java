@@ -7,6 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipData;
 import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
@@ -78,9 +79,14 @@ public class WandItem extends Item {
         WandProperties prop = WandProperties.check(stack);
 
         if (prop == null) {
-            return TypedActionResult.fail(stack);
+            prop = new WandProperties();
+            prop.apply(stack);
+            user.sendMessage(Text.translatable("item.magiaborras.wand.broken"));
         }
-        return prop.spell.cast(world, user, stack, prop);
+        if (!world.isClient()) {
+            return prop.spell.cast((ServerWorld) world, user, stack, prop);
+        }
+        return TypedActionResult.fail(stack);
     }
 
 
