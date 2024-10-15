@@ -32,9 +32,13 @@ public abstract class EntitySpellsMixin implements EntitySpellsAccess {
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void tick(CallbackInfo ci){
-        if (ticksLeftRevelio != null && --this.ticksLeftRevelio <= 0L) {
-            this.setGlowing(false);
-            ticksLeftRevelio = null;
+        if (ticksLeftRevelio != null) {
+            if (--this.ticksLeftRevelio <= 0L){
+                this.setGlowing(false);
+                ticksLeftRevelio = null;
+            } else {
+                this.setGlowing(true);
+            }
         }
         if (ticksLeftProtego != null && --this.ticksLeftProtego <= 0L) {
             ticksLeftProtego = null;
@@ -54,7 +58,6 @@ public abstract class EntitySpellsMixin implements EntitySpellsAccess {
     @Override
     public void magiaborras_setRevelioTimer(long ticks) {
         this.ticksLeftRevelio = ticks;
-        setGlowing(true);
     }
 
     @Override
