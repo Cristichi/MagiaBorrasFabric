@@ -92,9 +92,9 @@ public class MagiaBorras implements ModInitializer {
     public static final SchoolUniform SCHOOL_BOOTS = new SchoolUniform(ModArmorMaterials.UNIFORM_MATERIAL, ArmorItem.Type.BOOTS, new Item.Settings());
 
     // Blocks
-    public static final Block MOONSTONE_BLOCK = new Block(Block.Settings.create().strength(3.0f));
-    public static final Block MOONSTONE_ORE_BLOCK = new Block(Block.Settings.create().strength(4.0f));
-    public static final Block MOONSTONE_ORE_DEEP_BLOCK = new Block(Block.Settings.create().strength(4.1f));
+    public static final Block MOONSTONE_BLOCK = new Block(Block.Settings.create().strength(3.0f).luminance(value -> 8));
+    public static final Block MOONSTONE_ORE_BLOCK = new Block(Block.Settings.create().strength(4.0f).luminance(value -> 4));
+    public static final Block MOONSTONE_ORE_DEEP_BLOCK = new Block(Block.Settings.create().strength(4.1f).luminance(value -> 4));
     public static final FlooFireplaceBlock FLOO_FIREPLACE_BLOCK = new FlooFireplaceBlock(Block.Settings.create().luminance(value -> 15));
     public static final BlockEntityType<FlooFireplaceBlockE> FLOO_FIREPLACE_BLOCK_ENTITY_TYPE = BlockEntityType.Builder
             .create(FlooFireplaceBlockE::new, FLOO_FIREPLACE_BLOCK)
