@@ -17,8 +17,8 @@ public abstract class EntitySpellsMixin implements EntitySpellsAccess {
     @Shadow public abstract void setNoGravity(boolean noGravity);
     @Shadow public abstract void setVelocity(Vec3d velocity);
     @Shadow protected abstract void scheduleVelocityUpdate();
-
     @Shadow public float fallDistance;
+
     @Unique
     private Long ticksLeftRevelio;
     @Unique
